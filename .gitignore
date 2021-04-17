@@ -33,3 +33,6 @@ config.js
 config.js.map
 config.d.ts
 config.d.ts.map
+
+en
+en-US
