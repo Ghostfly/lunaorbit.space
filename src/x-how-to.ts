@@ -1,4 +1,5 @@
 import {html, customElement, LitElement, internalProperty} from 'lit-element';
+import {msg} from '@lit/localize';
 
 /**
  * How to choose a validator component
@@ -18,7 +19,7 @@ export class XHowTo extends LitElement {
         class="container mx-auto px-2 py-4 text-gray-700 body-font border-t border-gray-200"
       >
         <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">
-          How to start staking on Terra ?
+          ${msg('How to start staking on Terra ?')}
         </h1>
         <ul
           class="list-reset flex border-b"
@@ -55,21 +56,21 @@ export class XHowTo extends LitElement {
             <a
               data-img="0"
               class="cursor-pointer	active bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-blue-800 font-semibold"
-              >Download Terra Station</a
+              >${msg('Download Terra Station')}</a
             >
           </li>
           <li class="mr-1">
             <a
               data-img="1"
               class="cursor-pointer	bg-white inline-block py-2 px-4 hover:text-blue-800"
-              >Choose the validator</a
+              >${msg('Choose the validator')}</a
             >
           </li>
           <li class="mr-1">
             <a
               data-img="2"
               class="cursor-pointer	bg-white inline-block py-2 px-4 hover:text-blue-800"
-              >Delegate tokens</a
+              >${msg('Delegate tokens')}</a
             >
           </li>
         </ul>
@@ -85,13 +86,13 @@ export class XHowTo extends LitElement {
             <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
               <div class="ml-4">
                 <p class="text-base font-medium text-gray-900">
-                  Voting power
+                  ${msg('Voting power')}
                 </p>
                 <p class="mt-1 text-md text-gray-500">
-                  This is the amount of Luna that has been validated to this
+                  ${msg(`This is the amount of Luna that has been validated to this
                   node. For the sake of decentralization, it is better if this
                   number is lower. If any one node has too much voting power,
-                  they have too much influence over voting.
+                  they have too much influence over voting.`)}
                 </p>
               </div>
             </a>
@@ -99,15 +100,17 @@ export class XHowTo extends LitElement {
             <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
               <div class="ml-4">
                 <p class="text-base font-medium text-gray-900">
-                  Self-delegation
+                  ${msg('Self-delegation')}
                 </p>
                 <p class="mt-1 text-md text-gray-500">
-                  This is skin in the game, but the number reported here is
-                  often not correct. For Luna Orbit, I am currently 10% self
-                  delegated (as of March 2021) but will be 25% within a month.
-                  If you find skin in the game important, I recommend reaching
-                  out to the validator to ask them the accurate number they have
-                  delegated.
+                  ${msg(`
+                    This is skin in the game, but the number reported here is
+                    often not correct. For Luna Orbit, I am currently 10% self
+                    delegated (as of March 2021) but will be 25% within a month.
+                    If you find skin in the game important, I recommend reaching
+                    out to the validator to ask them the accurate number they have
+                    delegated.
+                  `)}
                 </p>
               </div>
             </a>
@@ -115,9 +118,10 @@ export class XHowTo extends LitElement {
             <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
               <div class="ml-4">
                 <p class="text-base font-medium text-gray-900">
-                  Validator commission
+                  ${msg('Validator commission')}
                 </p>
                 <p class="mt-1 text-md text-gray-500">
+                ${msg(`
                   This is currently the only way a validator makes money and it
                   comes out of rewards. For example, at a rate of commission at
                   5% and a reward of 1 Luna, a delegator would receive .95 Luna
@@ -126,6 +130,7 @@ export class XHowTo extends LitElement {
                   reliability and performance but it comes at a cost. Delegators
                   must decide if reliability and performance is important to
                   them or if lower cost validators are worth the risk.
+                  `)}
                 </p>
               </div>
             </a>
@@ -133,9 +138,10 @@ export class XHowTo extends LitElement {
             <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
               <div class="ml-4">
                 <p class="text-base font-medium text-gray-900">
-                  Delegation return
+                  ${msg('Delegation return')}
                 </p>
                 <p class="mt-1 text-sm text-gray-500">
+                ${msg(`
                   This is the current annual return you can expect from staking
                   with this validator. Keep in mind that validators that are new
                   (less than 30 days) might show different actual rates. This
@@ -148,6 +154,7 @@ export class XHowTo extends LitElement {
                   validators at this website (Look at http://terra.stake.id and
                   check the column "Missed Oracle Votes" to get an idea of
                   performance).
+                  `)}
                 </p>
               </div>
             </a>
@@ -155,15 +162,17 @@ export class XHowTo extends LitElement {
             <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
               <div class="ml-4">
                 <p class="text-base font-medium text-gray-900">
-                  Uptime
+                  ${msg('Uptime')}
                 </p>
                 <p class="mt-1 text-sm text-gray-500">
+                ${msg(`
                   This might be the most important on the list, you want the
                   maximum amount of uptime. Anything less can lead to small
                   penalties "slashing" to "jailing" . A small penalty is .01%
                   while jailing would cut off rewards until you redelegate or
                   the node fixes the issues. You want to choose a node that is
                   reliable if you want good uptime.
+                  `)}
                 </p>
               </div>
             </a>
@@ -171,11 +180,10 @@ export class XHowTo extends LitElement {
             <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
               <div class="ml-4">
                 <p class="text-base font-medium text-gray-900">
-                  The Blue check mark
+                  ${msg('The Blue check mark')}
                 </p>
                 <p class="mt-1 text-sm text-gray-500">
-                  This means the validator has submitted a profile on github.
-                  This is cosmetic only and has no effect on anything.
+                  ${msg('This means the validator has submitted a profile on github. This is cosmetic only and has no effect on anything.')}
                 </p>
               </div>
             </a>
@@ -183,9 +191,10 @@ export class XHowTo extends LitElement {
             <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
               <div class="ml-4">
                 <p class="text-base font-medium text-gray-900">
-                  Other considerations
+                ${msg('Other considerations')}
                 </p>
                 <p class="mt-1 text-sm text-gray-500">
+                ${msg(`
                   Some validators are active in the community and help people
                   out, some are building useful tools, some are high end for
                   reliability, and some people just want to make sure they
@@ -193,6 +202,7 @@ export class XHowTo extends LitElement {
                   could be any number of reasons to choose particular validators
                   and they all have an incentive to help you and the Terra eco
                   system!
+                  `)}
                 </p>
               </div>
             </a>
@@ -205,7 +215,7 @@ export class XHowTo extends LitElement {
           <h2
             class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl"
           >
-            <span class="block terra-color">Discover & Understand Terra</span>
+            <span class="block terra-color">${msg('Discover & Understand Terra')}</span>
           </h2>
           <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0">
             <div class="inline-flex rounded-md shadow">
@@ -213,7 +223,7 @@ export class XHowTo extends LitElement {
                 href="tools"
                 class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white terra-bg"
               >
-                Tools
+                ${msg('Tools')}
               </a>
             </div>
           </div>

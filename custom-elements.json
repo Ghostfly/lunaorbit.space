@@ -2,49 +2,70 @@
   "version": "experimental",
   "tags": [
     {
-      "name": "my-element",
-      "path": "./src/my-element.ts",
-      "description": "An example element.",
-      "attributes": [
+      "name": "x-home",
+      "path": "./src/x-home.ts",
+      "description": "Home component"
+    },
+    {
+      "name": "x-tools",
+      "path": "./src/x-tools.ts",
+      "description": "Tools component"
+    },
+    {
+      "name": "x-how-to",
+      "path": "./src/x-how-to.ts",
+      "description": "How to choose a validator component",
+      "properties": [
         {
-          "name": "name",
-          "description": "The name to say \"Hello\" to.",
+          "name": "step",
           "type": "string",
-          "default": "\"World\""
+          "default": "\"0\""
+        }
+      ]
+    },
+    {
+      "name": "x-contact",
+      "path": "./src/x-contact.ts",
+      "description": "Contact component",
+      "properties": [
+        {
+          "name": "contactForm",
+          "type": "HTMLFormElement"
         },
         {
-          "name": "count",
-          "description": "The number of times the button has been clicked.",
-          "type": "number",
-          "default": "0"
+          "name": "status",
+          "type": "HTMLParagraphElement"
+        }
+      ]
+    },
+    {
+      "name": "luna-orbit",
+      "path": "./src/luna-orbit.ts",
+      "description": "Luna-orbit",
+      "attributes": [
+        {
+          "name": "location",
+          "type": "RouterLocation",
+          "default": "\"location\""
         }
       ],
       "properties": [
         {
-          "name": "name",
-          "attribute": "name",
-          "description": "The name to say \"Hello\" to.",
-          "type": "string",
-          "default": "\"World\""
+          "name": "router",
+          "type": "Router",
+          "default": "\"new Router(document.querySelector('.content'))\""
         },
         {
-          "name": "count",
-          "attribute": "count",
-          "description": "The number of times the button has been clicked.",
-          "type": "number",
-          "default": "0"
+          "name": "location",
+          "attribute": "location",
+          "type": "RouterLocation",
+          "default": "\"location\""
         }
       ],
       "slots": [
         {
           "name": "",
           "description": "This element has a slot"
-        }
-      ],
-      "cssParts": [
-        {
-          "name": "button",
-          "description": "The button"
         }
       ]
     }

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Polymer/lit-html/main/packages/localize-tools/config.schema.json",
+  "sourceLocale": "en",
+  "targetLocales": ["en-US"],
+  "tsConfig": "tsconfig.json",
+  "output": {
+    "mode": "transform",
+    "localeCodesModule": "src/locale-codes.ts"
+  },
+  "interchange": {
+    "format": "xliff",
+    "xliffDir": "xliff"
+  }
+}

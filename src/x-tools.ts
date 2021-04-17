@@ -6,6 +6,8 @@ import {
   TemplateResult,
 } from 'lit-element';
 
+import {msg} from '@lit/localize';
+
 enum Tools {
   Airdrop = 'airdrop',
   Staking = 'staking',
@@ -14,6 +16,7 @@ enum Tools {
   USTSupply = 'ust-supply',
   MIRVolume = 'mirror-volume',
   ValidatorPerformance = 'validator-perf',
+  Price = 'price',
 }
 
 interface ToolSection {
@@ -39,25 +42,25 @@ export class XTools extends LitElement {
   private sections: ToolSection[] = [
     {
       id: Tools.Airdrop,
-      name: 'Airdrop timing and information',
+      name: msg('Airdrop timing and information'),
       explain:
-        'I use this to follow upcoming airdrops you get for staking Luna in Terra Station.  As of April 9th 2021 there are 2 drops per week - ANC and MIR.',
+        msg('I use this to follow upcoming airdrops you get for staking Luna in Terra Station.  As of April 9th 2021 there are 2 drops per week - ANC and MIR.'),
       links: [
         {
           href: 'https://terra-airdrop-timer.vercel.app/',
-          name: 'Vercel Airdrop Timer',
+          name: msg('Vercel Airdrop Timer'),
         },
         {
           href: 'https://terra.smartstake.io/',
-          name: 'Terra Analytics',
+          name: msg('Terra Analytics'),
         },
       ],
     },
     {
       id: Tools.Staking,
-      name: 'Staking / Unstaking Calendar',
+      name: msg('Staking / Unstaking Calendar'),
       explain:
-        'Shows the amount of Luna that has been delegated or undelegated on certain days.  When Luna gets undelegated and 21 days pass, it is possible that the Luna will get moved to an exchange and sold. Track',
+      msg('Shows the amount of Luna that has been delegated or undelegated on certain days.  When Luna gets undelegated and 21 days pass, it is possible that the Luna will get moved to an exchange and sold. Track'),
       links: [
         {
           href:
@@ -68,9 +71,9 @@ export class XTools extends LitElement {
     },
     {
       id: Tools.Exchange,
-      name: 'Exchange Wallets',
+      name: msg('Exchange Wallets'),
       explain:
-        'As Luna gets burned, the amount of Luna available on exchanges should slowly decrease.  Also good to watch these addresses during big undelegation events.',
+      msg('As Luna gets burned, the amount of Luna available on exchanges should slowly decrease.  Also good to watch these addresses during big undelegation events.'),
       links: [
         {
           href:
@@ -86,9 +89,9 @@ export class XTools extends LitElement {
     },
     {
       id: Tools.Various,
-      name: 'Various useful metrics for Anchor and TerraSwap',
+      name: msg('Various useful metrics for Anchor and TerraSwap'),
       explain:
-        'You can see Anchor earn APY history, tokens in the ANC - UST LP,  bLuna / Luna swap price history and pool size, etc.',
+      msg('You can see Anchor earn APY history, tokens in the ANC - UST LP,  bLuna / Luna swap price history and pool size, etc.'),
       links: [
         {
           href: 'https://reactor.starport.services/',
@@ -98,9 +101,9 @@ export class XTools extends LitElement {
     },
     {
       id: Tools.USTSupply,
-      name: 'UST Supply information',
+      name: msg('UST Supply information'),
       explain:
-        'This is the most important metric to watch, UST market cap and growth day over day.  Burn tracking shows you how much Luna has been burned, more is better.',
+      msg('This is the most important metric to watch, UST market cap and growth day over day.  Burn tracking shows you how much Luna has been burned, more is better.'),
       links: [
         {
           href: 'https://www.coingecko.com/en/coins/terra-usd',
@@ -114,9 +117,9 @@ export class XTools extends LitElement {
     },
     {
       id: Tools.MIRVolume,
-      name: 'Mirror volume',
+      name: msg('Mirror volume'),
       explain:
-        'As the price of Mirror goes up, so does the yield for staking mAssets which in turn drives demand for UST and increases the value of the weekly MIR airdrop.',
+      msg('As the price of Mirror goes up, so does the yield for staking mAssets which in turn drives demand for UST and increases the value of the weekly MIR airdrop.'),
       links: [
         {
           href: 'https://www.coingecko.com/en/exchanges/terraswap',
@@ -126,21 +129,36 @@ export class XTools extends LitElement {
     },
     {
       id: Tools.ValidatorPerformance,
-      name: 'Validator performance',
+      name: msg('Validator performance'),
       explain:
-        'How is Luna Orbit doing?  You want to see good uptime, few missed Oracle votes, and low precommits missed.  Numbers are trailing and should be watched over time.',
+      msg('How is Luna Orbit doing?  You want to see good uptime, few missed Oracle votes, and low precommits missed.  Numbers are trailing and should be watched over time.'),
       links: [
         {
           href: 'https://terra.stake.id/#/',
-          name: 'Terra Stake ID',
+          name: msg('Terra Stake ID'),
         },
         {
           href:
             'https://hubble.figment.io/terra/chains/columbus-4/validators/EA5B6A187F6A74B40AFF1828E8ADE11072835416',
-          name: 'Luna Orbit - hubble.figment.io',
+          name: msg('Luna Orbit - hubble.figment.io'),
         },
       ],
-    },
+      },
+      {
+        id: Tools.Price,
+        name: 'Trading tools',
+        explain: '',
+        links: [
+          {
+            href: 'https://analytics.blep.ai/charts/uniswapv2.0x67B3825348521B94828127f1eE31da80EE67d285.trade-1m0s',
+            name: msg('Blep.ai - LUNA-UST (UniSwap)')
+          },
+          {
+            href: 'https://analytics.blep.ai/charts/uniswapv2.0x87dA823B6fC8EB8575a235A824690fda94674c88.trade-1m0s',
+            name: msg('Blep.ai - MIR-UST (UniSwap)')
+          }
+        ]
+    }
   ];
 
   public sectionForTools(toolsSection: Tools): ToolSection | undefined {
@@ -158,16 +176,20 @@ export class XTools extends LitElement {
               </h1>
               <div class="leading-relaxed">${description.explain}</div>
               <div class="pt-4 pb-3 space-y-1">
+                <ul>
                 ${description.links.map((link) => {
                   return html`
+                    <li>
                     <a
                       target="_blank"
                       href="${link.href}"
                       class="text-base font-medium"
                       >${link.name}</a
                     >
+                    </li>
                   `;
                 })}
+                </ul>
               </div>
             </div>
           </div>
@@ -181,7 +203,7 @@ export class XTools extends LitElement {
       <section
         class="container mx-auto px-2 py-4 text-gray-700 body-font border-t border-gray-200"
       >
-        <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">Terra tools</h1>
+        <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">${msg('Terra tools')}</h1>
 
         ${this.sections.map((section) => {
           return this._sectionTemplate(section);
@@ -201,7 +223,7 @@ export class XTools extends LitElement {
                 ></path>
               </svg>
               <p class="leading-relaxed text-lg">
-                To understand why Luna could appreciate over time, you need to
+                ${msg(`To understand why Luna could appreciate over time, you need to
                 understand a few things.&nbsp; The first thing is to understand
                 the relationship between the market cap of UST and the price of
                 Luna.&nbsp; The second piece of the puzzle is to understand all
@@ -210,13 +232,12 @@ export class XTools extends LitElement {
                 you will understand why Luna could continue to appreciate in
                 value over time.&nbsp; These are the tools that I personally use
                 to watch the ecosystem around Terra.&nbsp; If you have any
-                questions, please come find me in the
+                questions, please come find me in the`)}
                 <a
                   class="text-gray-500 hover:text-gray-700"
                   href="https://t.me/lunaorbitchat"
                   target="_blank"
-                  >Luna Orbit chat room on Telegram</a
-                >.
+                  >${msg('Luna Orbit chat room on Telegram')}</a>.
               </p>
               <span
                 class="inline-block h-1 w-10 rounded bg-indigo-500 mt-8 mb-6"
@@ -224,7 +245,7 @@ export class XTools extends LitElement {
               <h2
                 class="text-gray-900 font-medium title-font tracking-wider text-sm"
               >
-                Justin
+                ${msg('Justin')}
               </h2>
             </div>
           </div>
@@ -237,7 +258,7 @@ export class XTools extends LitElement {
         <h2
           class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl"
         >
-          <span class="block terra-color">We are here to help.</span>
+          <span class="block terra-color">${msg('We are here to help.')}</span>
         </h2>
         <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0">
           <div class="inline-flex rounded-md shadow">
@@ -245,7 +266,7 @@ export class XTools extends LitElement {
               href="contact"
               class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white terra-bg"
             >
-              Contact
+              ${msg('Contact')}
             </a>
           </div>
         </div>
