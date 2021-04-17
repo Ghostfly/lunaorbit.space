@@ -1,0 +1,1 @@
+{"version":3,"file":"terra-min.d.ts","sourceRoot":"","sources":["src/terra-min.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,SAAS;IACxB,KAAK,EAAE,MAAM,CAAC;IACd,MAAM,EAAE;QACN,UAAU,EAAE;YACV,gBAAgB,EAAE;gBAChB,IAAI,EAAE,MAAM,CAAC;aACd,CAAC;SACH,CAAC;KACH,CAAC;CACH"}

@@ -3,18 +3,139 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>&lt;my-element> Demo</title>
-    <script type="module" src="../my-element.js"></script>
-    <style>
-      p {
-        border: solid 1px blue;
-        padding: 8px;
-      }
-    </style>
+    <title>Luna Orbit Staking</title>
+
+    <base href="/dev/">
+
+    <link href="tailwind.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
   </head>
   <body>
-    <my-element>
-      <p>This is child content</p>
-    </my-element>
+    <luna-orbit>
+      <div class="terra-light" slot="header-banner">
+        <div class="max-w-7xl mx-auto py-3 px-3 sm:px-4 lg:px-4">
+          <div class="flex items-center justify-between flex-wrap">
+            <div class="w-0 flex-1 flex items-center">
+              <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+              </svg>
+              <p class="ml-3 font-medium text-white truncate">
+                <span class="md:inline">0% commissions until May 10th 2021</span>
+              </p>
+            </div>
+            <div class="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
+              <button id="close-banner" type="button" class="-mr-1 flex p-2 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-white sm:-mr-2">
+                <span class="sr-only">Dismiss</span>
+                <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="terra-bg" slot="nav">
+        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+          <div class="relative flex items-center justify-between h-16">
+            <div class="flex-1 flex items-center justify-between">
+              <div class="flex-shrink-0 flex items-center">
+                <a href="home">
+                  <img slot="branding" class="block h-8 w-auto pointer-events-none" src="logo.svg" alt="LunaOrbit logo">
+                </a>
+                <a href="home">
+                <h1 slot="branding" class="text-gray-50 ml-2 select-none font-sans">Luna Orbit</h1>
+                </a>
+              </div>
+              <button id="mobile-menu-toggle" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-white md:hidden lg:hidden" aria-controls="mobile-menu" aria-expanded="false">
+                <span class="sr-only">Open main menu</span>
+                <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <div class="hidden sm:block">
+                <div class="flex space-x-4" class="menu-holder">
+                  <a href="home" slot="menu" class="text-gray-300 hover:text-white block px-3 py-2 text-base font-medium">Staking</a>
+                  <a href="how-to" slot="menu" class="text-gray-300 hover:text-white block px-3 py-2 text-base font-medium">How to</a>
+                  <a href="tools" slot="menu" class="text-gray-300 hover:text-white block px-3 py-2 text-base font-medium">Terra tools</a>
+                  <a href="contact" slot="menu" class="text-gray-300 hover:text-white block px-3 py-2 text-base font-medium">Contact</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        </div>
+
+        <div class="sm:hidden" id="mobile-menu" style="display: none">
+          <div class="px-2 pt-2 pb-3 space-y-1 md:hidden lg:hidden" class="menu-holder">
+            <a href="home" slot="menu" class="text-gray-300 hover:text-white block  px-3 py-2 text-base font-medium" aria-current="page">Staking</a>
+            <a href="how-to" slot="menu" class="text-gray-300 hover:text-white block px-3 py-2 text-base font-medium">How to ?</a>
+            <a href="tools" slot="menu" class="text-gray-300 hover:text-white block px-3 py-2 text-base font-medium">Tools</a>
+            <a href="contact" slot="menu" class="text-gray-300 hover:text-white block px-3 py-2 text-base font-medium">Contact</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="content" slot="content"></div>
+
+      <div class="container  mx-auto py-12 px-6 flex justify-between" slot="equation">
+        <svg class="m-2" width="50" enable-background="new 0 0 512 512" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+          <path d="m117.87 237.37 21.21-21.209c4.505-4.504 4.505-11.806 1e-3 -16.309-4.502-4.503-11.801-4.503-16.309 0l-21.21 21.21-21.209-21.209c-4.502-4.503-11.801-4.503-16.309 0-4.503 4.503-4.503 11.805 0 16.308l21.209 21.21-21.209 21.21c-4.503 4.503-4.503 11.805 0 16.308 4.504 4.503 11.804 4.503 16.309 0l21.209-21.21 21.21 21.21c2.252 2.252 5.203 3.378 8.154 3.378s5.902-1.125 8.154-3.378c4.503-4.503 4.503-11.805 0-16.309l-21.21-21.21z"/>
+          <path d="m194.97 225.84h-4.586v-4.585c0-6.369-5.164-11.532-11.532-11.532s-11.532 5.163-11.532 11.532v4.585h-4.585c-6.368 0-11.532 5.163-11.532 11.532s5.164 11.532 11.532 11.532h4.585v4.585c0 6.369 5.164 11.532 11.532 11.532s11.532-5.163 11.532-11.532v-4.585h4.586c6.368 0 11.532-5.163 11.532-11.532s-5.163-11.532-11.532-11.532z"/>
+          <path d="m512 234.64c0-45.909-27.316-88.696-76.913-120.48-48.007-30.762-111.61-47.704-179.09-47.704s-131.08 16.942-179.09 47.704c-49.597 31.782-76.913 74.569-76.913 120.48s27.316 88.696 76.913 120.48c48.008 30.762 111.61 47.704 179.09 47.704 38.785 0 77.369-5.796 112-16.793l80.693 57.381c1.996 1.421 4.338 2.135 6.683 2.135 2.192 0 4.388-0.624 6.307-1.877 3.97-2.593 5.948-7.354 4.984-11.997l-17.862-86.067c40.82-30.588 63.195-69.752 63.195-110.96zm-82.598 96.531c-3.787 2.64-5.635 7.283-4.697 11.804l13.41 64.612-61.492-43.727c-1.978-1.407-4.317-2.135-6.684-2.135-1.24 0-2.487 0.201-3.694 0.608-33.703 11.399-71.825 17.424-110.24 17.424-63.121 0-122.3-15.647-166.64-44.06-42.749-27.393-66.293-63.283-66.293-101.06 0-37.776 23.544-73.666 66.293-101.06 44.341-28.413 103.52-44.06 166.64-44.06s122.3 15.647 166.64 44.059c42.75 27.393 66.293 63.283 66.293 101.06 0 35.495-21.143 69.778-59.535 96.533z"/>
+          <path d="m296.72 198.77c-4.503-4.502-11.803-4.501-16.307 2e-3l-21.209 21.209-21.21-21.21c-4.504-4.503-11.804-4.503-16.309 0-4.503 4.503-4.503 11.805 0 16.308l25.986 25.986v26.741c0 6.369 5.164 11.532 11.532 11.532s11.532-5.163 11.532-11.532v-26.742l25.985-25.986c4.503-4.504 4.503-11.805 0-16.308z"/>
+          <path d="m444.33 255.2h-30.887l39.041-39.041c3.297-3.298 4.284-8.258 2.5-12.566-1.785-4.309-5.99-7.118-10.654-7.118h-58.727c-6.368 0-11.532 5.163-11.532 11.532s5.164 11.532 11.532 11.532h30.887l-39.041 39.041c-3.297 3.298-4.284 8.258-2.5 12.566 1.785 4.309 5.99 7.118 10.654 7.118h58.727c6.368 0 11.532-5.163 11.532-11.532-1e-3 -6.369-5.163-11.532-11.532-11.532z"/>
+          <path d="m350.19 241.98h-30.822c-6.368 0-11.532 5.163-11.532 11.532s5.164 11.532 11.532 11.532h30.822c6.368 0 11.532-5.163 11.532-11.532s-5.164-11.532-11.532-11.532z"/>
+          <path d="m350.19 209.69h-30.822c-6.368 0-11.532 5.163-11.532 11.532s5.164 11.532 11.532 11.532h30.822c6.368 0 11.532-5.163 11.532-11.532s-5.164-11.532-11.532-11.532z"/>
+        </svg>
+
+        <ul class="container px-2 py-2 mx-auto">
+          <li><em class="font-semibold"><a class="text-gray-600" href="https://terra.money" target="_blank">Terra</a></em>'s competition is the <em class="font-semibold">Dollar</em>.</li>
+          <li><em class="font-semibold"><a class="text-gray-600" href="https://mirror.finance" target="_blank">Mirror</a></em>'s competition is the <em class="font-semibold">NASDAQ</em>.</li>
+          <li><em class="font-semibold"><a class="text-gray-600" href="https://anchorprotocol.com" target="_blank">Anchor</a></em>'s competition is the <em class="font-semibold">Federal Funds Rate</em>.</li>
+          <div class="flex justify-center m-4 items-center">
+            <a class="terra-color" href="https://docs.terra.money/luna.html">
+              <img class="h-5" src="luna.svg" alt="Luna logo" />
+              <h3 class="font-semibold ml-2">Luna</a> governs them all !</h3>
+          </div>
+        </ul>
+    </div>
+
+      <footer slot="footer">
+        <div class="bg-gradient-to-r from-indigo-300 to-blue-500">
+            <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
+              <a class="flex title-font font-medium items-center md:justify-start justify-center text-white">
+                <img slot="branding" class="block h-8 w-auto pointer-events-none" src="logo.svg" alt="LunaOrbit logo">
+                <span class="ml-3 text-xl">LunaOrbit</span>
+              </a>
+              <p class="text-sm text-white sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
+                <a href="https://twitter.com/justinlunaorbit" class="text-white ml-1" rel="noopener noreferrer" target="_blank">@justinlunaorbit</a>
+                | <a class="text-white ml-1" target="_blank" href="https://station.terra.money/validator/terravaloper1p94a6vwl9dkd98cyrlmzf6ydjdgfvamyhu33fa">Validator commission : <span id="commission" class="text-white">Loading ...</span></a>
+                | <a class="text-white ml-1" target="_blank" href="https://github.com/terra-project/validator-profiles/tree/master/validators/terravaloper1p94a6vwl9dkd98cyrlmzf6ydjdgfvamyhu33fa">Validator profile</a>
+              </p>
+              <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+                <a class="ml-3 text-white" href="http://t.me/lunaorbitchat" target="_blank">
+                  <svg fill="currentColor" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
+                  class="w-5 h-5"
+                  style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+                  <path id="telegram-1"
+                      d="M18.384,22.779c0.322,0.228 0.737,0.285 1.107,0.145c0.37,-0.141 0.642,-0.457 0.724,-0.84c0.869,-4.084 2.977,-14.421 3.768,-18.136c0.06,-0.28 -0.04,-0.571 -0.26,-0.758c-0.22,-0.187 -0.525,-0.241 -0.797,-0.14c-4.193,1.552 -17.106,6.397 -22.384,8.35c-0.335,0.124 -0.553,0.446 -0.542,0.799c0.012,0.354 0.25,0.661 0.593,0.764c2.367,0.708 5.474,1.693 5.474,1.693c0,0 1.452,4.385 2.209,6.615c0.095,0.28 0.314,0.5 0.603,0.576c0.288,0.075 0.596,-0.004 0.811,-0.207c1.216,-1.148 3.096,-2.923 3.096,-2.923c0,0 3.572,2.619 5.598,4.062Zm-11.01,-8.677l1.679,5.538l0.373,-3.507c0,0 6.487,-5.851 10.185,-9.186c0.108,-0.098 0.123,-0.262 0.033,-0.377c-0.089,-0.115 -0.253,-0.142 -0.376,-0.064c-4.286,2.737 -11.894,7.596 -11.894,7.596Z" />
+                  </svg>                </a>
+                <a class="ml-3 text-white" href="https://twitter.com/justinlunaorbit" target="_blank">
+                  <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                  </svg>
+                </a>
+              </span>
+            </div>
+        </div>
+      </footer>
+    </luna-orbit>
   </body>
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../node_modules/@lit/reactive-element/polyfill-support.js"></script>
+  <script type="module" src="../luna-orbit.js"></script>
 </html>

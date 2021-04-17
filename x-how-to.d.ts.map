@@ -1,0 +1,1 @@
+{"version":3,"file":"x-how-to.d.ts","sourceRoot":"","sources":["src/x-how-to.ts"],"names":[],"mappings":"AAAA,OAAO,EAAsB,UAAU,EAAmB,MAAM,aAAa,CAAC;AAE9E;;GAEG;AACH,qBACa,MAAO,SAAQ,UAAU;IAE7B,IAAI,SAAO;IAElB,gBAAgB;IAIhB,MAAM;CAiNP;AAED,OAAO,CAAC,MAAM,CAAC;IACb,UAAU,qBAAqB;QAC7B,UAAU,EAAE,MAAM,CAAC;KACpB;CACF"}
