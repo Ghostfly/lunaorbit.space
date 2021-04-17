@@ -1,1 +1,0 @@
-{"version":3,"file":"x-home.d.ts","sourceRoot":"","sources":["src/x-home.ts"],"names":[],"mappings":"AAAA,OAAO,EAAsB,UAAU,EAAC,MAAM,aAAa,CAAC;AAG5D;;GAEG;AACH,qBACa,KAAM,SAAQ,UAAU;IACnC,gBAAgB;IAIhB,MAAM;CAoGP;AAED,OAAO,CAAC,MAAM,CAAC;IACb,UAAU,qBAAqB;QAC7B,QAAQ,EAAE,KAAK,CAAC;KACjB;CACF"}

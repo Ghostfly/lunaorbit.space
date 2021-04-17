@@ -3,7 +3,12 @@
 /test/
 
 # top level source
-my-element.js
-my-element.js.map
-my-element.d.ts
-my-element.d.ts.map
+luna-orbit.js
+luna-orbit.js.map
+luna-orbit.d.ts
+luna-orbit.d.ts.map
+
+x-*.js
+x-*.js.map
+x-*.d.ts
+x-*.d.ts.map
