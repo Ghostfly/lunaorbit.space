@@ -1,4 +1,3 @@
-
 import {
   html,
   customElement,
@@ -12,7 +11,7 @@ import {
 import {Validator} from './terra-min';
 import {Router, RouterLocation} from '@vaadin/router';
 
-import "./locale-picker";
+import './locale-picker';
 
 import './x-home';
 import './x-how-to';
@@ -21,9 +20,9 @@ import './x-contact';
 import './x-equation';
 
 import config from './config';
-import { setLocaleFromUrl } from './localization';
-import { Localized } from "@lit/localize/localized-element";
-import { msg } from "@lit/localize";
+import {setLocaleFromUrl} from './localization';
+import {Localized} from '@lit/localize/localized-element';
+import {msg} from '@lit/localize';
 /**
  * Luna-orbit
  *
@@ -96,9 +95,7 @@ export class LunaOrbit extends Localized(LitElement) {
   }
 
   private _updateBannerMessage(): void {
-    const bannerNode = document.querySelector(
-      '#banner-message'
-    ) as HTMLElement;
+    const bannerNode = document.querySelector('#banner-message') as HTMLElement;
 
     if (bannerNode) {
       const bannerMessage = msg('0% commissions until May 10th 2021');
@@ -108,7 +105,7 @@ export class LunaOrbit extends Localized(LitElement) {
 
   async firstUpdated(): Promise<void> {
     await setLocaleFromUrl();
-    
+
     this._updateBannerMessage();
     this._setupMenus();
     this._handleMobileMenu();
@@ -121,25 +118,29 @@ export class LunaOrbit extends Localized(LitElement) {
     const links = [
       {
         href: 'home',
-        class: 'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
-        value: msg('Staking')
+        class:
+          'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
+        value: msg('Staking'),
       },
       {
         href: 'how-to',
-        class: 'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
-        value: msg('How to')
+        class:
+          'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
+        value: msg('How to'),
       },
       {
         href: 'tools',
-        class: 'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
-        value: msg('Tools')
+        class:
+          'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
+        value: msg('Tools'),
       },
       {
         href: 'contact',
-        class: 'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
-        value: msg('Contact')
+        class:
+          'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
+        value: msg('Contact'),
       },
-    ]
+    ];
 
     for (const menuHolder of menuHolders) {
       for (const link of links) {

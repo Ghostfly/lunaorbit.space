@@ -1,4 +1,10 @@
-import {html, customElement, LitElement, internalProperty, TemplateResult} from 'lit-element';
+import {
+  html,
+  customElement,
+  LitElement,
+  internalProperty,
+  TemplateResult,
+} from 'lit-element';
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
 

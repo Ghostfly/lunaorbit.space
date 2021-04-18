@@ -1,35 +1,43 @@
 :root {
-    --terra-blue: #0c3694;
-    --terra-light: #516289;
+  --terra-blue: #0c3694;
+  --terra-light: #516289;
 }
 
 .terra-bg {
-    background-color: var(--terra-blue);
+  background-color: var(--terra-blue);
 }
 
 .terra-color {
-    color: var(--terra-blue);
+  color: var(--terra-blue);
 }
 
 .terra-light {
-    background-color: var(--terra-light);
+  background-color: var(--terra-light);
 }
 
 .terra-light-color {
-    color: var(--terra-light);
+  color: var(--terra-light);
 }
 
 .content > .leaving {
-    animation: .3s fadeOut;
+  animation: 0.3s fadeOut;
 }
 .content > .entering {
-    animation: .3s fadeIn;
+  animation: 0.3s fadeIn;
 }
 @keyframes fadeOut {
-    from {opacity: 1;}
-    to {opacity: 0;}
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
