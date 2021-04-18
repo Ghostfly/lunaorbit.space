@@ -336,6 +336,38 @@ Lorsque vous assemblez ces deux pièces, vous comprenez pourquoi Luna peut conti
   <source>or</source>
   <target>ou</target>
 </trans-unit>
+<trans-unit id="sd4758eaeb9571bb5">
+  <source>Terra</source>
+  <target>Terra</target>
+</trans-unit>
+<trans-unit id="s9367ae470d6a2df3">
+  <source>'s competition is the</source>
+  <target> peut remplacer le </target>
+</trans-unit>
+<trans-unit id="sb1f2e5190094b6df">
+  <source>Dollar</source>
+  <target>Dollar</target>
+</trans-unit>
+<trans-unit id="s1e5ff0f50c741122">
+  <source>Mirror</source>
+  <target>Mirror</target>
+</trans-unit>
+<trans-unit id="s1bb4f1c7e2287dd9">
+  <source>NASDAQ</source>
+  <target>NASDAQ</target>
+</trans-unit>
+<trans-unit id="sbeff9ac02dc2c474">
+  <source>Anchor</source>
+  <target>Anchor</target>
+</trans-unit>
+<trans-unit id="sed5ff004b2f2cfac">
+  <source>Federal Funds Rate</source>
+  <target>Federal Funds Rate</target>
+</trans-unit>
+<trans-unit id="s6ad93f1069d6191b">
+  <source>Luna governs them all !</source>
+  <target>Luna les gouverne tous !</target>
+</trans-unit>
 <trans-unit id="sf5b7c2218ded0045">
   <source>0% commissions until May 10th 2021</source>
   <target>0% de commission jusqu'au 10 Mai 2021</target>

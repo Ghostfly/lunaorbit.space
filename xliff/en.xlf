@@ -262,6 +262,30 @@
 <trans-unit id="s08b05407b5565ca4">
   <source>or</source>
 </trans-unit>
+<trans-unit id="sd4758eaeb9571bb5">
+  <source>Terra</source>
+</trans-unit>
+<trans-unit id="s9367ae470d6a2df3">
+  <source>'s competition is the</source>
+</trans-unit>
+<trans-unit id="sb1f2e5190094b6df">
+  <source>Dollar</source>
+</trans-unit>
+<trans-unit id="s1e5ff0f50c741122">
+  <source>Mirror</source>
+</trans-unit>
+<trans-unit id="s1bb4f1c7e2287dd9">
+  <source>NASDAQ</source>
+</trans-unit>
+<trans-unit id="sbeff9ac02dc2c474">
+  <source>Anchor</source>
+</trans-unit>
+<trans-unit id="sed5ff004b2f2cfac">
+  <source>Federal Funds Rate</source>
+</trans-unit>
+<trans-unit id="s6ad93f1069d6191b">
+  <source>Luna governs them all !</source>
+</trans-unit>
 <trans-unit id="sf5b7c2218ded0045">
   <source>0% commissions until May 10th 2021</source>
 </trans-unit>
