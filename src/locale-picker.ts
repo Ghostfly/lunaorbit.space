@@ -50,7 +50,6 @@ export class LocalePicker extends Localized(LitElement) {
     document.querySelector('luna-orbit')?.refreshI18n();
 
     const url = new URL(document.location.href);
-    console.warn('url', url);
     url.searchParams.set('locale', newLocale);
 
     // Avoid refresh by using replaceState.

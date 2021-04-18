@@ -96,13 +96,22 @@ export class LunaOrbit extends Localized(LitElement) {
     document.body.insertBefore(bannerNode, document.body.firstChild);
   }
 
-  async firstUpdated(): Promise<void> {
-    await setLocaleFromUrl();
+  private _showAirdropToast() {
+    debugger;
+    const hasToast = this.shadowRoot?.querySelector('airdrop-toast');
+    if (hasToast) {
+      hasToast.parentElement?.removeChild(hasToast);
+    }
 
     if (!sessionStorage.getItem('lunaorbit-airdrops-hide')) {
       this.shadowRoot?.appendChild(document.createElement('airdrop-toast'));
     }
+  }
 
+  async firstUpdated(): Promise<void> {
+    await setLocaleFromUrl();
+
+    this._showAirdropToast();
     this._updateBannerMessage();
     this._setupMenus();
     this._handleMobileMenu();
@@ -163,6 +172,7 @@ export class LunaOrbit extends Localized(LitElement) {
     this._cleanMenus();
     this._updateBannerMessage();
     this._setupMenus();
+    this._showAirdropToast();
   }
 
   render(): TemplateResult {
