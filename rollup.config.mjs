@@ -20,7 +20,8 @@ const copyConfig = {
     { src: 'dev/*.jpeg', dest: 'dist/assets' },
     { src: 'dev/site.webmanifest', dest: 'dist/assets' },
     { src: 'dev/index.css', dest: 'dist/assets' },
-    { src: 'dev/tailwind.css', dest: 'dist/assets' }
+    { src: 'dev/tailwind.css', dest: 'dist/assets' },
+    { src: 'dev/robots.txt', dest: 'dist' }
   ],
   verbose: true,
 };
