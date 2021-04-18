@@ -3,18 +3,18 @@ import {
   customElement,
   internalProperty,
   LitElement,
-  css,
   property,
-  CSSResult,
   TemplateResult,
 } from 'lit-element';
-import {Validator} from './terra-min';
+import { Validator } from './terra-min';
 import { Router, RouterLocation } from '@vaadin/router';
 
 import './styles.css';
 
 import './banner-message';
 import './locale-picker';
+import './airdrop-dialog';
+import './airdrop-toast';
 
 import './x-parts';
 
@@ -47,16 +47,6 @@ export class LunaOrbit extends Localized(LitElement) {
   @internalProperty()
   private _bannerMessage!: BannerMessage;
 
-  static get styles(): CSSResult {
-    return css`
-      .dynamic-head {
-        display: flex;
-        justify-content: space-between;
-        margin: 2em;
-      }
-    `;
-  }
-
   constructor() {
     super();
 
@@ -79,6 +69,10 @@ export class LunaOrbit extends Localized(LitElement) {
       'vaadin-router-location-changed',
       this._routerLocationChanged.bind(this)
     );
+  }
+
+  public showAirdropDialog(): void {
+    document.body.appendChild(document.createElement('airdrop-dialog'));
   }
 
   private _updateBannerMessage(): void {
@@ -104,6 +98,10 @@ export class LunaOrbit extends Localized(LitElement) {
 
   async firstUpdated(): Promise<void> {
     await setLocaleFromUrl();
+
+    if (!sessionStorage.getItem('lunaorbit-airdrops-hide')) {
+      this.shadowRoot?.appendChild(document.createElement('airdrop-toast'));
+    }
 
     this._updateBannerMessage();
     this._setupMenus();

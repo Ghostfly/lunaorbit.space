@@ -5,6 +5,16 @@
 :root {
   --terra-blue: #0c3694;
   --terra-light: #516289;
+  --mirror-color: #232d45;
+  --anchor-color: #4bdb4b;
+}
+
+.anchor-bg {
+  background-color: var(--anchor-color);
+}
+
+.mirror-bg {
+  background-color: var(--mirror-color);
 }
 
 .terra-bg {
