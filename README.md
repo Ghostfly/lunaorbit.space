@@ -2,6 +2,9 @@
 
 # LunaOrbit website
 
+- Dev : https://lunaorbit.ghostfly.dev
+- Prod : https://lunaorbit.space
+
 ## Setup
 
 Install dependencies:
