@@ -142,6 +142,14 @@ export class AirdropDialog extends Localized(LitElement) {
                     <div class="relative flex-grow w-full">
                       <label for="terra-address" class="leading-7 text-sm text-gray-600">${msg('Terra address')}</label>
                       <input id="address-input" .value=${this.terraAddress} @change=${(change: InputEvent) => {
+                        if (!this.terraAddress || !this.terraAddress.startsWith('terra')) {
+                          this.input.classList.add('border-red-500');
+                          this.loading = true;
+                        } else {
+                          this.input.classList.remove('border-red-500');
+                          this.loading = false;
+                        }
+                        
                         this.terraAddress = (change.target as HTMLInputElement).value;
                       }} type="text" id="terra-address" name="terra-address" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                     </div>
