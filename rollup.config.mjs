@@ -27,9 +27,7 @@ const targets = [
 const isDev = process.env.BUILD === 'development';
 
 if(isDev){
-  targets.push(
-    { src: 'luna-orbit.js', dest: 'dev/assets' },
-  )
+  // TODO XXX;
 }
 
 const copyConfig = {
