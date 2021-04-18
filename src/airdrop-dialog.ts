@@ -26,10 +26,10 @@ export class AirdropDialog extends Localized(LitElement) {
   public dialog!: HTMLDivElement;
 
   @property({type: Boolean})
-  public showANC = false;
+  public showANC: boolean | null = null;
 
   @property({type: Boolean})
-  public showMIR = false;
+  public showMIR: boolean | null = null;
 
   @property({type: Boolean})
   public loading = false;
@@ -144,9 +144,9 @@ export class AirdropDialog extends Localized(LitElement) {
                     <div class="anc">
                       <img class="h-10" src="assets/anchor-logo.svg" alt="anchor protocol logo" height="30" />
                       <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
-                        ${this.showANC ? html`
+                        ${this.showANC === true ? html`
                         <p class="leading-relaxed">${msg('Claimable')}</p>
-                        ` : html`
+                        ` : this.showANC === null ? html`` : html`
                         <p class="leading-relaxed">${msg('Claimed')}</p>
                         `}
                       </div>
@@ -154,9 +154,9 @@ export class AirdropDialog extends Localized(LitElement) {
                     <div class="mirror">
                       <img class="h-10" src="assets/logo-mirror.svg" alt="mirror protocol logo" height="30" />
                       <div class="p-4 sm:w-1/2 lg:w-1/4 w-1/2">
-                        ${this.showMIR ? html`
+                        ${this.showMIR === true ? html`
                         <p class="leading-relaxed">${msg('Claimable')}</p>
-                        ` : html`
+                        ` : this.showMIR === null ? html`` : html`
                         <p class="leading-relaxed">${msg('Claimed')}</p>
                           `}
                       </div>
@@ -165,22 +165,24 @@ export class AirdropDialog extends Localized(LitElement) {
                 </div>
             </div>
             <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-              <button @click=${() => {
-                window.open('https://terra.mirror.finance/airdrop', '_blank');
-              }} type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm mirror-bg">
-                ${msg('Claim MIR')}
-              </button>
-              ${this.showANC ? html`
+              ${this.showANC === true ? html`
               <button @click=${() => {
                 window.open('https://app.anchorprotocol.com/airdrop', '_blank');
               }} type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm anchor-bg">
                 ${msg('Claim ANC')}
               </button>
               ` : html``}
+              ${this.showMIR === true ? html`
+              <button @click=${() => {
+                window.open('https://terra.mirror.finance/airdrop', '_blank');
+              }} type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm mirror-bg">
+                ${msg('Claim MIR')}
+              </button>
+              ` : html``}
               <button @click=${() => {
                 this.close();
               }} type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                ${msg('Ok')}
+                ${msg('Close')}
               </button>
             </div>
           </div>
