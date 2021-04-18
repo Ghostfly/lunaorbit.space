@@ -43,7 +43,9 @@ export class XContact extends Localized(LitElement) {
           form.classList.add('opacity-50', 'pointer-events-none');
         })
         .catch((_err) => {
-          this.status.innerText = msg('Oops! There was a problem submitting your form');
+          this.status.innerText = msg(
+            'Oops! There was a problem submitting your form'
+          );
         });
     });
   }

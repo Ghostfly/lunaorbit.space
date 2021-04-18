@@ -6,8 +6,8 @@ import {
   property,
   TemplateResult,
 } from 'lit-element';
-import { Validator } from './terra-min';
-import { Router, RouterLocation } from '@vaadin/router';
+import {Validator} from './terra-min';
+import {Router, RouterLocation} from '@vaadin/router';
 
 import './styles.css';
 
@@ -22,7 +22,7 @@ import config from './config';
 import {setLocaleFromUrl} from './localization';
 import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
-import { BannerMessage } from './banner-message';
+import {BannerMessage} from './banner-message';
 
 /**
  * Luna-orbit
@@ -88,7 +88,7 @@ export class LunaOrbit extends Localized(LitElement) {
     const bannerNode = document.createElement('banner-message');
     bannerNode.message = msg('0% commissions until May 10th 2021');
 
-    bannerNode.addEventListener('click', function() {
+    bannerNode.addEventListener('click', function () {
       bannerNode.parentElement?.removeChild(bannerNode);
       sessionStorage.setItem('lunaorbit-banner-hide', 'true');
     });
@@ -97,7 +97,6 @@ export class LunaOrbit extends Localized(LitElement) {
   }
 
   private _showAirdropToast() {
-    debugger;
     const hasToast = this.shadowRoot?.querySelector('airdrop-toast');
     if (hasToast) {
       hasToast.parentElement?.removeChild(hasToast);

@@ -19,17 +19,16 @@ export interface TerraQuery {
     address?: string;
     airdropContract?: string;
     isClaimedQuery?: string;
-  },
+  };
   query: string;
 }
-
 
 export interface AnchorClaimResponse {
   data: {
     isClaimed: {
-      Result: string
-    },
-  }
+      Result: string;
+    };
+  };
 }
 
 export interface MIRAirdrop {
@@ -39,10 +38,10 @@ export interface MIRAirdrop {
   createdAt: string; // Date ISO
   id: number;
   merkleRoot: string;
-  network: "TERRA";
+  network: 'TERRA';
   proof: string;
   rate: string; // contains number
   stage: number;
-  staked: string // Contains number
+  staked: string; // Contains number
   total: string; // Contains number
 }
