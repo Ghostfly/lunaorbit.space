@@ -1,4 +1,4 @@
-import {html, customElement, LitElement} from 'lit-element';
+import {html, customElement, LitElement, TemplateResult} from 'lit-element';
 import config from './config';
 import {msg} from '@lit/localize';
 
@@ -7,11 +7,11 @@ import {msg} from '@lit/localize';
  */
 @customElement('x-home')
 export class XHome extends LitElement {
-  createRenderRoot() {
+  createRenderRoot(): this {
     return this;
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       <section
         class="container mx-auto px-2 py-4 text-gray-700 body-font border-t border-gray-200 relative text-gray-700 body-font border-t border-gray-200 relative"

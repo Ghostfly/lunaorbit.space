@@ -1,4 +1,4 @@
-import {html, customElement, LitElement, query} from 'lit-element';
+import {html, customElement, LitElement, query, TemplateResult} from 'lit-element';
 import config from './config';
 
 import {msg} from '@lit/localize';
@@ -14,11 +14,11 @@ export class XContact extends LitElement {
   @query('#status')
   public status!: HTMLParagraphElement;
 
-  createRenderRoot() {
+  createRenderRoot(): this {
     return this;
   }
 
-  firstUpdated() {
+  firstUpdated(): void {
     this.contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const form = e.target as HTMLFormElement;
@@ -42,7 +42,7 @@ export class XContact extends LitElement {
     });
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
     <section class="text-gray-600 body-font relative">
       <div class="absolute inset-0 bg-gray-300">
@@ -74,13 +74,8 @@ export class XContact extends LitElement {
               'Send'
             )}</button>
             <p id="status" class="font-semibold"></p>
-            <p class="text-md mt-3">${msg('Find us on')} <a href="http://t.me/${
-      config.telegram
-    }" target="_blank" rel="noopener" title="Telegram" class="text-gray-500 hover:text-indigo-500">Telegram</a> ${msg(
-      'or'
-    )} <a class="text-gray-500 hover:text-indigo-500" href="https://twitter.com/${
-      config.twitter
-    }" target="_blank" rel="noopener" title="Twitter">Twitter.</p>
+            <p class="text-md mt-3">${msg('Find us on')} <a href="http://t.me/${config.telegram}" target="_blank" rel="noopener" title="Telegram" class="text-gray-500 hover:text-indigo-500">Telegram</a> ${msg('or')} 
+            <a class="text-gray-500 hover:text-indigo-500" href="https://twitter.com/${config.twitter}" target="_blank" rel="noopener" title="Twitter">Twitter</a>.</p>
         </form>
         </div>
       </div>

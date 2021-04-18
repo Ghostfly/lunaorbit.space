@@ -5,6 +5,8 @@ import {
   LitElement,
   css,
   property,
+  CSSResult,
+  TemplateResult,
 } from 'lit-element';
 import {Validator} from './terra-min';
 import {Router, RouterLocation} from '@vaadin/router';
@@ -40,7 +42,7 @@ export class LunaOrbit extends LitElement {
   @property({type: Object})
   location = this.router.location;
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       .dynamic-head {
         display: flex;
@@ -88,11 +90,11 @@ export class LunaOrbit extends LitElement {
     }
   }
 
-  createRenderRoot() {
+  createRenderRoot(): ShadowRoot {
     return this.attachShadow({mode: 'open'});
   }
 
-  async firstUpdated() {
+  async firstUpdated(): Promise<void> {
     // Display a spinner whenever a new locale is loading.
     window.addEventListener(LOCALE_STATUS_EVENT, ({detail}) => {
       if (detail.status === 'loading') {
@@ -113,7 +115,7 @@ export class LunaOrbit extends LitElement {
     await this._retrieveCommission();
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       <slot name="header-banner"></slot>
       <slot name="nav"></slot>
@@ -124,7 +126,7 @@ export class LunaOrbit extends LitElement {
     `;
   }
 
-  private _handleMobileMenu() {
+  private _handleMobileMenu(): void {
     if (this.mobileMenuToggle && this.mobileMenu) {
       this.mobileMenuToggle.addEventListener('click', () => {
         if (this.mobileMenu?.style.display == 'none') {
@@ -136,7 +138,7 @@ export class LunaOrbit extends LitElement {
     }
   }
 
-  private async _retrieveCommission() {
+  private async _retrieveCommission(): Promise<void> {
     const validatorQuery = await fetch(
       LunaOrbit.APIValidatorURL + config.address
     );
@@ -160,7 +162,7 @@ export class LunaOrbit extends LitElement {
       router: Router;
       location: RouterLocation;
     }>
-  ) {
+  ): void {
     const page = event.detail.location.route?.path.replace('/', '');
     const selector = `[href='${page}']`;
     const activeLinks = document.querySelectorAll(`a${selector}`);

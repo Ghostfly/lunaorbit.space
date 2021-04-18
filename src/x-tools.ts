@@ -34,7 +34,7 @@ interface ToolSection {
  */
 @customElement('x-tools')
 export class XTools extends LitElement {
-  createRenderRoot() {
+  createRenderRoot(): this {
     return this;
   }
 
@@ -208,7 +208,7 @@ export class XTools extends LitElement {
     `;
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       <section
         class="container mx-auto px-2 py-4 text-gray-700 body-font border-t border-gray-200"
