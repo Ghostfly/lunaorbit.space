@@ -17,16 +17,19 @@ const INDEX_TEMPLATE = resolve('./src/index.ejs');
 const nodeModules = './node_modules/';
 
 const webcomponentsjs = join(nodeModules, '@webcomponents/webcomponentsjs');
-const webanimationsjs = join(nodeModules, 'web-animations-js');
 
 const assets = [
   {
     from: resolve('./src/assets'),
-    to: resolve('dist/assets/')
+    to: join(OUTPUT_PATH, 'assets')
   }
 ];
 
 const polyfills = [
+  {
+    from: resolve('./src/assets'),
+    to: join(OUTPUT_PATH, 'assets')
+  },
   {
     from: resolve(`${webcomponentsjs}/webcomponents-*.js`),
     to: join(OUTPUT_PATH, 'vendor')

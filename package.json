@@ -2,9 +2,7 @@
   "name": "luna-orbit",
   "scripts": {
     "webpack:start": "webpack serve --mode=development",
-    "build": "tsc",
-    "build:watch": "tsc --watch",
-    "clean": "rimraf luna-orbit.{d.ts,d.ts.map,js,js.map} test/luna-orbit.{d.ts,d.ts.map,js,js.map} test/luna-orbit.{d.ts,d.ts.map,js,js.map}",
+    "webpack:build": "webpack --mode=production",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint 'src/**/*.ts'",
     "lint:lit-analyzer": "lit-analyzer",
