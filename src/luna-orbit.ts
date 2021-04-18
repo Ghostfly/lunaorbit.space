@@ -1,5 +1,5 @@
 
-import "./locale-picker";import {
+import {
   html,
   customElement,
   internalProperty,
@@ -11,6 +11,8 @@ import "./locale-picker";import {
 } from 'lit-element';
 import {Validator} from './terra-min';
 import {Router, RouterLocation} from '@vaadin/router';
+
+import "./locale-picker";
 
 import './x-home';
 import './x-how-to';
@@ -143,12 +145,12 @@ export class LunaOrbit extends Localized(LitElement) {
         elem.innerText = link.value;
         menuHolder.appendChild(elem);
       }
+      menuHolder.appendChild(document.createElement('locale-picker'));
     }
   }
 
   render(): TemplateResult {
     return html`
-      <locale-picker></locale-picker>
       <slot name="header-banner"></slot>
       <slot name="nav"></slot>
       <slot name="content"></slot>

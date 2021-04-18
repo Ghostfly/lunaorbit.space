@@ -132,5 +132,8 @@
 's57adf424d57c8a0f': `Send`,
 'sd172ebbd02baf0fb': `Find us on`,
 's08b05407b5565ca4': `or`,
+'sf5b7c2218ded0045': `0% commissions until May 10th 2021`,
+'s8272d3d5e2925aba': `Staking`,
+'sf79a70a7ecf6cf42': `How to`,
     };
   
