@@ -1,3 +1,7 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 :root {
   --terra-blue: #0c3694;
   --terra-light: #516289;
@@ -26,9 +30,6 @@
 .content > .entering {
   animation: 0.3s fadeIn;
 }
-
-@tailwind base;
-@tailwind utilities;
 
 @keyframes fadeOut {
   from {
