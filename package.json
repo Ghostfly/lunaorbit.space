@@ -1,6 +1,7 @@
 {
   "name": "luna-orbit",
   "scripts": {
+    "clean": "rimraf luna-orbit.{d.ts,d.ts.map,js,js.map} terra-min.{d.ts,d.ts.map,js,js.map} x-contact.{d.ts,d.ts.map,js,js.map} x-home.{d.ts,d.ts.map,js,js.map} x-how-to.{d.ts,d.ts.map,js,js.map} x-tools.{d.ts,d.ts.map,js,js.map}",
     "webpack:start": "webpack serve --mode=development",
     "webpack:build": "webpack --mode=production",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
@@ -19,7 +20,6 @@
   "author": "Gh0stfly_",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@lit-labs/task": "*",
     "@lit/localize": "^0.9.0",
     "@lit/localize-tools": "^0.2.1",
     "@vaadin/router": "^1.7.4",
