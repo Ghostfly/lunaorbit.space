@@ -1,1 +1,0 @@
-{"version":3,"file":"banner-message.d.ts","sourceRoot":"","sources":["src/banner-message.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,UAAU,EAAQ,cAAc,EAA0B,MAAM,aAAa,CAAC;;AAItF,qBACa,aAAc,SAAQ,kBAAqB;IAE/C,OAAO,SAAM;IAEpB,gBAAgB,IAAI,IAAI;IAIxB,MAAM,IAAI,cAAc;CA0BzB;AAED,OAAO,CAAC,MAAM,CAAC;IACb,UAAU,qBAAqB;QAC7B,gBAAgB,EAAE,aAAa,CAAC;KACjC;CACF"}

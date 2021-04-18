@@ -36,6 +36,12 @@ fr.d.ts
 fr.d.ts.map
 
 
+banner-message.js
+banner-message.js.map
+banner-message.d.ts
+banner-message.d.ts.map
+
+
 localization.js
 localization.js.map
 localization.d.ts
