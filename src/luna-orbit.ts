@@ -18,8 +18,6 @@ import './x-contact';
 
 import config from './config';
 
-import {LOCALE_STATUS_EVENT} from '@lit/localize';
-
 /**
  * Luna-orbit
  *
@@ -95,22 +93,6 @@ export class LunaOrbit extends LitElement {
   }
 
   async firstUpdated(): Promise<void> {
-    // Display a spinner whenever a new locale is loading.
-    window.addEventListener(LOCALE_STATUS_EVENT, ({detail}) => {
-      if (detail.status === 'loading') {
-        console.log(`Loading new locale: ${detail.loadingLocale}`);
-        // spinner.removeAttribute('hidden');
-      } else if (detail.status === 'ready') {
-        console.log(`Loaded new locale: ${detail.readyLocale}`);
-        // spinner.setAttribute('hidden', '');
-      } else if (detail.status === 'error') {
-        console.error(
-          `Error loading locale ${detail.errorLocale}: ` + detail.errorMessage
-        );
-        // spinner.setAttribute('hidden', '');
-      }
-    });
-
     this._handleMobileMenu();
     await this._retrieveCommission();
   }

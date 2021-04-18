@@ -50,93 +50,6 @@
 <trans-unit id="s1915bd2be4e757ad">
   <source>Find us on the Luna Orbit chat on</source>
 </trans-unit>
-<trans-unit id="s0f5cbda53ab0b573">
-  <source>Airdrop timing and information</source>
-</trans-unit>
-<trans-unit id="s46df4b2d546f3067">
-  <source>I use this to follow upcoming airdrops you get for staking Luna in Terra Station.  As of April 9th 2021 there are 2 drops per week - ANC and MIR.</source>
-</trans-unit>
-<trans-unit id="s420631e1ce34c8fa">
-  <source>Vercel Airdrop Timer</source>
-</trans-unit>
-<trans-unit id="s0c0f4361a2eb76ed">
-  <source>Terra Analytics</source>
-</trans-unit>
-<trans-unit id="s5e9dc507e4fba96f">
-  <source>Staking / Unstaking Calendar</source>
-</trans-unit>
-<trans-unit id="s78af760bf3aa0d23">
-  <source>Shows the amount of Luna that has been delegated or undelegated on certain days.  When Luna gets undelegated and 21 days pass, it is possible that the Luna will get moved to an exchange and sold. Track</source>
-</trans-unit>
-<trans-unit id="scd40e9bdb7f30072">
-  <source>Exchange Wallets</source>
-</trans-unit>
-<trans-unit id="sa4d15873cde6a691">
-  <source>As Luna gets burned, the amount of Luna available on exchanges should slowly decrease.  Also good to watch these addresses during big undelegation events.</source>
-</trans-unit>
-<trans-unit id="s28106bfb3d9d03d7">
-  <source>Various useful metrics for Anchor and TerraSwap</source>
-</trans-unit>
-<trans-unit id="sb85d1541cfa12d5c">
-  <source>You can see Anchor earn APY history, tokens in the ANC - UST LP,  bLuna / Luna swap price history and pool size, etc.</source>
-</trans-unit>
-<trans-unit id="sa56522d944842d2c">
-  <source>UST Supply information</source>
-</trans-unit>
-<trans-unit id="se7974e3fee0ca5a0">
-  <source>This is the most important metric to watch, UST market cap and growth day over day.  Burn tracking shows you how much Luna has been burned, more is better.</source>
-</trans-unit>
-<trans-unit id="sa956e62593dd02d8">
-  <source>Mirror volume</source>
-</trans-unit>
-<trans-unit id="s3383ecf9c0006ebb">
-  <source>As the price of Mirror goes up, so does the yield for staking mAssets which in turn drives demand for UST and increases the value of the weekly MIR airdrop.</source>
-</trans-unit>
-<trans-unit id="sce94f12c12fa2d8f">
-  <source>Validator performance</source>
-</trans-unit>
-<trans-unit id="sc8c6e4d184303c3c">
-  <source>How is Luna Orbit doing?  You want to see good uptime, few missed Oracle votes, and low precommits missed.  Numbers are trailing and should be watched over time.</source>
-</trans-unit>
-<trans-unit id="se1fe3a61e8d02690">
-  <source>Terra Stake ID</source>
-</trans-unit>
-<trans-unit id="s605e1718af12083a">
-  <source>Luna Orbit - hubble.figment.io</source>
-</trans-unit>
-<trans-unit id="sfa3a1693161dda38">
-  <source>Blep.ai - LUNA-UST (UniSwap)</source>
-</trans-unit>
-<trans-unit id="sa96f3a6a684e87c8">
-  <source>Blep.ai - MIR-UST (UniSwap)</source>
-</trans-unit>
-<trans-unit id="s202cc9aafc815aae">
-  <source>Terra tools</source>
-</trans-unit>
-<trans-unit id="s557fc4060e690544">
-  <source>To understand why Luna could appreciate over time, you need to
-                understand a few things.&amp;nbsp; The first thing is to understand
-                the relationship between the market cap of UST and the price of
-                Luna.&amp;nbsp; The second piece of the puzzle is to understand all
-                of the different ways demand is being created for the adoption
-                and use of UST.&amp;nbsp; When you put those two pieces together,
-                you will understand why Luna could continue to appreciate in
-                value over time.&amp;nbsp; These are the tools that I personally use
-                to watch the ecosystem around Terra.&amp;nbsp; If you have any
-                questions, please come find me in the</source>
-</trans-unit>
-<trans-unit id="sd0a48cb7c6a059b2">
-  <source>Luna Orbit chat room on Telegram</source>
-</trans-unit>
-<trans-unit id="s895035c1fab2b964">
-  <source>Justin</source>
-</trans-unit>
-<trans-unit id="sc1e59c37f65f8a0b">
-  <source>We are here to help.</source>
-</trans-unit>
-<trans-unit id="s87bae2710b2492c3">
-  <source>Contact</source>
-</trans-unit>
 <trans-unit id="s6632bee996b65d13">
   <source>How to start staking on Terra ?</source>
 </trans-unit>
@@ -243,6 +156,93 @@
 </trans-unit>
 <trans-unit id="sc26501e3ade7da3c">
   <source>Tools</source>
+</trans-unit>
+<trans-unit id="s0f5cbda53ab0b573">
+  <source>Airdrop timing and information</source>
+</trans-unit>
+<trans-unit id="s46df4b2d546f3067">
+  <source>I use this to follow upcoming airdrops you get for staking Luna in Terra Station.  As of April 9th 2021 there are 2 drops per week - ANC and MIR.</source>
+</trans-unit>
+<trans-unit id="s420631e1ce34c8fa">
+  <source>Vercel Airdrop Timer</source>
+</trans-unit>
+<trans-unit id="s0c0f4361a2eb76ed">
+  <source>Terra Analytics</source>
+</trans-unit>
+<trans-unit id="s5e9dc507e4fba96f">
+  <source>Staking / Unstaking Calendar</source>
+</trans-unit>
+<trans-unit id="s78af760bf3aa0d23">
+  <source>Shows the amount of Luna that has been delegated or undelegated on certain days.  When Luna gets undelegated and 21 days pass, it is possible that the Luna will get moved to an exchange and sold. Track</source>
+</trans-unit>
+<trans-unit id="scd40e9bdb7f30072">
+  <source>Exchange Wallets</source>
+</trans-unit>
+<trans-unit id="sa4d15873cde6a691">
+  <source>As Luna gets burned, the amount of Luna available on exchanges should slowly decrease.  Also good to watch these addresses during big undelegation events.</source>
+</trans-unit>
+<trans-unit id="s28106bfb3d9d03d7">
+  <source>Various useful metrics for Anchor and TerraSwap</source>
+</trans-unit>
+<trans-unit id="sb85d1541cfa12d5c">
+  <source>You can see Anchor earn APY history, tokens in the ANC - UST LP,  bLuna / Luna swap price history and pool size, etc.</source>
+</trans-unit>
+<trans-unit id="sa56522d944842d2c">
+  <source>UST Supply information</source>
+</trans-unit>
+<trans-unit id="se7974e3fee0ca5a0">
+  <source>This is the most important metric to watch, UST market cap and growth day over day.  Burn tracking shows you how much Luna has been burned, more is better.</source>
+</trans-unit>
+<trans-unit id="sa956e62593dd02d8">
+  <source>Mirror volume</source>
+</trans-unit>
+<trans-unit id="s3383ecf9c0006ebb">
+  <source>As the price of Mirror goes up, so does the yield for staking mAssets which in turn drives demand for UST and increases the value of the weekly MIR airdrop.</source>
+</trans-unit>
+<trans-unit id="sce94f12c12fa2d8f">
+  <source>Validator performance</source>
+</trans-unit>
+<trans-unit id="sc8c6e4d184303c3c">
+  <source>How is Luna Orbit doing?  You want to see good uptime, few missed Oracle votes, and low precommits missed.  Numbers are trailing and should be watched over time.</source>
+</trans-unit>
+<trans-unit id="se1fe3a61e8d02690">
+  <source>Terra Stake ID</source>
+</trans-unit>
+<trans-unit id="s605e1718af12083a">
+  <source>Luna Orbit - hubble.figment.io</source>
+</trans-unit>
+<trans-unit id="sfa3a1693161dda38">
+  <source>Blep.ai - LUNA-UST (UniSwap)</source>
+</trans-unit>
+<trans-unit id="sa96f3a6a684e87c8">
+  <source>Blep.ai - MIR-UST (UniSwap)</source>
+</trans-unit>
+<trans-unit id="s202cc9aafc815aae">
+  <source>Terra tools</source>
+</trans-unit>
+<trans-unit id="s7dbad456eb3aabea">
+  <source>To understand why Luna could appreciate over time, you need to
+                understand a few things. The first thing is to understand
+                the relationship between the market cap of UST and the price of
+                Luna. The second piece of the puzzle is to understand all
+                of the different ways demand is being created for the adoption
+                and use of UST. When you put those two pieces together,
+                you will understand why Luna could continue to appreciate in
+                value over time. These are the tools that I personally use
+                to watch the ecosystem around Terra. If you have any
+                questions, please come find me in the</source>
+</trans-unit>
+<trans-unit id="sd0a48cb7c6a059b2">
+  <source>Luna Orbit chat room on Telegram</source>
+</trans-unit>
+<trans-unit id="s895035c1fab2b964">
+  <source>Justin</source>
+</trans-unit>
+<trans-unit id="sc1e59c37f65f8a0b">
+  <source>We are here to help.</source>
+</trans-unit>
+<trans-unit id="s87bae2710b2492c3">
+  <source>Contact</source>
 </trans-unit>
 <trans-unit id="sd15de0dcd2378a55">
   <source>Contact us</source>
