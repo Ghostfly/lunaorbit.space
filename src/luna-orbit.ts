@@ -9,7 +9,9 @@ import {
   TemplateResult,
 } from 'lit-element';
 import {Validator} from './terra-min';
-import {Router, RouterLocation} from '@vaadin/router';
+import { Router, RouterLocation } from '@vaadin/router';
+
+import './styles.css';
 
 import './locale-picker';
 

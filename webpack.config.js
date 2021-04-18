@@ -20,6 +20,10 @@ const webcomponentsjs = join(nodeModules, '@webcomponents/webcomponentsjs');
 
 const assets = [
   {
+    from: resolve('./src/styles.css'),
+    to: join(OUTPUT_PATH, 'styles.css')
+  },
+  {
     from: resolve('./src/assets'),
     to: join(OUTPUT_PATH, 'assets')
   }
@@ -64,9 +68,10 @@ const commonConfig = merge([
     module: {
       rules: [
         {
-          test: /\.css$/,
-          use: ['css-loader'],
-        },
+          test: /\.css$/i,
+          include: resolve(__dirname, 'src'),
+          use: ['style-loader', 'css-loader', 'postcss-loader'],
+        },  
         {
           test: /\.(jpe?g|png|gif|svg)$/i,
           use: [
