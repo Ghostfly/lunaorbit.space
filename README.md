@@ -20,6 +20,22 @@ npm run webpack:start
 
 You can view the website at http://localhost:3000/.
 
+## Localization
+
+### Extract strings
+```bash
+npm run localize:extract
+```
+
+### Translate
+Go to https://xliff.brightec.co.uk/
+Upload the xlf file
+
+### Generate strings
+```bash
+npm run localize:build
+```
+
 ## Deploy
 
 ```bash
