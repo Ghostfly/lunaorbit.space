@@ -99,8 +99,51 @@ export class LunaOrbit extends Localized(LitElement) {
   async firstUpdated(): Promise<void> {
     await setLocaleFromUrl();
 
+    const bannerMessage = msg('0% commissions until May 10th 2021');
+    const bannerNode = document.querySelector(
+      '#banner-message'
+    ) as HTMLElement;
+    bannerNode.innerText = bannerMessage;
+
+    this._setupMenus();
     this._handleMobileMenu();
     await this._retrieveCommission();
+  }
+
+  private _setupMenus() {
+    const menuHolders = document.querySelectorAll('.menu-holder');
+    const links = [
+      {
+        href: 'home',
+        class: 'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
+        value: msg('Staking')
+      },
+      {
+        href: 'how-to',
+        class: 'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
+        value: msg('How to')
+      },
+      {
+        href: 'tools',
+        class: 'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
+        value: msg('Tools')
+      },
+      {
+        href: 'contact',
+        class: 'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
+        value: msg('Contact')
+      },
+    ]
+
+    for (const menuHolder of menuHolders) {
+      for (const link of links) {
+        const elem = document.createElement('a');
+        elem.href = link.href;
+        elem.className = link.class;
+        elem.innerText = link.value;
+        menuHolder.appendChild(elem);
+      }
+    }
   }
 
   render(): TemplateResult {
@@ -144,12 +187,6 @@ export class LunaOrbit extends Localized(LitElement) {
       ) as HTMLElement;
       commissionNode.innerText = this._commission + '%';
     }
-
-    const bannerMessage = msg('0% commissions until May 10th 2021');
-    const bannerNode = document.querySelector(
-      '#banner-message'
-    ) as HTMLElement;
-    bannerNode.innerText = bannerMessage;
   }
 
   private _routerLocationChanged(

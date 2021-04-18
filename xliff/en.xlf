@@ -262,6 +262,15 @@
 <trans-unit id="s08b05407b5565ca4">
   <source>or</source>
 </trans-unit>
+<trans-unit id="sf5b7c2218ded0045">
+  <source>0% commissions until May 10th 2021</source>
+</trans-unit>
+<trans-unit id="s8272d3d5e2925aba">
+  <source>Staking</source>
+</trans-unit>
+<trans-unit id="sf79a70a7ecf6cf42">
+  <source>How to</source>
+</trans-unit>
 </body>
 </file>
 </xliff>
