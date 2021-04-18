@@ -1,4 +1,4 @@
-![LunaOrbit logo](/src/assets/logo.svg?raw=true "LunaOrbit logo" | width=100)
+<img src="./src/assets/logo.svg?raw=true" width="250" alt="LunaOrbit Logo" />
 
 # LunaOrbit website
 
