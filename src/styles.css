@@ -21,6 +21,14 @@
   color: white;
 }
 
+footer .telegram svg {
+  fill: white;
+  fill-rule:evenodd;
+  clip-rule:evenodd;
+  stroke-linejoin:round;
+  stroke-miterlimit:1.41421;
+}
+
 .mirror-bg {
   background-color: var(--mirror-color);
 }
