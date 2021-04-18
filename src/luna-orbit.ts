@@ -16,6 +16,8 @@ import './locale-picker';
 import './airdrop-dialog';
 import './airdrop-toast';
 
+import './parts/x-admin';
+
 import './x-parts';
 
 import config from './config';
@@ -67,6 +69,7 @@ export class LunaOrbit extends Localized(LitElement) {
       { path: '/tools', component: 'x-tools'},
       { path: '/contact', component: 'x-contact' },
       { path: '/airdrops', component: 'airdrop-dialog' },
+      { path: '/cockpit', component: 'x-admin' },
     ]);
 
     window.addEventListener(

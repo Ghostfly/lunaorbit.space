@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { merge }= require('webpack-merge');
+
+const { ProvidePlugin } = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-// const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 
 const { resolve, join } = require('path');
 
@@ -66,14 +68,6 @@ const commonConfig = merge([
     resolve: {
       extensions: [ '.ts', '.js', '.css' ]
     },
-    /*optimization: {
-      minimize: true,
-      minimizer: [
-        new CssMinimizerPlugin({
-          parallel: true,
-        }),
-      ],
-    },*/
     module: {
       rules: [
         {
@@ -126,9 +120,14 @@ const developmentConfig = merge([
   {
     devtool: 'eval-cheap-source-map',
     plugins: [
+      new NodePolyfillPlugin(),
       new CopyWebpackPlugin({patterns: polyfills}),
       new HtmlWebpackPlugin({
         template: INDEX_TEMPLATE
+      }),
+      new ProvidePlugin({
+        Buffer: ['buffer', 'Buffer'],
+        process: 'process/browser'
       })
     ],
 
@@ -148,7 +147,10 @@ const productionConfig = merge([
   {
     devtool: 'nosources-source-map',
     plugins: [
-      new CleanWebpackPlugin(),
+      new NodePolyfillPlugin(),
+      new CleanWebpackPlugin({
+        verbose: true
+      }),
       new CopyWebpackPlugin({patterns: [...polyfills, ...assets]}),
       new HtmlWebpackPlugin({
         pathname: `${subDirectory ? '/'+subDirectory : ''}`,
@@ -159,6 +161,10 @@ const productionConfig = merge([
           minifyCSS: true,
           minifyJS: true
         }
+      }),
+      new ProvidePlugin({
+        Buffer: ['buffer', 'Buffer'],
+        process: 'process/browser'
       })
     ]
   }
