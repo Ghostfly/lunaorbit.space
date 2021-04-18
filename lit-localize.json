@@ -1,10 +1,11 @@
 {
   "$schema": "https://raw.githubusercontent.com/Polymer/lit-html/main/packages/localize-tools/config.schema.json",
   "sourceLocale": "en",
-  "targetLocales": ["en-US"],
+  "targetLocales": ["en", "fr"],
   "tsConfig": "tsconfig.json",
   "output": {
-    "mode": "transform",
+    "mode": "runtime",
+    "outputDir": "src/locales",
     "localeCodesModule": "src/locale-codes.ts"
   },
   "interchange": {

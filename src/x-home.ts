@@ -1,12 +1,13 @@
 import {html, customElement, LitElement, TemplateResult} from 'lit-element';
 import config from './config';
 import {msg} from '@lit/localize';
+import {Localized} from '@lit/localize/localized-element.js';
 
 /**
  * Home component
  */
 @customElement('x-home')
-export class XHome extends LitElement {
+export class XHome extends Localized(LitElement) {
   createRenderRoot(): this {
     return this;
   }

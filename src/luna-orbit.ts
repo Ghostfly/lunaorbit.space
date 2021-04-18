@@ -1,4 +1,5 @@
-import {
+
+import "./locale-picker";import {
   html,
   customElement,
   internalProperty,
@@ -17,7 +18,7 @@ import './x-tools';
 import './x-contact';
 
 import config from './config';
-
+import { setLocaleFromUrl } from './localization';
 /**
  * Luna-orbit
  *
@@ -52,6 +53,7 @@ export class LunaOrbit extends LitElement {
 
   constructor() {
     super();
+
     this.mobileMenuToggle = document.querySelector('#mobile-menu-toggle');
     this.mobileMenu = document.querySelector('#mobile-menu');
 
@@ -93,12 +95,15 @@ export class LunaOrbit extends LitElement {
   }
 
   async firstUpdated(): Promise<void> {
+    await setLocaleFromUrl();
+
     this._handleMobileMenu();
     await this._retrieveCommission();
   }
 
   render(): TemplateResult {
     return html`
+      <locale-picker></locale-picker>
       <slot name="header-banner"></slot>
       <slot name="nav"></slot>
       <slot name="content"></slot>

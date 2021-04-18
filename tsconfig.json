@@ -24,6 +24,6 @@
       }
     ]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/locales/en-US.js", "src/locales/fr-FR.js"],
   "exclude": []
 }

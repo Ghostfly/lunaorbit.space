@@ -1,66 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-<file target-language="en-US" source-language="en" original="lit-localize-inputs" datatype="plaintext">
+<file target-language="fr-FR" source-language="en" original="lit-localize-inputs" datatype="plaintext">
 <body>
 <trans-unit id="s0a8ca47bbbdc78bb">
-  <source>Stake with us today !</source>
+  <source>Stakez avec nous aujourd'hui</source>
 </trans-unit>
 <trans-unit id="s93d85c9969bc1e8e">
-  <source>Get started</source>
+  <source>Commencer</source>
 </trans-unit>
 <trans-unit id="s342e3f24c1234918">
-  <source>Safe</source>
+  <source>Sûr</source>
 </trans-unit>
 <trans-unit id="sd88dd390f024204f">
   <source>Multi-cloud hosting across 12 regions on AWS, GCP, and Azure with 24/7 monitoring</source>
 </trans-unit>
 <trans-unit id="s6f65e19c3b6c30ae">
-  <source>Distributed</source>
+  <source>Distribué</source>
 </trans-unit>
 <trans-unit id="sea5fe44851d08155">
   <source>Geographically distributed across four continents to ensure validator stays online.</source>
 </trans-unit>
 <trans-unit id="s3ceed4d952789f32">
-  <source>Smart</source>
+  <source>Intelligent</source>
 </trans-unit>
 <trans-unit id="s2012a58d9ed2b0dc">
   <source>Oracle Management provides maximum accuracy to maximize delegation rewards</source>
 </trans-unit>
 <trans-unit id="s198f498517ea3a13">
-  <source>Fair</source>
+  <source>Juste</source>
 </trans-unit>
 <trans-unit id="s57c6c9fa579d63f8">
-  <source>0% commissions until</source>
+  <source>0% de commissions avant le</source>
 </trans-unit>
 <trans-unit id="s7e2477ab41df485a">
-  <source>May 10th 2021</source>
+  <source>10 Mai 2021</source>
 </trans-unit>
 <trans-unit id="sa24a6e713286b437">
-  <source>, then 2%.</source>
+  <source>, puis 2%.</source>
 </trans-unit>
 <trans-unit id="s1ec1b6a8da184889">
-  <source>Aware</source>
+  <source>Communicant</source>
 </trans-unit>
 <trans-unit id="s157787c7bf8aa808">
-  <source>Changes in the commission rate will be announced 30 days in advance.</source>
+  <source>Tous changements sur le ratio de commission seront annoncés 30 jours à l'avance.</source>
 </trans-unit>
 <trans-unit id="sa55a23781c05de90">
-  <source>Reachable</source>
+  <source>Atteignable</source>
 </trans-unit>
 <trans-unit id="s1915bd2be4e757ad">
-  <source>Find us on the Luna Orbit chat on</source>
+  <source>Retrouvez-nous sur le Luna Orbit chat sur</source>
 </trans-unit>
 <trans-unit id="s6632bee996b65d13">
-  <source>How to start staking on Terra ?</source>
+  <source>Comment staker sur Terra (Luna) ?</source>
 </trans-unit>
 <trans-unit id="sa07f6db2301a6ccb">
-  <source>Download Terra Station</source>
+  <source>Télécharger Terra Station</source>
 </trans-unit>
 <trans-unit id="s28aeca54f10f2b0d">
-  <source>Choose the validator</source>
+  <source>Choisir un validateur</source>
 </trans-unit>
 <trans-unit id="sc22e8285e4ff2ba8">
-  <source>Delegate tokens</source>
+  <source>Déléguer ses tokens</source>
 </trans-unit>
 <trans-unit id="sb9a367840a904f1b">
   <source>Voting power</source>
@@ -233,34 +233,34 @@
                 questions, please come find me in the</source>
 </trans-unit>
 <trans-unit id="sd0a48cb7c6a059b2">
-  <source>Luna Orbit chat room on Telegram</source>
+  <source>Chat Luna Orbit sur Telegram</source>
 </trans-unit>
 <trans-unit id="s895035c1fab2b964">
   <source>Justin</source>
 </trans-unit>
 <trans-unit id="sc1e59c37f65f8a0b">
-  <source>We are here to help.</source>
+  <source>Nous sommes là pour aider.</source>
 </trans-unit>
 <trans-unit id="s87bae2710b2492c3">
   <source>Contact</source>
 </trans-unit>
 <trans-unit id="sd15de0dcd2378a55">
-  <source>Contact us</source>
+  <source>Contactez-nous</source>
 </trans-unit>
 <trans-unit id="sd1f44f1a8bc20e67">
-  <source>Email</source>
+  <source>E-mail</source>
 </trans-unit>
 <trans-unit id="saf84ec86139d349e">
-  <source>Comment</source>
+  <source>Message</source>
 </trans-unit>
 <trans-unit id="s57adf424d57c8a0f">
-  <source>Send</source>
+  <source>Envoyer</source>
 </trans-unit>
 <trans-unit id="sd172ebbd02baf0fb">
-  <source>Find us on</source>
+  <source>Retrouvez-nous sur</source>
 </trans-unit>
 <trans-unit id="s08b05407b5565ca4">
-  <source>or</source>
+  <source>ou</source>
 </trans-unit>
 </body>
 </file>

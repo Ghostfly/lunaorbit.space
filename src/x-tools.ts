@@ -7,6 +7,7 @@ import {
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
+import {Localized} from '@lit/localize/localized-element.js';
 
 enum Tools {
   Airdrop = 'airdrop',
@@ -33,7 +34,7 @@ interface ToolSection {
  * Tools component
  */
 @customElement('x-tools')
-export class XTools extends LitElement {
+export class XTools extends Localized(LitElement) {
   createRenderRoot(): this {
     return this;
   }

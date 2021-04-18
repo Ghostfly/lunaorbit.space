@@ -2,12 +2,13 @@ import {html, customElement, LitElement, query, TemplateResult} from 'lit-elemen
 import config from './config';
 
 import {msg} from '@lit/localize';
+import {Localized} from '@lit/localize/localized-element.js';
 
 /**
  * Contact component
  */
 @customElement('x-contact')
-export class XContact extends LitElement {
+export class XContact extends Localized(LitElement) {
   @query('#contact-form')
   public contactForm!: HTMLFormElement;
 

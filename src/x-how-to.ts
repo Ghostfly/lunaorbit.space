@@ -1,11 +1,12 @@
 import {html, customElement, LitElement, internalProperty, TemplateResult} from 'lit-element';
 import {msg} from '@lit/localize';
+import {Localized} from '@lit/localize/localized-element.js';
 
 /**
  * How to choose a validator component
  */
 @customElement('x-how-to')
-export class XHowTo extends LitElement {
+export class XHowTo extends Localized(LitElement) {
   @internalProperty()
   private step = '0';
 
