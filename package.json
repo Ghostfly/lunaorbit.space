@@ -3,7 +3,7 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "start": "web-dev-server --open --root-dir dist/",
+    "start": "web-dev-server --node-resolve --open --root-dir dist/ --app-index index.html",
     "start:watch": "web-dev-server --open dev/ --node-resolve --watch",
     "bundle:watch": "npx rollup --config --watch --environment BUILD:development ",
     "clean": "rimraf luna-orbit.{d.ts,d.ts.map,js,js.map} test/luna-orbit.{d.ts,d.ts.map,js,js.map} test/luna-orbit.{d.ts,d.ts.map,js,js.map}",
@@ -12,17 +12,17 @@
     "lint:lit-analyzer": "lit-analyzer",
     "localize": "npx lit-localize extract",
     "format": "prettier src/* --write",
-    "analyze": "wca analyze \"src/**/*.ts\" --outFile custom-elements.json",
     "test": "karma start karma.conf.cjs",
     "test:watch": "karma start karma.conf.cjs --auto-watch=true --single-run=false",
     "test:update-snapshots": "karma start karma.conf.cjs --update-snapshots",
     "test:prune-snapshots": "karma start karma.conf.cjs --prune-snapshots",
-    "checksize": "rollup -c ; cat my-element.bundled.js | gzip -9 | wc -c ; rm my-element.bundled.js"
   },
   "keywords": [
-    "web-components",
-    "lit-element",
-    "typescript"
+    "lunaorbit",
+    "terra",
+    "validator",
+    "blockchain",
+    "website"
   ],
   "author": "Gh0stfly_",
   "license": "BSD-3-Clause",
@@ -64,7 +64,6 @@
     "rollup-plugin-node-externals": "^2.2.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^7.0.2",
-    "typescript": "^3.8.3",
-    "web-component-analyzer": "^1.0.3"
+    "typescript": "^4.2.4"
   }
 }
