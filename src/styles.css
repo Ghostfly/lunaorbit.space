@@ -13,6 +13,14 @@
   background-color: var(--anchor-color);
 }
 
+.strength:hover {
+  background-color: var(--terra-blue);
+}
+
+.strength:hover h2, .strength:hover a {
+  color: white;
+}
+
 .mirror-bg {
   background-color: var(--mirror-color);
 }

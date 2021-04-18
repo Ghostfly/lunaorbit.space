@@ -13,6 +13,44 @@ export class XHome extends Localized(LitElement) {
   }
 
   render(): TemplateResult {
+    const strengths = [
+      {
+        title: msg('Safe'),
+        description: msg('Find us on the Luna Orbit chat on'), 
+        link: null,
+      },
+      {
+        title: msg('Distributed'),
+        description: msg('Multi-cloud hosting across 12 regions on AWS, GCP, and Azure with 24/7 monitoring'), 
+        link: null,
+      },
+      {
+        title: msg('Smart'),
+        description: msg('Geographically distributed across four continents to ensure validator stays online.'), 
+        link: null,
+      },
+      {
+        title: msg('Fair'),
+        description: msg('0% commissions until') + ' ' + msg('May 10th 2021') + ' ' + msg(', then 2%.'), 
+        link: null,
+      },
+      {
+        title: msg('Aware'),
+        description: msg('Changes in the commission rate will be announced 30 days in advance.'), 
+        link: null,
+      },
+      {
+        title: msg('Reachable'),
+        description: msg('Find us on the Luna Orbit chat on'), 
+        link: {
+          href: `http://t.me/${config.telegram}`,
+          name: msg('Telegram')
+        }
+      },
+
+      
+    ]
+
     return html`
       <section
         class="container mx-auto px-2 py-4 text-gray-700 body-font border-t border-gray-200 relative text-gray-700 body-font border-t border-gray-200 relative"
@@ -40,83 +78,38 @@ export class XHome extends Localized(LitElement) {
         </div>
         <div class="container px-5 py-8 mx-auto">
           <div class="flex flex-wrap -m-4">
-            <div class="sm:w-full xl:w-1/3 md:w-1/2 p-4">
-              <div class="border border-gray-300 p-6 rounded-lg">
-                <h2 class="text-lg text-gray-900 font-medium title-font mb-2">
-                  ${msg('Safe')}
-                </h2>
-                <p class="leading-relaxed text-base">
-                  ${msg(
-                    'Multi-cloud hosting across 12 regions on AWS, GCP, and Azure with 24/7 monitoring'
-                  )}
-                </p>
-              </div>
-            </div>
-            <div class="xl:w-1/3 md:w-1/2 p-4">
-              <div class="border border-gray-300 p-6 rounded-lg">
-                <h2 class="text-lg text-gray-900 font-medium title-font mb-2">
-                  ${msg('Distributed')}
-                </h2>
-                <p class="leading-relaxed text-base">
-                  ${msg(
-                    'Geographically distributed across four continents to ensure validator stays online.'
-                  )}
-                </p>
-              </div>
-            </div>
-            <div class="xl:w-1/3 md:w-1/2 p-4">
-              <div class="border border-gray-300 p-6 rounded-lg">
-                <h2 class="text-lg text-gray-900 font-medium title-font mb-2">
-                  ${msg('Smart')}
-                </h2>
-                <p class="leading-relaxed text-base">
-                  ${msg(
-                    'Oracle Management provides maximum accuracy to maximize delegation rewards'
-                  )}
-                </p>
-              </div>
-            </div>
-            <div class="xl:w-1/3 md:w-1/2 p-4">
-              <div class="border border-gray-300 p-6 rounded-lg">
-                <h2 class="text-lg text-gray-900 font-medium title-font mb-2">
-                  ${msg('Fair')}
-                </h2>
-                <p class="leading-relaxed text-base">
-                  ${msg('0% commissions until')}
-                  <b>${msg('May 10th 2021')}</b>${msg(', then 2%.')}
-                </p>
-              </div>
-            </div>
-            <div class="xl:w-1/3 md:w-1/2 p-4">
-              <div class="border border-gray-300 p-6 rounded-lg">
-                <h2 class="text-lg text-gray-900 font-medium title-font mb-2">
-                  ${msg('Aware')}
-                </h2>
-                <p class="leading-relaxed text-base">
-                  ${msg(
-                    'Changes in the commission rate will be announced 30 days in advance.'
-                  )}
-                </p>
-              </div>
-            </div>
-            <div class="xl:w-1/3 md:w-1/2 p-4">
-              <div class="border border-gray-300 p-6 rounded-lg">
-                <h2 class="text-lg text-gray-900 font-medium title-font mb-2">
-                  ${msg('Reachable')}
-                </h2>
-                <p class="leading-relaxed text-base">
-                  ${msg('Find us on the Luna Orbit chat on')}
-                  <a
-                    class="text-gray-500 hover:text-gray-700"
-                    href="http://t.me/${config.telegram}"
-                    >${msg('Telegram')}</a
-                  >
-                </p>
-              </div>
-            </div>
+            ${strengths.map(strength => {
+              return this._strengthBox(strength.title, strength.description, strength.link)
+            })}
           </div>
         </div>
       </section>
+    `;
+  }
+
+  private _strengthBox(title: string, message: string, link: {
+    href: string;
+    name: string;
+  } | null): TemplateResult {
+    return html`
+    <div class="xl:w-1/3 md:w-1/2 p-4">
+        <div class="border border-gray-300 p-6 rounded-lg strength hover:text-white">
+          <h2 class="text-lg text-gray-900 font-medium title-font mb-2">
+            ${title}
+          </h2>
+          <p class="leading-relaxed text-base">
+            ${message}
+            ${link ? html`
+            <a
+              class="text-gray-500 hover:text-gray-700"
+              href="${link.href}"
+              >${link.name}</a
+            >
+            ` : html``}
+
+          </p>
+        </div>
+      </div>
     `;
   }
 }
