@@ -1,10 +1,10 @@
 {
   "name": "luna-orbit",
   "scripts": {
-    "clean": "rimraf luna-orbit.{d.ts,d.ts.map,js,js.map} terra-min.{d.ts,d.ts.map,js,js.map} x-contact.{d.ts,d.ts.map,js,js.map} x-home.{d.ts,d.ts.map,js,js.map} x-how-to.{d.ts,d.ts.map,js,js.map} x-tools.{d.ts,d.ts.map,js,js.map} x-equation.{d.ts,d.ts.map,js,js.map} banner-message.{d.ts,d.ts.map,js,js.map}",
+    "clean": "rimraf *{d.ts,d.ts.map,js,js.map}",
     "webpack:start": "webpack serve --mode=development",
     "webpack:build": "webpack --mode=production",
-    "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
+    "lint:lit": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint 'src/**/*.ts'",
     "lint:styles": "npx stylelint \"src/*.css\"",
     "lint:lit-analyzer": "lit-analyzer",
