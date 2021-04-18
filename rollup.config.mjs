@@ -3,6 +3,8 @@ import {terser} from 'rollup-plugin-terser';
 import resolve from 'rollup-plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import typescript from '@rollup/plugin-typescript';
+import externals from 'rollup-plugin-node-externals'
+
 import process from 'process';
 
 // import {localeTransformers} from '@lit/localize-tools/lib/rollup.js';
@@ -65,6 +67,16 @@ export default {
           regex: /^__/,
         },
       },
+    }),
+    externals({
+      packagePath: 'package.json',
+      builtins: true,
+      true: false,
+      peerDeps: true,
+      optDeps: true,
+      devDeps: true,
+      exclude: [],
+      include: ['lit-element'],
     }),
     filesize({
       showBrotliSize: true,
