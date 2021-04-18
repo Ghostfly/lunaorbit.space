@@ -13,11 +13,7 @@ import {Router, RouterLocation} from '@vaadin/router';
 
 import './locale-picker';
 
-import './x-home';
-import './x-how-to';
-import './x-tools';
-import './x-contact';
-import './x-equation';
+import './x-parts';
 
 import config from './config';
 import {setLocaleFromUrl} from './localization';
