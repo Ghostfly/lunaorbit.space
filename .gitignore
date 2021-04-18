@@ -3,6 +3,8 @@
 /test/
 /dist/
 
+/locales/
+
 # top level source
 luna-orbit.js
 luna-orbit.js.map
