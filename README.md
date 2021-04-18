@@ -36,14 +36,20 @@ Upload the xlf file
 npm run localize:build
 ```
 
-## Deploy
-
-```bash
-npm run webpack:build
-```
-
 ## Lint
 
 ```bash
 npm run lint
+```
+
+## Prettify
+
+```bash
+npm run format
+```
+
+## Deploy
+
+```bash
+npm run webpack:build
 ```
