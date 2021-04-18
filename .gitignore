@@ -36,3 +36,5 @@ config.d.ts.map
 
 en
 en-US
+
+.DS_Store
