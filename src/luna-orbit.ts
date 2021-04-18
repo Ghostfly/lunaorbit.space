@@ -58,11 +58,12 @@ export class LunaOrbit extends Localized(LitElement) {
         path: '',
         component: 'x-home',
       },
-      {path: '/', component: 'x-home'},
-      {path: '/home', component: 'x-home'},
-      {path: '/how-to', component: 'x-how-to'},
-      {path: '/tools', component: 'x-tools'},
-      {path: '/contact', component: 'x-contact'},
+      { path: '/', component: 'x-home' },
+      { path: '/home', component: 'x-home' },
+      { path: '/how-to', component: 'x-how-to' },
+      { path: '/tools', component: 'x-tools'},
+      { path: '/contact', component: 'x-contact' },
+      { path: '/airdrops', component: 'airdrop-dialog' },
     ]);
 
     window.addEventListener(
@@ -145,6 +146,12 @@ export class LunaOrbit extends Localized(LitElement) {
         class:
           'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
         value: msg('Contact'),
+      },
+      {
+        href: 'airdrops',
+        class:
+          'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
+        value: msg('Airdrops'),
       },
     ];
 
