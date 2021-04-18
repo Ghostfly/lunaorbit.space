@@ -1,4 +1,4 @@
-![Alt text](/src/assets/logo.svg?raw=true "LunaOrbit logo")
+![LunaOrbit logo](/src/assets/logo.svg?raw=true "LunaOrbit logo" | width=100)
 
 # LunaOrbit website
 
