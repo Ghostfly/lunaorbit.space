@@ -47,7 +47,7 @@ export class XContact extends LitElement {
     return html`
     <section class="text-gray-600 body-font relative">
       <div class="absolute inset-0 bg-gray-300">
-        <img class="w-full h-full" src="moon.jpeg" alt="lunaorbit" />
+        <img class="w-full h-full object-cover" src="assets/moon.jpeg" alt="lunaorbit" />
       </div>
       <div class="container px-5 py-24 mx-auto flex">
         <div class="lg:w-1/3 md:w-1/2 bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative z-10 shadow-md">

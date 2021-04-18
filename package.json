@@ -1,8 +1,5 @@
 {
   "name": "luna-orbit",
-  "main": "luna-orbit.js",
-  "module": "luna-orbit.js",
-  "type": "module",
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
@@ -32,7 +29,8 @@
     "@lit/localize-tools": "^0.2.1",
     "@rollup/plugin-typescript": "^8.2.1",
     "@vaadin/router": "^1.7.4",
-    "lit-element": "^2.3.1"
+    "lit-element": "^2.3.1",
+    "rollup-plugin-minify-html-literals": "^1.2.6"
   },
   "devDependencies": {
     "@open-wc/testing": "^2.5.10",
@@ -55,6 +53,8 @@
     "prettier": "^2.0.4",
     "rimraf": "^3.0.2",
     "rollup": "^2.45.2",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-filesize": "^9.1.1",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^7.0.2",

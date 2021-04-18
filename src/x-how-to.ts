@@ -75,7 +75,7 @@ export class XHowTo extends LitElement {
           </li>
         </ul>
         <div class="p-4" id="tabs">
-          <img .src=${`${this.step}.png`} alt="download terra station" />
+          <img src=${`/assets/${this.step}.png`} alt="download terra station" />
         </div>
 
         <div

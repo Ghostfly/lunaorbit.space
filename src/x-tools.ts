@@ -224,14 +224,14 @@ export class XTools extends LitElement {
               </svg>
               <p class="leading-relaxed text-lg">
                 ${msg(`To understand why Luna could appreciate over time, you need to
-                understand a few things.&nbsp; The first thing is to understand
+                understand a few things. The first thing is to understand
                 the relationship between the market cap of UST and the price of
-                Luna.&nbsp; The second piece of the puzzle is to understand all
+                Luna. The second piece of the puzzle is to understand all
                 of the different ways demand is being created for the adoption
-                and use of UST.&nbsp; When you put those two pieces together,
+                and use of UST. When you put those two pieces together,
                 you will understand why Luna could continue to appreciate in
-                value over time.&nbsp; These are the tools that I personally use
-                to watch the ecosystem around Terra.&nbsp; If you have any
+                value over time. These are the tools that I personally use
+                to watch the ecosystem around Terra. If you have any
                 questions, please come find me in the`)}
                 <a
                   class="text-gray-500 hover:text-gray-700"
