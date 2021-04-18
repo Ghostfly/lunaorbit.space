@@ -150,7 +150,7 @@ export class AirdropDialog extends Localized(LitElement) {
                     ${msg('Airdrops')}
                   </h3>
                   
-                  <div class="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end m-10">
+                  <div class="flex lg:w-full w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-2 sm:px-0 items-end m-10">
                     <div class="relative flex-grow w-full">
                       <label for="terra-address" class="leading-7 text-sm text-gray-600">${msg(
                         'Terra address'
