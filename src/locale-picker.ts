@@ -32,6 +32,8 @@ export class LocalePicker extends Localized(LitElement) {
     const newLocale = (event.target as HTMLSelectElement).value;
 
     await setLocale(newLocale);
+
+    document.querySelector('luna-orbit')?.refreshMenus();
     console.warn('changed locale', newLocale);
   }
 }

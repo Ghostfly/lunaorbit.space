@@ -338,12 +338,15 @@ Lorsque vous assemblez ces deux pièces, vous comprenez pourquoi Luna peut conti
 </trans-unit>
 <trans-unit id="sf5b7c2218ded0045">
   <source>0% commissions until May 10th 2021</source>
+  <target>0% de commission jusqu'au 10 Mai 2021</target>
 </trans-unit>
 <trans-unit id="s8272d3d5e2925aba">
   <source>Staking</source>
+  <target>Staking</target>
 </trans-unit>
 <trans-unit id="sf79a70a7ecf6cf42">
   <source>How to</source>
+  <target>Comment</target>
 </trans-unit>
 </body>
 </file>

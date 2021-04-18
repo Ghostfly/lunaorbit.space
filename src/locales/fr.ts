@@ -44,6 +44,7 @@ La première chose est de comprendre la relation entre la capitalisation boursi�
 La deuxième pièce du puzzle est de comprendre les différentes façons dont la demande est créée pour l'adoption et l'utilisation de l'UST. 
 Lorsque vous assemblez ces deux pièces, vous comprenez pourquoi Luna peut continuer à s'apprécier en valeur au fil du temps. Ce sont les outils que j'utilise personnellement pour observer l'écosystème autour de Terra. Si vous avez des questions, venez me trouver dans le`,
 's7e2477ab41df485a': `10 Mai 2021`,
+'s8272d3d5e2925aba': `Staking`,
 's87bae2710b2492c3': `Contact`,
 's895035c1fab2b964': `Justin`,
 's93d85c9969bc1e8e': `Commencer`,
@@ -81,9 +82,8 @@ Si l'un des nœuds a trop de pouvoir de vote, ils ont trop d'influence sur le vo
 'sf05fce28d5ea7456': `C'est actuellement le seul moyen pour un validateur de gagner de l'argent et d'obtenir des récompenses. 
 Par exemple, à un taux de commission de 5% et une récompense de 1 Luna, un délégant recevra 0,95 Luna et le validateur recevra 0,05 Luna. Luna Orbit utilise un hébergement de qualité entreprise qui devrait assurer un maximum fiabilité et performances, mais cela a un coût. Les délégants doivent décider si la fiabilité et la performance sont importantes pour eux ou si les validateurs à moindre coût valent le risque.`,
 'sf0f18f40d187045d': `C'est peut-être le plus important de la liste, vous voulez le quantité maximale de disponibilité. Moins peut conduire à des peines : «slashing» => «jailing». Une petite pénalité est de 0,01% tandis que l'emprisonnement couperait les récompenses jusqu'à ce que vous soyez re-délégué ou que le nœud arrive à résoudre les problèmes. Vous souhaitez choisir un nœud qui est fiable si vous voulez une bonne disponibilité.`,
+'sf5b7c2218ded0045': `0% de commission jusqu'au 10 Mai 2021`,
+'sf79a70a7ecf6cf42': `Comment`,
 'sfa3a1693161dda38': `Blep.ai - LUNA-UST (UniSwap)`,
-'sf5b7c2218ded0045': `0% commissions until May 10th 2021`,
-'s8272d3d5e2925aba': `Staking`,
-'sf79a70a7ecf6cf42': `How to`,
     };
   

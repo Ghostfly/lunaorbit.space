@@ -112,8 +112,18 @@ export class LunaOrbit extends Localized(LitElement) {
     await this._retrieveCommission();
   }
 
+  public refreshMenus(): void {
+    const menuHolders = document.querySelectorAll('.menu-holder');
+    for (const menuHolder of menuHolders) {
+      menuHolder.innerHTML = '';
+    }
+
+    this._setupMenus();
+  }
+
   private _setupMenus() {
     const menuHolders = document.querySelectorAll('.menu-holder');
+
     const links = [
       {
         href: 'home',
