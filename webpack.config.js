@@ -3,7 +3,7 @@ const { merge }= require('webpack-merge');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+// const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const { resolve, join } = require('path');
 
@@ -66,14 +66,14 @@ const commonConfig = merge([
     resolve: {
       extensions: [ '.ts', '.js', '.css' ]
     },
-    optimization: {
+    /*optimization: {
       minimize: true,
       minimizer: [
         new CssMinimizerPlugin({
           parallel: true,
         }),
       ],
-    },
+    },*/
     module: {
       rules: [
         {
