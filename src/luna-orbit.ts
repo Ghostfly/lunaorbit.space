@@ -13,6 +13,7 @@ import { Router, RouterLocation } from '@vaadin/router';
 
 import './styles.css';
 
+import './banner-message';
 import './locale-picker';
 
 import './x-parts';
@@ -21,6 +22,7 @@ import config from './config';
 import {setLocaleFromUrl} from './localization';
 import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
+import { BannerMessage } from './banner-message';
 /**
  * Luna-orbit
  *
@@ -30,18 +32,19 @@ import {msg} from '@lit/localize';
 export class LunaOrbit extends Localized(LitElement) {
   private mobileMenu!: HTMLDivElement | null;
   private mobileMenuToggle!: HTMLButtonElement | null;
-  private closeBanner!: HTMLButtonElement | null;
 
   static APIValidatorURL = 'https://lcd.terra.dev/staking/validators/';
 
-  /*@internalProperty()
+  @internalProperty()
   private validatorInformation?: Validator;
   @internalProperty()
-  private _commission = 0;*/
+  private _commission = 0;
 
   public router: Router = new Router(document.querySelector('.content'));
   @property({type: Object})
   location = this.router.location;
+  @internalProperty()
+  private _bannerMessage!: BannerMessage;
 
   static get styles(): CSSResult {
     return css`
@@ -75,30 +78,18 @@ export class LunaOrbit extends Localized(LitElement) {
       'vaadin-router-location-changed',
       this._routerLocationChanged.bind(this)
     );
-
-    this.closeBanner = document.querySelector(
-      '#close-banner'
-    ) as HTMLButtonElement;
-    const banner = this.closeBanner.parentElement?.parentElement?.parentElement;
-    if (this.closeBanner && banner) {
-      if (sessionStorage.getItem('lunaorbit-banner-hide')) {
-        banner.parentElement?.removeChild(banner);
-      }
-
-      this.closeBanner.addEventListener('click', () => {
-        banner.parentElement?.removeChild(banner);
-        sessionStorage.setItem('lunaorbit-banner-hide', 'true');
-      });
-    }
   }
 
   private _updateBannerMessage(): void {
-    const bannerNode = document.querySelector('#banner-message') as HTMLElement;
+    const bannerNode = document.createElement('banner-message');
+    bannerNode.message = msg('0% commissions until May 10th 2021');
 
-    if (bannerNode) {
-      const bannerMessage = msg('0% commissions until May 10th 2021');
-      bannerNode.innerText = bannerMessage;
-    }
+    bannerNode.addEventListener('click', function() {
+      bannerNode.parentElement?.removeChild(bannerNode);
+      sessionStorage.setItem('lunaorbit-banner-hide', 'true');
+    });
+
+    document.body.insertBefore(bannerNode, document.body.firstChild);
   }
 
   async firstUpdated(): Promise<void> {
@@ -108,7 +99,7 @@ export class LunaOrbit extends Localized(LitElement) {
     this._setupMenus();
     this._handleMobileMenu();
 
-    // await this._retrieveCommission();
+    await this._retrieveCommission();
   }
 
   private _setupMenus() {
@@ -168,7 +159,7 @@ export class LunaOrbit extends Localized(LitElement) {
 
   render(): TemplateResult {
     return html`
-      <slot name="header-banner"></slot>
+      ${this._bannerMessage}
       <slot name="nav"></slot>
       <slot name="content"></slot>
       <slot name="equation"></slot>
@@ -189,7 +180,7 @@ export class LunaOrbit extends Localized(LitElement) {
     }
   }
 
-  /*private async _retrieveCommission(): Promise<void> {
+  private async _retrieveCommission(): Promise<void> {
     const validatorQuery = await fetch(
       LunaOrbit.APIValidatorURL + config.address
     );
@@ -206,7 +197,7 @@ export class LunaOrbit extends Localized(LitElement) {
       ) as HTMLElement;
       commissionNode.innerText = this._commission + '%';
     }
-  }*/
+  }
 
   private _routerLocationChanged(
     event: CustomEvent<{
