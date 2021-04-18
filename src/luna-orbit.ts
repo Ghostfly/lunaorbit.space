@@ -90,7 +90,6 @@ export class LunaOrbit extends LitElement {
   }
 
   async firstUpdated() {
-
     // Display a spinner whenever a new locale is loading.
     window.addEventListener(LOCALE_STATUS_EVENT, ({detail}) => {
       if (detail.status === 'loading') {
@@ -106,7 +105,7 @@ export class LunaOrbit extends LitElement {
         // spinner.setAttribute('hidden', '');
       }
     });
-    
+
     this._handleMobileMenu();
     await this._retrieveCommission();
   }

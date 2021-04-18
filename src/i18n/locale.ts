@@ -1,4 +1,4 @@
-import { configureTransformLocalization} from '@lit/localize';
+import {configureTransformLocalization} from '@lit/localize';
 
 const sourceLocale = 'en';
 

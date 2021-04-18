@@ -43,8 +43,9 @@ export class XTools extends LitElement {
     {
       id: Tools.Airdrop,
       name: msg('Airdrop timing and information'),
-      explain:
-        msg('I use this to follow upcoming airdrops you get for staking Luna in Terra Station.  As of April 9th 2021 there are 2 drops per week - ANC and MIR.'),
+      explain: msg(
+        'I use this to follow upcoming airdrops you get for staking Luna in Terra Station.  As of April 9th 2021 there are 2 drops per week - ANC and MIR.'
+      ),
       links: [
         {
           href: 'https://terra-airdrop-timer.vercel.app/',
@@ -59,8 +60,9 @@ export class XTools extends LitElement {
     {
       id: Tools.Staking,
       name: msg('Staking / Unstaking Calendar'),
-      explain:
-      msg('Shows the amount of Luna that has been delegated or undelegated on certain days.  When Luna gets undelegated and 21 days pass, it is possible that the Luna will get moved to an exchange and sold. Track'),
+      explain: msg(
+        'Shows the amount of Luna that has been delegated or undelegated on certain days.  When Luna gets undelegated and 21 days pass, it is possible that the Luna will get moved to an exchange and sold. Track'
+      ),
       links: [
         {
           href:
@@ -72,8 +74,9 @@ export class XTools extends LitElement {
     {
       id: Tools.Exchange,
       name: msg('Exchange Wallets'),
-      explain:
-      msg('As Luna gets burned, the amount of Luna available on exchanges should slowly decrease.  Also good to watch these addresses during big undelegation events.'),
+      explain: msg(
+        'As Luna gets burned, the amount of Luna available on exchanges should slowly decrease.  Also good to watch these addresses during big undelegation events.'
+      ),
       links: [
         {
           href:
@@ -90,8 +93,9 @@ export class XTools extends LitElement {
     {
       id: Tools.Various,
       name: msg('Various useful metrics for Anchor and TerraSwap'),
-      explain:
-      msg('You can see Anchor earn APY history, tokens in the ANC - UST LP,  bLuna / Luna swap price history and pool size, etc.'),
+      explain: msg(
+        'You can see Anchor earn APY history, tokens in the ANC - UST LP,  bLuna / Luna swap price history and pool size, etc.'
+      ),
       links: [
         {
           href: 'https://reactor.starport.services/',
@@ -102,8 +106,9 @@ export class XTools extends LitElement {
     {
       id: Tools.USTSupply,
       name: msg('UST Supply information'),
-      explain:
-      msg('This is the most important metric to watch, UST market cap and growth day over day.  Burn tracking shows you how much Luna has been burned, more is better.'),
+      explain: msg(
+        'This is the most important metric to watch, UST market cap and growth day over day.  Burn tracking shows you how much Luna has been burned, more is better.'
+      ),
       links: [
         {
           href: 'https://www.coingecko.com/en/coins/terra-usd',
@@ -118,8 +123,9 @@ export class XTools extends LitElement {
     {
       id: Tools.MIRVolume,
       name: msg('Mirror volume'),
-      explain:
-      msg('As the price of Mirror goes up, so does the yield for staking mAssets which in turn drives demand for UST and increases the value of the weekly MIR airdrop.'),
+      explain: msg(
+        'As the price of Mirror goes up, so does the yield for staking mAssets which in turn drives demand for UST and increases the value of the weekly MIR airdrop.'
+      ),
       links: [
         {
           href: 'https://www.coingecko.com/en/exchanges/terraswap',
@@ -130,8 +136,9 @@ export class XTools extends LitElement {
     {
       id: Tools.ValidatorPerformance,
       name: msg('Validator performance'),
-      explain:
-      msg('How is Luna Orbit doing?  You want to see good uptime, few missed Oracle votes, and low precommits missed.  Numbers are trailing and should be watched over time.'),
+      explain: msg(
+        'How is Luna Orbit doing?  You want to see good uptime, few missed Oracle votes, and low precommits missed.  Numbers are trailing and should be watched over time.'
+      ),
       links: [
         {
           href: 'https://terra.stake.id/#/',
@@ -143,22 +150,24 @@ export class XTools extends LitElement {
           name: msg('Luna Orbit - hubble.figment.io'),
         },
       ],
-      },
-      {
-        id: Tools.Price,
-        name: 'Trading tools',
-        explain: '',
-        links: [
-          {
-            href: 'https://analytics.blep.ai/charts/uniswapv2.0x67B3825348521B94828127f1eE31da80EE67d285.trade-1m0s',
-            name: msg('Blep.ai - LUNA-UST (UniSwap)')
-          },
-          {
-            href: 'https://analytics.blep.ai/charts/uniswapv2.0x87dA823B6fC8EB8575a235A824690fda94674c88.trade-1m0s',
-            name: msg('Blep.ai - MIR-UST (UniSwap)')
-          }
-        ]
-    }
+    },
+    {
+      id: Tools.Price,
+      name: 'Trading tools',
+      explain: '',
+      links: [
+        {
+          href:
+            'https://analytics.blep.ai/charts/uniswapv2.0x67B3825348521B94828127f1eE31da80EE67d285.trade-1m0s',
+          name: msg('Blep.ai - LUNA-UST (UniSwap)'),
+        },
+        {
+          href:
+            'https://analytics.blep.ai/charts/uniswapv2.0x87dA823B6fC8EB8575a235A824690fda94674c88.trade-1m0s',
+          name: msg('Blep.ai - MIR-UST (UniSwap)'),
+        },
+      ],
+    },
   ];
 
   public sectionForTools(toolsSection: Tools): ToolSection | undefined {
@@ -177,19 +186,19 @@ export class XTools extends LitElement {
               <div class="leading-relaxed">${description.explain}</div>
               <div class="pt-4 pb-3 space-y-1">
                 <ul>
-                ${description.links.map((link) => {
-                  return html`
-                    <li>
-                    <a
-                      target="_blank"
-                      rel="noopener"
-                      href="${link.href}"
-                      class="text-base font-medium"
-                      >${link.name}</a
-                    >
-                    </li>
-                  `;
-                })}
+                  ${description.links.map((link) => {
+                    return html`
+                      <li>
+                        <a
+                          target="_blank"
+                          rel="noopener"
+                          href="${link.href}"
+                          class="text-base font-medium"
+                          >${link.name}</a
+                        >
+                      </li>
+                    `;
+                  })}
                 </ul>
               </div>
             </div>
@@ -239,7 +248,8 @@ export class XTools extends LitElement {
                   href="https://t.me/lunaorbitchat"
                   target="_blank"
                   rel="noopener"
-                  >${msg('Luna Orbit chat room on Telegram')}</a>.
+                  >${msg('Luna Orbit chat room on Telegram')}</a
+                >.
               </p>
               <span
                 class="inline-block h-1 w-10 rounded bg-indigo-500 mt-8 mb-6"

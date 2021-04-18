@@ -121,7 +121,7 @@ export class XHowTo extends LitElement {
                   ${msg('Validator commission')}
                 </p>
                 <p class="mt-1 text-md text-gray-500">
-                ${msg(`
+                  ${msg(`
                   This is currently the only way a validator makes money and it
                   comes out of rewards. For example, at a rate of commission at
                   5% and a reward of 1 Luna, a delegator would receive .95 Luna
@@ -141,7 +141,7 @@ export class XHowTo extends LitElement {
                   ${msg('Delegation return')}
                 </p>
                 <p class="mt-1 text-sm text-gray-500">
-                ${msg(`
+                  ${msg(`
                   This is the current annual return you can expect from staking
                   with this validator. Keep in mind that validators that are new
                   (less than 30 days) might show different actual rates. This
@@ -165,7 +165,7 @@ export class XHowTo extends LitElement {
                   ${msg('Uptime')}
                 </p>
                 <p class="mt-1 text-sm text-gray-500">
-                ${msg(`
+                  ${msg(`
                   This might be the most important on the list, you want the
                   maximum amount of uptime. Anything less can lead to small
                   penalties "slashing" to "jailing" . A small penalty is .01%
@@ -183,7 +183,9 @@ export class XHowTo extends LitElement {
                   ${msg('The Blue check mark')}
                 </p>
                 <p class="mt-1 text-sm text-gray-500">
-                  ${msg('This means the validator has submitted a profile on github. This is cosmetic only and has no effect on anything.')}
+                  ${msg(
+                    'This means the validator has submitted a profile on github. This is cosmetic only and has no effect on anything.'
+                  )}
                 </p>
               </div>
             </a>
@@ -191,10 +193,10 @@ export class XHowTo extends LitElement {
             <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
               <div class="ml-4">
                 <p class="text-base font-medium text-gray-900">
-                ${msg('Other considerations')}
+                  ${msg('Other considerations')}
                 </p>
                 <p class="mt-1 text-sm text-gray-500">
-                ${msg(`
+                  ${msg(`
                   Some validators are active in the community and help people
                   out, some are building useful tools, some are high end for
                   reliability, and some people just want to make sure they
@@ -215,7 +217,9 @@ export class XHowTo extends LitElement {
           <h2
             class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl"
           >
-            <span class="block terra-color">${msg('Discover & Understand Terra')}</span>
+            <span class="block terra-color"
+              >${msg('Discover & Understand Terra')}</span
+            >
           </h2>
           <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0">
             <div class="inline-flex rounded-md shadow">
