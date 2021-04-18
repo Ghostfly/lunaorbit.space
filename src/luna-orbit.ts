@@ -9,7 +9,10 @@ import {
 import {Validator} from './terra-min';
 import {Router, RouterLocation} from '@vaadin/router';
 
-import './x-pages';
+import './x-home';
+import './x-how-to';
+import './x-tools';
+import './x-contact';
 
 import config from './config';
 
