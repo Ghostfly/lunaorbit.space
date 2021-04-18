@@ -19,13 +19,15 @@ import './x-contact';
 
 import config from './config';
 import { setLocaleFromUrl } from './localization';
+import { Localized } from "@lit/localize/localized-element";
+import { msg } from "@lit/localize";
 /**
  * Luna-orbit
  *
  * @slot - This element has a slot
  */
 @customElement('luna-orbit')
-export class LunaOrbit extends LitElement {
+export class LunaOrbit extends Localized(LitElement) {
   private mobileMenu!: HTMLDivElement | null;
   private mobileMenuToggle!: HTMLButtonElement | null;
   private closeBanner!: HTMLButtonElement | null;
@@ -142,6 +144,12 @@ export class LunaOrbit extends LitElement {
       ) as HTMLElement;
       commissionNode.innerText = this._commission + '%';
     }
+
+    const bannerMessage = msg('0% commissions until May 10th 2021');
+    const bannerNode = document.querySelector(
+      '#banner-message'
+    ) as HTMLElement;
+    bannerNode.innerText = bannerMessage;
   }
 
   private _routerLocationChanged(
