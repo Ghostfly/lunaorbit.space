@@ -81,6 +81,11 @@ export class LunaOrbit extends Localized(LitElement) {
   }
 
   private _updateBannerMessage(): void {
+    const banners = document.querySelectorAll('banner-message');
+    for (const banner of banners) {
+      banner.parentElement?.removeChild(banner);
+    }
+    
     const bannerNode = document.createElement('banner-message');
     bannerNode.message = msg('0% commissions until May 10th 2021');
 
