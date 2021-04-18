@@ -45,3 +45,15 @@ export interface MIRAirdrop {
   staked: string; // Contains number
   total: string; // Contains number
 }
+
+
+export interface LunaPriceResponse {
+  lastPrice: number;
+  oneDayVariation: string;
+  oneDayVariationRate: string;
+  prices: {
+    datetime: number; // Timestamp
+    denom: string;
+    price: number
+  }[]
+}

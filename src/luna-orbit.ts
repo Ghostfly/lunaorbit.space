@@ -6,7 +6,7 @@ import {
   property,
   TemplateResult,
 } from 'lit-element';
-import {Validator} from './terra-min';
+import {LunaPriceResponse, Validator} from './terra-min';
 import {Router, RouterLocation} from '@vaadin/router';
 
 import './styles.css';
@@ -35,6 +35,7 @@ export class LunaOrbit extends Localized(LitElement) {
   private mobileMenuToggle!: HTMLButtonElement | null;
 
   static APIValidatorURL = 'https://lcd.terra.dev/staking/validators/';
+  static APILunaPrice = 'https://fcd.terra.dev/v1/market/price?denom=uusd&interval=15m';
 
   @internalProperty()
   private validatorInformation?: Validator;
@@ -46,6 +47,8 @@ export class LunaOrbit extends Localized(LitElement) {
   location = this.router.location;
   @internalProperty()
   private _bannerMessage!: BannerMessage;
+  @internalProperty()
+  private _price = 0;
 
   constructor() {
     super();
@@ -116,7 +119,7 @@ export class LunaOrbit extends Localized(LitElement) {
     this._setupMenus();
     this._handleMobileMenu();
 
-    await this._retrieveCommission();
+    await this._retrieveCommissionAndPrice();
   }
 
   private _setupMenus() {
@@ -204,7 +207,16 @@ export class LunaOrbit extends Localized(LitElement) {
     }
   }
 
-  private async _retrieveCommission(): Promise<void> {
+  private async _retrieveCommissionAndPrice(): Promise<void> {
+    const priceQuery = await fetch(LunaOrbit.APILunaPrice);
+    const price = await priceQuery.json() as LunaPriceResponse;
+    this._price = price.lastPrice;
+
+    const equation = document.querySelector('x-equation');
+    if (equation) {
+      equation.price = this._price;
+    }
+
     const validatorQuery = await fetch(
       LunaOrbit.APIValidatorURL + config.address
     );

@@ -1,4 +1,4 @@
-import {LitElement, html, TemplateResult, customElement} from 'lit-element';
+import {LitElement, html, TemplateResult, customElement, property} from 'lit-element';
 import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
 
@@ -8,13 +8,16 @@ import {msg} from '@lit/localize';
  */
 @customElement('x-equation')
 export class XEquation extends Localized(LitElement) {
+  @property({type: Number})
+  public price = 0;
+
   createRenderRoot(): this {
     return this;
   }
 
   render(): TemplateResult {
     return html`
-      <div class="container  mx-auto py-12 px-6 flex justify-between">
+      <div class="container  mx-auto py-12 px-6">
         <ul class="container px-2 py-2 mx-auto">
           <li>
             <em class="font-semibold"
@@ -54,8 +57,8 @@ export class XEquation extends Localized(LitElement) {
             <em class="font-semibold">${' ' +msg(`Federal Funds Rate`)}</em>.
           </li>
         </ul>
-        <div class="flex justify-center m-4 items-center">
-          <a class="terra-color" href="https://docs.terra.money/luna.html">
+        <div class="flex m-4 justify-end">
+          <a class="terra-color" href="https://station.terra.money/swap">
             <img
               class="h-5"
               src="/assets/luna.svg"
@@ -65,6 +68,9 @@ export class XEquation extends Localized(LitElement) {
             />
             <h3 class="font-semibold ml-2">
               ${msg('Luna governs them all !')}
+              <p>
+              <em>$LUNA</em> : ${this.price.toFixed(3)} UST
+              </p>
             </h3>
           </a>
         </div>
