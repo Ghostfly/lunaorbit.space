@@ -18,6 +18,7 @@ import './x-home';
 import './x-how-to';
 import './x-tools';
 import './x-contact';
+import './x-equation';
 
 import config from './config';
 import { setLocaleFromUrl } from './localization';
@@ -118,6 +119,12 @@ export class LunaOrbit extends Localized(LitElement) {
       menuHolder.innerHTML = '';
     }
 
+    const bannerMessage = msg('0% commissions until May 10th 2021');
+    const bannerNode = document.querySelector(
+      '#banner-message'
+    ) as HTMLElement;
+    bannerNode.innerText = bannerMessage;
+
     this._setupMenus();
   }
 
@@ -164,7 +171,7 @@ export class LunaOrbit extends Localized(LitElement) {
       <slot name="header-banner"></slot>
       <slot name="nav"></slot>
       <slot name="content"></slot>
-      <slot name="equation"></slot>
+      <x-equation></x-equation>
       <slot name="divider"></slot>
       <slot name="footer"></slot>
     `;

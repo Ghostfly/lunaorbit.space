@@ -1,8 +1,9 @@
-import {LitElement, html, TemplateResult} from 'lit-element';
+import {LitElement, html, TemplateResult, customElement} from 'lit-element';
 import {getLocale, setLocale} from './localization';
 import {allLocales} from './locale-codes';
 import {Localized} from '@lit/localize/localized-element';
 
+@customElement('locale-picker')
 export class LocalePicker extends Localized(LitElement) {
   createRenderRoot(): this {
     return this;
@@ -37,4 +38,3 @@ export class LocalePicker extends Localized(LitElement) {
     console.warn('changed locale', newLocale);
   }
 }
-customElements.define('locale-picker', LocalePicker);
