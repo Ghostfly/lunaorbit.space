@@ -95,37 +95,24 @@ export class LunaOrbit extends Localized(LitElement) {
     }
   }
 
-  createRenderRoot(): ShadowRoot {
-    return this.attachShadow({mode: 'open'});
+  private _updateBannerMessage(): void {
+    const bannerNode = document.querySelector(
+      '#banner-message'
+    ) as HTMLElement;
+
+    if (bannerNode) {
+      const bannerMessage = msg('0% commissions until May 10th 2021');
+      bannerNode.innerText = bannerMessage;
+    }
   }
 
   async firstUpdated(): Promise<void> {
     await setLocaleFromUrl();
-
-    const bannerMessage = msg('0% commissions until May 10th 2021');
-    const bannerNode = document.querySelector(
-      '#banner-message'
-    ) as HTMLElement;
-    bannerNode.innerText = bannerMessage;
-
+    
+    this._updateBannerMessage();
     this._setupMenus();
     this._handleMobileMenu();
     await this._retrieveCommission();
-  }
-
-  public refreshMenus(): void {
-    const menuHolders = document.querySelectorAll('.menu-holder');
-    for (const menuHolder of menuHolders) {
-      menuHolder.innerHTML = '';
-    }
-
-    const bannerMessage = msg('0% commissions until May 10th 2021');
-    const bannerNode = document.querySelector(
-      '#banner-message'
-    ) as HTMLElement;
-    bannerNode.innerText = bannerMessage;
-
-    this._setupMenus();
   }
 
   private _setupMenus() {
@@ -166,12 +153,25 @@ export class LunaOrbit extends Localized(LitElement) {
     }
   }
 
+  private _cleanMenus(): void {
+    const menuHolders = document.querySelectorAll('.menu-holder');
+    for (const menuHolder of menuHolders) {
+      menuHolder.innerHTML = '';
+    }
+  }
+
+  public refreshI18n(): void {
+    this._cleanMenus();
+    this._updateBannerMessage();
+    this._setupMenus();
+  }
+
   render(): TemplateResult {
     return html`
       <slot name="header-banner"></slot>
       <slot name="nav"></slot>
       <slot name="content"></slot>
-      <x-equation></x-equation>
+      <slot name="equation"></slot>
       <slot name="divider"></slot>
       <slot name="footer"></slot>
     `;

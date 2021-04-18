@@ -34,7 +34,13 @@ export class LocalePicker extends Localized(LitElement) {
 
     await setLocale(newLocale);
 
-    document.querySelector('luna-orbit')?.refreshMenus();
-    console.warn('changed locale', newLocale);
+    document.querySelector('luna-orbit')?.refreshI18n();
+
+    const url = new URL(document.location.href);
+    console.warn('url', url);
+    url.searchParams.set("locale", newLocale);
+
+    // Avoid refresh by using replaceState.
+    window.history.replaceState( {} , 'Luna Orbit | Staking', url.toString());
   }
 }
