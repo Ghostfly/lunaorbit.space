@@ -41,3 +41,9 @@ npm run localize:build
 ```bash
 npm run webpack:build
 ```
+
+## Lint
+
+```bash
+npm run lint
+```

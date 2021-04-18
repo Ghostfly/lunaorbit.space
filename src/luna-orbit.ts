@@ -82,6 +82,10 @@ export class LunaOrbit extends Localized(LitElement) {
   }
 
   private _updateBannerMessage(): void {
+    if (sessionStorage.getItem('lunaorbit-banner-hide')) {
+      return;
+    }
+
     const banners = document.querySelectorAll('banner-message');
     for (const banner of banners) {
       banner.parentElement?.removeChild(banner);
