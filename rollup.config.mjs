@@ -10,8 +10,8 @@ import copy from 'rollup-plugin-copy';
 
 const copyConfig = {
   targets: [
-    { src: 'node_modules/@webcomponents', dest: 'dist/node_modules/@webcomponents' },
-    { src: 'node_modules/@lit/reactive-element/polyfill-support.js', dest: 'dist/node_modules/@lit/reactive-element/polyfill-support.jst' },
+    { src: 'node_modules/@webcomponents', dest: 'dist/node_modules/' },
+    { src: 'node_modules/@lit/reactive-element/polyfill-support.js', dest: 'dist/node_modules/@lit/reactive-element/' },
     { src: 'dev/assets', dest: 'dist' },
     { src: 'dev/index.html', dest: 'dist' },
     { src: 'dev/*.png', dest: 'dist/assets' },
