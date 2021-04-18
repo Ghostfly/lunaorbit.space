@@ -2,12 +2,11 @@ import filesize from 'rollup-plugin-filesize';
 import {terser} from 'rollup-plugin-terser';
 import resolve from 'rollup-plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
-import typescript from '@rollup/plugin-typescript';
 import externals from 'rollup-plugin-node-externals'
 
 import process from 'process';
 
-// import {localeTransformers} from '@lit/localize-tools/lib/rollup.js';
+import {localeTransformers} from '@lit/localize-tools/lib/rollup.js';
 
 import copy from 'rollup-plugin-copy';
 
@@ -28,6 +27,8 @@ const targets = [
 
 const isDev = process.env.BUILD === 'development';
 
+const locales = localeTransformers();
+
 if(isDev){
   // TODO XXX;
 }
@@ -36,8 +37,6 @@ const copyConfig = {
   targets,
   verbose: true,
 };
-
-// const locales = localeTransformers();
 
 export default {
   input: 'luna-orbit.js',
@@ -51,12 +50,6 @@ export default {
     }
   },
   plugins: [
-    typescript({
-      outDir: 'dist/',
-      transformers: {
-        before: [/*locales*/],
-      },
-    }),
     replace({'Reflect.decorate': 'undefined'}),
     resolve(),
     terser({
