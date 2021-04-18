@@ -26,7 +26,8 @@
     "@lit/localize-tools": "^0.2.1",
     "@vaadin/router": "^1.7.4",
     "@webcomponents/webcomponentsjs": "^2.5.0",
-    "lit-element": "^2.4.0"
+    "lit-element": "^2.4.0",
+    "postcss-import": "^14.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.13.15",
@@ -38,6 +39,7 @@
     "copy-webpack-plugin": "^8.1.1",
     "create-file-webpack": "^1.0.2",
     "css-loader": "^5.2.2",
+    "css-minimizer-webpack-plugin": "^2.0.0",
     "ejs-loader": "^0.5.0",
     "eslint": "^7.24.0",
     "eslint-loader": "^4.0.2",
@@ -45,6 +47,7 @@
     "html-webpack-plugin": "^5.3.1",
     "img-loader": "^3.0.2",
     "lit-analyzer": "^1.2.1",
+    "mini-css-extract-plugin": "^1.5.0",
     "postcss": "^8.2.10",
     "postcss-loader": "^5.2.0",
     "postcss-preset-env": "^6.7.0",

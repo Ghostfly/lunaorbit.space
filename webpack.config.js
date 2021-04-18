@@ -3,6 +3,7 @@ const { merge }= require('webpack-merge');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const { resolve, join } = require('path');
 
@@ -20,8 +21,8 @@ const webcomponentsjs = join(nodeModules, '@webcomponents/webcomponentsjs');
 
 const assets = [
   {
-    from: resolve('./src/styles.css'),
-    to: join(OUTPUT_PATH, 'styles.css')
+    from: resolve('./styles.css'),
+    to: join(OUTPUT_PATH)
   },
   {
     from: resolve('./src/assets'),
@@ -64,6 +65,14 @@ const commonConfig = merge([
     },
     resolve: {
       extensions: [ '.ts', '.js', '.css' ]
+    },
+    optimization: {
+      minimize: true,
+      minimizer: [
+        new CssMinimizerPlugin({
+          parallel: true,
+        }),
+      ],
     },
     module: {
       rules: [

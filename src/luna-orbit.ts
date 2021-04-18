@@ -34,10 +34,10 @@ export class LunaOrbit extends Localized(LitElement) {
 
   static APIValidatorURL = 'https://lcd.terra.dev/staking/validators/';
 
-  @internalProperty()
+  /*@internalProperty()
   private validatorInformation?: Validator;
   @internalProperty()
-  private _commission = 0;
+  private _commission = 0;*/
 
   public router: Router = new Router(document.querySelector('.content'));
   @property({type: Object})
@@ -107,7 +107,8 @@ export class LunaOrbit extends Localized(LitElement) {
     this._updateBannerMessage();
     this._setupMenus();
     this._handleMobileMenu();
-    await this._retrieveCommission();
+
+    // await this._retrieveCommission();
   }
 
   private _setupMenus() {
@@ -188,7 +189,7 @@ export class LunaOrbit extends Localized(LitElement) {
     }
   }
 
-  private async _retrieveCommission(): Promise<void> {
+  /*private async _retrieveCommission(): Promise<void> {
     const validatorQuery = await fetch(
       LunaOrbit.APIValidatorURL + config.address
     );
@@ -205,7 +206,7 @@ export class LunaOrbit extends Localized(LitElement) {
       ) as HTMLElement;
       commissionNode.innerText = this._commission + '%';
     }
-  }
+  }*/
 
   private _routerLocationChanged(
     event: CustomEvent<{
