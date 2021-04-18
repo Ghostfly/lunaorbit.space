@@ -19,6 +19,11 @@ x-*.js.map
 x-*.d.ts
 x-*.d.ts.map
 
+config.js
+config.d.ts
+config.js.map
+config.d.ts.map
+
 locale-codes.js
 locale-codes.js.map
 locale-codes.d.ts
