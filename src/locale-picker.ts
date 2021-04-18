@@ -12,7 +12,7 @@ export class LocalePicker extends Localized(LitElement) {
   render(): TemplateResult {
     return html`
     <div class="relative">
-      <select @change=${this.localeChanged} class="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10">
+      <select @change=${this.localeChanged} class="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-7">
         ${[...new Set(allLocales)].map(
           (locale) =>
             html`<option value=${locale} ?selected=${locale === getLocale()}>
