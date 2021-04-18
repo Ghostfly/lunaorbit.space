@@ -3,6 +3,7 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
+    "bundle:watch": "npx rollup --config --watch --environment BUILD:development",
     "clean": "rimraf luna-orbit.{d.ts,d.ts.map,js,js.map} test/luna-orbit.{d.ts,d.ts.map,js,js.map} test/luna-orbit.{d.ts,d.ts.map,js,js.map}",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint 'src/**/*.ts'",
@@ -10,7 +11,7 @@
     "localize": "npx lit-localize extract",
     "format": "prettier src/* --write",
     "analyze": "wca analyze \"src/**/*.ts\" --outFile custom-elements.json",
-    "serve": "es-dev-server --node-resolve --watch  --open --app-index dev/index.html",
+    "serve": "es-dev-server --node-resolve --watch  --open --app-index=index.html --root-dir=dev/",
     "test": "karma start karma.conf.cjs",
     "test:watch": "karma start karma.conf.cjs --auto-watch=true --single-run=false",
     "test:update-snapshots": "karma start karma.conf.cjs --update-snapshots",
@@ -29,7 +30,7 @@
     "@lit/localize-tools": "^0.2.1",
     "@rollup/plugin-typescript": "^8.2.1",
     "@vaadin/router": "^1.7.4",
-    "lit-element": "^2.3.1",
+    "lit-element": "^2.4.0",
     "rollup-plugin-minify-html-literals": "^1.2.6"
   },
   "devDependencies": {
