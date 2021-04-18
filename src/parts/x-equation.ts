@@ -26,7 +26,7 @@ export class XEquation extends Localized(LitElement) {
                 >${msg(`Terra`)}</a
               ></em
             >${msg(`'s competition is the`)}<em class="font-semibold"
-              >${msg(`Dollar`)}</em
+              >${' ' + msg(`Dollar`)}</em
             >.
           </li>
           <li>
@@ -39,7 +39,7 @@ export class XEquation extends Localized(LitElement) {
                 >${msg(`Mirror`)}</a
               ></em
             >${msg(`'s competition is the`)}
-            <em class="font-semibold">${msg(`NASDAQ`)}</em>.
+            <em class="font-semibold">${' ' + msg(`NASDAQ`)}</em>.
           </li>
           <li>
             <em class="font-semibold"
@@ -51,7 +51,7 @@ export class XEquation extends Localized(LitElement) {
                 >${msg(`Anchor`)}</a
               ></em
             >${msg(`'s competition is the`)}
-            <em class="font-semibold">${msg(`Federal Funds Rate`)}</em>.
+            <em class="font-semibold">${' ' +msg(`Federal Funds Rate`)}</em>.
           </li>
         </ul>
         <div class="flex justify-center m-4 items-center">
