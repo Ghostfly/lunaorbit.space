@@ -1,3 +1,6 @@
+/**
+ * Terra LCD
+ */
 export interface Validator {
   block: string;
   result: {

@@ -1,11 +1,21 @@
-import {LitElement, html, TemplateResult, customElement, property} from 'lit-element';
+import {LitElement, html, TemplateResult, customElement, property, query} from 'lit-element';
 import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
 
+/**
+ * Banner message component
+ */
 @customElement('banner-message')
 export class BannerMessage extends Localized(LitElement) {
   @property({ type: String })
   public message = '';
+
+  @query('.terra-light')
+  public banner!: HTMLDivElement;
+
+  public close(): void {
+    this.banner.style.display = 'none';
+  }
   
   createRenderRoot(): this {
     return this;
@@ -13,7 +23,7 @@ export class BannerMessage extends Localized(LitElement) {
 
   render(): TemplateResult {
     return html`
-            <div class="terra-light" slot="header-banner">
+      <div class="terra-light">
         <div class="max-w-7xl mx-auto py-3 px-3 sm:px-4 lg:px-4">
           <div class="flex items-center justify-between flex-wrap">
             <div class="w-0 flex-1 flex items-center">

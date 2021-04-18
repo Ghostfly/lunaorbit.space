@@ -39,12 +39,11 @@ export class XContact extends Localized(LitElement) {
         },
       })
         .then((_response) => {
-          this.status.innerText = 'Thanks for your submission!';
+          this.status.innerText = msg('Thanks for your submission!');
           form.classList.add('opacity-50', 'pointer-events-none');
         })
         .catch((_err) => {
-          this.status.innerText =
-            'Oops! There was a problem submitting your form';
+          this.status.innerText = msg('Oops! There was a problem submitting your form');
         });
     });
   }
@@ -105,7 +104,7 @@ export class XContact extends Localized(LitElement) {
                   rel="noopener"
                   title="Telegram"
                   class="text-gray-500 hover:text-indigo-500"
-                  >Telegram</a
+                  >${msg('Telegram')}</a
                 >
                 ${msg('or')}
                 <a
@@ -114,7 +113,7 @@ export class XContact extends Localized(LitElement) {
                   target="_blank"
                   rel="noopener"
                   title="Twitter"
-                  >Twitter</a
+                  >${msg('Twitter')}</a
                 >.
               </p>
             </form>

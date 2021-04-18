@@ -55,5 +55,7 @@ export class LocalePicker extends Localized(LitElement) {
 
     // Avoid refresh by using replaceState.
     window.history.replaceState({}, 'Luna Orbit | Staking', url.toString());
+
+    document.documentElement.lang = newLocale;
   }
 }

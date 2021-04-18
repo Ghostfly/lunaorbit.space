@@ -109,8 +109,7 @@ export class XHome extends Localized(LitElement) {
                   <a
                     class="text-gray-500 hover:text-gray-700"
                     href="http://t.me/${config.telegram}"
-                    >Telegram</a
-                  >
+                    >${msg('Telegram')}</a>
                 </p>
               </div>
             </div>

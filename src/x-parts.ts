@@ -1,3 +1,7 @@
+/*
+  Template parts
+*/
+
 import './parts/x-home';
 import './parts/x-how-to';
 import './parts/x-tools';

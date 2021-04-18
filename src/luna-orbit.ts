@@ -23,10 +23,11 @@ import {setLocaleFromUrl} from './localization';
 import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
 import { BannerMessage } from './banner-message';
+
 /**
  * Luna-orbit
  *
- * @slot - This element has a slot
+ * @slot - This element has slots
  */
 @customElement('luna-orbit')
 export class LunaOrbit extends Localized(LitElement) {
@@ -85,7 +86,7 @@ export class LunaOrbit extends Localized(LitElement) {
     for (const banner of banners) {
       banner.parentElement?.removeChild(banner);
     }
-    
+
     const bannerNode = document.createElement('banner-message');
     bannerNode.message = msg('0% commissions until May 10th 2021');
 

@@ -2,6 +2,10 @@ import {LitElement, html, TemplateResult, customElement} from 'lit-element';
 import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
 
+/**
+ * Equation component
+ *
+ */
 @customElement('x-equation')
 export class XEquation extends Localized(LitElement) {
   createRenderRoot(): this {
