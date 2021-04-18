@@ -2,6 +2,46 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
 <file target-language="fr" source-language="en" original="lit-localize-inputs" datatype="plaintext">
 <body>
+<trans-unit id="saaa706d023df1c67">
+  <source>Airdrops</source>
+  <target>Airdrops</target>
+</trans-unit>
+<trans-unit id="s87d926871c09fd6d">
+  <source>Terra address</source>
+  <target>Terra address</target>
+</trans-unit>
+<trans-unit id="s42cbd8dca939a9c7">
+  <source>Check</source>
+  <target>Vérifier</target>
+</trans-unit>
+<trans-unit id="s1f134e24a84033bb">
+  <source>Claimable</source>
+  <target>Récupérable</target>
+</trans-unit>
+<trans-unit id="sd3e5a2416925d46e">
+  <source>Claimed</source>
+  <target>Récupéré</target>
+</trans-unit>
+<trans-unit id="s5dfb711463f789d7">
+  <source>Claim ANC</source>
+  <target>Récupérer ANC</target>
+</trans-unit>
+<trans-unit id="sf7c6ce142a91baeb">
+  <source>Claim MIR</source>
+  <target>Récupérer MIR</target>
+</trans-unit>
+<trans-unit id="s5e8250fb85d64c23">
+  <source>Close</source>
+  <target>Fermer</target>
+</trans-unit>
+<trans-unit id="s5d52a192132fbce7">
+  <source>Check airdrops</source>
+  <target>Vérifier les airdrops</target>
+</trans-unit>
+<trans-unit id="s12d6dde9b30c3093">
+  <source>Dismiss</source>
+  <target>Fermer</target>
+</trans-unit>
 <trans-unit id="s0a8ca47bbbdc78bb">
   <source>Stake with us today !</source>
   <target>Stakez avec nous aujourd'hui !</target>
@@ -65,6 +105,10 @@
 <trans-unit id="s1915bd2be4e757ad">
   <source>Find us on the Luna Orbit chat on</source>
   <target>Retrouvez-nous sur le chat Luna Orbit </target>
+</trans-unit>
+<trans-unit id="s5aecfdf20f18c9b6">
+  <source>Telegram</source>
+  <target>Telegram</target>
 </trans-unit>
 <trans-unit id="s6632bee996b65d13">
   <source>How to start staking on Terra ?</source>
@@ -312,6 +356,14 @@ Lorsque vous assemblez ces deux pièces, vous comprenez pourquoi Luna peut conti
   <source>Contact</source>
   <target>Contact</target>
 </trans-unit>
+<trans-unit id="s66efde6b2cf6bfa9">
+  <source>Thanks for your submission!</source>
+  <target>Merci du message, nous vous répondrons au plus vite.</target>
+</trans-unit>
+<trans-unit id="sddabeb5e38e47395">
+  <source>Oops! There was a problem submitting your form</source>
+  <target>Une erreur est survenue</target>
+</trans-unit>
 <trans-unit id="sd15de0dcd2378a55">
   <source>Contact us</source>
   <target>Contactez-nous</target>
@@ -335,6 +387,10 @@ Lorsque vous assemblez ces deux pièces, vous comprenez pourquoi Luna peut conti
 <trans-unit id="s08b05407b5565ca4">
   <source>or</source>
   <target>ou</target>
+</trans-unit>
+<trans-unit id="sece556bea3b31804">
+  <source>Twitter</source>
+  <target>Twitter</target>
 </trans-unit>
 <trans-unit id="sd4758eaeb9571bb5">
   <source>Terra</source>

@@ -2,6 +2,36 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
 <file target-language="en" source-language="en" original="lit-localize-inputs" datatype="plaintext">
 <body>
+<trans-unit id="saaa706d023df1c67">
+  <source>Airdrops</source>
+</trans-unit>
+<trans-unit id="s87d926871c09fd6d">
+  <source>Terra address</source>
+</trans-unit>
+<trans-unit id="s42cbd8dca939a9c7">
+  <source>Check</source>
+</trans-unit>
+<trans-unit id="s1f134e24a84033bb">
+  <source>Claimable</source>
+</trans-unit>
+<trans-unit id="sd3e5a2416925d46e">
+  <source>Claimed</source>
+</trans-unit>
+<trans-unit id="s5dfb711463f789d7">
+  <source>Claim ANC</source>
+</trans-unit>
+<trans-unit id="sf7c6ce142a91baeb">
+  <source>Claim MIR</source>
+</trans-unit>
+<trans-unit id="s5e8250fb85d64c23">
+  <source>Close</source>
+</trans-unit>
+<trans-unit id="s5d52a192132fbce7">
+  <source>Check airdrops</source>
+</trans-unit>
+<trans-unit id="s12d6dde9b30c3093">
+  <source>Dismiss</source>
+</trans-unit>
 <trans-unit id="s0a8ca47bbbdc78bb">
   <source>Stake with us today !</source>
 </trans-unit>
@@ -49,6 +79,9 @@
 </trans-unit>
 <trans-unit id="s1915bd2be4e757ad">
   <source>Find us on the Luna Orbit chat on</source>
+</trans-unit>
+<trans-unit id="s5aecfdf20f18c9b6">
+  <source>Telegram</source>
 </trans-unit>
 <trans-unit id="s6632bee996b65d13">
   <source>How to start staking on Terra ?</source>
@@ -244,6 +277,12 @@
 <trans-unit id="s87bae2710b2492c3">
   <source>Contact</source>
 </trans-unit>
+<trans-unit id="s66efde6b2cf6bfa9">
+  <source>Thanks for your submission!</source>
+</trans-unit>
+<trans-unit id="sddabeb5e38e47395">
+  <source>Oops! There was a problem submitting your form</source>
+</trans-unit>
 <trans-unit id="sd15de0dcd2378a55">
   <source>Contact us</source>
 </trans-unit>
@@ -261,6 +300,9 @@
 </trans-unit>
 <trans-unit id="s08b05407b5565ca4">
   <source>or</source>
+</trans-unit>
+<trans-unit id="sece556bea3b31804">
+  <source>Twitter</source>
 </trans-unit>
 <trans-unit id="sd4758eaeb9571bb5">
   <source>Terra</source>

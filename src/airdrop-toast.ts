@@ -118,7 +118,7 @@ export class AirdropToast extends Localized(LitElement) {
             orbit?.showAirdropDialog();
             this.close();
           }}>
-      	<span class="text">${msg('Check airdrops !')}</span>
+      	<span class="text">${msg('Check airdrops')}</span>
         </button>
         </div>
       </div>
