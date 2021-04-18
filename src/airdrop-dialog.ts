@@ -19,6 +19,9 @@ export class AirdropDialog extends Localized(LitElement) {
   @property({type: String})
   public terraAddress = 'terra1alpf6snw2d76kkwjv3dp4l7pcl6cn9uytq89zk';
 
+  @query('#address-input')
+  public input!: HTMLInputElement;
+
   @property({ type: String })
   public message = '';
 
@@ -50,11 +53,18 @@ export class AirdropDialog extends Localized(LitElement) {
     
     const anchorResponse = await anchorCheckQuery.json() as AnchorClaimResponse;
 
-    const isClaimed = JSON.parse(anchorResponse.data.isClaimed.Result)?.is_claimed;
-    if (!isClaimed) {
-      this.showANC = true;
+    if (anchorResponse.data.isClaimed) {
+      const isClaimed = JSON.parse(anchorResponse.data.isClaimed.Result)?.is_claimed;
+      this.input.classList.remove('border-red-500');
+
+      if (!isClaimed) {
+        this.showANC = true;
+      } else {
+        this.showANC = false
+      }
     } else {
-      this.showANC = false
+      this.input.classList.add('border-red-500');
+      this.showANC = false;
     }
   }
 
@@ -131,7 +141,7 @@ export class AirdropDialog extends Localized(LitElement) {
                   <div class="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end m-10">
                     <div class="relative flex-grow w-full">
                       <label for="terra-address" class="leading-7 text-sm text-gray-600">${msg('Terra address')}</label>
-                      <input .value=${this.terraAddress} @change=${(change: InputEvent) => {
+                      <input id="address-input" .value=${this.terraAddress} @change=${(change: InputEvent) => {
                         this.terraAddress = (change.target as HTMLInputElement).value;
                       }} type="text" id="terra-address" name="terra-address" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                     </div>
