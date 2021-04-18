@@ -182,6 +182,7 @@ export class XTools extends LitElement {
                     <li>
                     <a
                       target="_blank"
+                      rel="noopener"
                       href="${link.href}"
                       class="text-base font-medium"
                       >${link.name}</a
@@ -237,6 +238,7 @@ export class XTools extends LitElement {
                   class="text-gray-500 hover:text-gray-700"
                   href="https://t.me/lunaorbitchat"
                   target="_blank"
+                  rel="noopener"
                   >${msg('Luna Orbit chat room on Telegram')}</a>.
               </p>
               <span
