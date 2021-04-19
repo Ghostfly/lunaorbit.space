@@ -94,7 +94,7 @@ export class WebsitePages extends Localized(LitElement) {
       this.editor?.destroy();
 
       try {
-        const savedTest = await getFile(`${this.page}-${this.lang}.json`, {
+        const savedTest = await getFile(`page-${this.page}-${this.lang}.json`, {
           decrypt: false
         });
         const data = JSON.parse(savedTest as string);
@@ -160,7 +160,7 @@ export class WebsitePages extends Localized(LitElement) {
             </div>
             <button @click=${async () => {
               const outputData = await this.editor?.save();
-              const savedTest = await putFile(`${this.page}-${this.lang}.json`, JSON.stringify(outputData), {
+              const savedTest = await putFile(`page-${this.page}-${this.lang}.json`, JSON.stringify(outputData), {
                 contentType: 'text/html',
                 encrypt: false,
                 dangerouslyIgnoreEtag: false
