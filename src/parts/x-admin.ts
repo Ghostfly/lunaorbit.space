@@ -245,7 +245,7 @@ export class XAdmin extends Localized(LitElement) {
             </svg>
           </a>
         </div>
-        <div class="container px-4 py-6 h-screen">
+        <div class="px-4 py-6 h-screen w-full">
           ${this._pageForTitle(this._page)}
         </div>
       </div>
