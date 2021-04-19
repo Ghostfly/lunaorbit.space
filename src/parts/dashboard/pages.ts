@@ -23,6 +23,7 @@ import Quote from '@editorjs/quote';
 import Delimiter from '@editorjs/delimiter';
 
 import edjsParser from 'editorjs-parser';
+import { systemPages } from './menus';
 
 /**
  * Pages component
@@ -110,7 +111,6 @@ export class WebsitePages extends Localized(LitElement) {
         editorInit.data = this._data;
       } catch (err) {
         editorInit.data = undefined;
-        // console.error('no page found', err);
       }
 
       this.editor = new EditorJS(editorInit);
@@ -120,7 +120,9 @@ export class WebsitePages extends Localized(LitElement) {
   async loadFiles(): Promise<void> {
     const files = (await listFiles()).filter(file => file.name.startsWith('page-'));
 
-    this._files = files;
+    const pages = [...systemPages, ...files];
+
+    this._files = pages;
   }
 
   async firstUpdated(): Promise<void> {
@@ -188,7 +190,10 @@ export class WebsitePages extends Localized(LitElement) {
                 class="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-7"
               >
                 ${this._files.map(file => {
-                  const name = file.name.split('-')[1];
+                  const isSystemPage = file.name.split('-')[1] ?? file.name.toLowerCase();
+
+                  const name = isSystemPage ?? file.name;
+
                   return html`
                     <option value="${name}">${name}</option>
                   `;
@@ -233,7 +238,8 @@ export class WebsitePages extends Localized(LitElement) {
             </button>
             <button @click=${async () => {
               await deleteFile(this.editedPage);
-              this.loadEditor();
+              await this.loadFiles();
+              await this.loadEditor();
             }} class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
