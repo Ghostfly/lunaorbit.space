@@ -67,6 +67,8 @@ export class LunaOrbit extends Localized(LitElement) {
       { path: '/contact', component: 'x-contact' },
       { path: '/airdrops', component: 'airdrop-dialog' },
       { path: '/cockpit', component: 'x-admin' },
+      { path: '/cockpit/:page', component: 'x-admin' },
+      { path: '(.*)',       component: 'x-404' }
     ]);
 
     window.addEventListener(
