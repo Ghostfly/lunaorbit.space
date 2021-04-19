@@ -12,6 +12,9 @@ import { putFile } from '../../storage';
 
 import EditorJS from '@editorjs/editorjs';
 
+/**
+ * Pages component
+ */
 @customElement('website-pages')
 export class WebsitePages extends Localized(LitElement) {
 

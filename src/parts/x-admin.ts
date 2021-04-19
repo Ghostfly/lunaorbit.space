@@ -21,6 +21,7 @@ import './dashboard/settings';
 import './dashboard/assets';
 import './dashboard/translate';
 import './dashboard/pages';
+import './dashboard/menus';
 
 import { IXliffSource, IXliffTarget, XliffParser } from '@vtabary/xliff2js';
 
@@ -293,12 +294,7 @@ export class XAdmin extends Localized(LitElement) {
         `;
       case DashboardPages.menus:
         return html`
-        <h1 class="text-xl ml-4 mb-4 pb-6">
-          ${msg('Menus')}
-        </h1>
-        <div class="m-4">
-          TODO : Form to manage website menus
-        </div>
+        <admin-menu></admin-menu>
         `;
       case DashboardPages.assets:
         return html`
