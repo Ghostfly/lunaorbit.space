@@ -21,6 +21,8 @@ import Marker from '@editorjs/marker';
 import Quote from '@editorjs/quote';
 import Delimiter from '@editorjs/delimiter';
 
+import edjsParser from 'editorjs-parser';
+
 /**
  * Pages component
  */
@@ -35,6 +37,8 @@ export class WebsitePages extends Localized(LitElement) {
 
   @property({ type: String })
   public page = 'home';
+
+  private _data: undefined;
 
   createRenderRoot(): this {
     return this;
@@ -98,7 +102,8 @@ export class WebsitePages extends Localized(LitElement) {
           decrypt: false
         });
         const data = JSON.parse(savedTest as string);
-        editorInit.data = data;
+        this._data = data;
+        editorInit.data = this._data;
       } catch (err) {
         editorInit.data = undefined;
         // console.error('no page found', err);
@@ -110,6 +115,31 @@ export class WebsitePages extends Localized(LitElement) {
 
   async firstUpdated(): Promise<void> {
     await this.loadEditor();
+
+    const parser = new edjsParser({
+      image: {
+        use: "figure",
+        imgClass: "img",
+        figureClass: "fig-img",
+        figCapClass: "fig-cap",
+        path: "absolute",
+      },
+      paragraph: {
+        pClass: "paragraph",
+      },
+      code: {
+        codeBlockClass: "code-block",
+      },
+      embed: {
+        useProvidedLength: false,
+      },
+      quote: {
+        applyAlignment: false,
+      },
+    });
+
+    const markup = parser.parse(this._data);
+    console.warn(markup);
   }
 
   public get editedPage(): string {
@@ -131,8 +161,8 @@ export class WebsitePages extends Localized(LitElement) {
                   }}
                   class="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-7"
                 >
-                  <option>EN</option>
-                  <option>FR</option>
+                  <option value="en">EN</option>
+                  <option value="fr">FR</option>
               </select>
               <select
                 @change=${async (event: Event) => {
