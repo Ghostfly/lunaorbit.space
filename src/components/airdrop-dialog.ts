@@ -1,7 +1,3 @@
-/*
-
-*/
-
 import {
   LitElement,
   html,

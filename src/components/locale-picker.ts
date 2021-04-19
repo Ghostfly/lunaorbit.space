@@ -3,6 +3,9 @@ import {getLocale, setLocale} from '../localization';
 import {allLocales} from '../locale-codes';
 import {Localized} from '@lit/localize/localized-element';
 
+/**
+ * Locale picker
+ */
 @customElement('locale-picker')
 export class LocalePicker extends Localized(LitElement) {
   createRenderRoot(): this {

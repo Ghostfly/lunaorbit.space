@@ -4,11 +4,12 @@ import {
   LitElement,
   TemplateResult,
   property,
+  internalProperty,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
-import { deleteFile, getFile, putFile } from '../../storage';
+import { deleteFile, getFile, listFiles, putFile } from '../../storage';
 
 import EditorJS, { LogLevels } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
@@ -39,6 +40,9 @@ export class WebsitePages extends Localized(LitElement) {
   public page = 'home';
 
   private _data: undefined;
+
+  @internalProperty()
+  private _files: { name: string; url: string; }[] = [];
 
   createRenderRoot(): this {
     return this;
@@ -113,7 +117,14 @@ export class WebsitePages extends Localized(LitElement) {
     }
   }
 
+  async loadFiles(): Promise<void> {
+    const files = (await listFiles()).filter(file => file.name.startsWith('page-'));
+
+    this._files = files;
+  }
+
   async firstUpdated(): Promise<void> {
+    await this.loadFiles();
     await this.loadEditor();
 
     const parser = new edjsParser({
@@ -147,6 +158,8 @@ export class WebsitePages extends Localized(LitElement) {
   }
 
   render(): TemplateResult {
+    const languages = ['en', 'fr'];
+
     return html`
         <div class="flex justify-between ml-4 mb-4 pb-6">
           <h1 class="text-xl">
@@ -161,8 +174,11 @@ export class WebsitePages extends Localized(LitElement) {
                   }}
                   class="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-7"
                 >
-                  <option value="en">EN</option>
-                  <option value="fr">FR</option>
+                  ${languages.map((lang) => {
+                    return html`
+                      <option value="${lang}">${lang.toUpperCase()}</option>
+                    `;
+                  })}
               </select>
               <select
                 @change=${async (event: Event) => {
@@ -171,10 +187,12 @@ export class WebsitePages extends Localized(LitElement) {
                 }}
                 class="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-7"
               >
-                <option value="home">Staking</option>
-                <option value="how-to">How to</option>
-                <option value="tools">Tools</option>
-                <option value="contact">Contact</option>
+                ${this._files.map(file => {
+                  const name = file.name.split('-')[1];
+                  return html`
+                    <option value="${name}">${name}</option>
+                  `;
+                })}
               </select>
               <span
                 class="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center"
@@ -214,7 +232,6 @@ export class WebsitePages extends Localized(LitElement) {
               </svg>
             </button>
             <button @click=${async () => {
-              console.warn('will drop page.');
               await deleteFile(this.editedPage);
               this.loadEditor();
             }} class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">

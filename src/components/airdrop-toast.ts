@@ -11,7 +11,7 @@ import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
 
 /**
- * Banner message component
+ * Airdrop toast component
  */
 @customElement('airdrop-toast')
 export class AirdropToast extends Localized(LitElement) {
