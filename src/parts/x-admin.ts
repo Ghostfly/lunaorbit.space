@@ -24,11 +24,11 @@ import { IXliffSource, IXliffTarget, XliffParser } from '@vtabary/xliff2js';
 import FRTranslation from '../assets/xliff/fr.xlf?raw';
 
 enum DashboardPages {
-  home = 'home',
   pages = 'pages',
   settings = 'settings',
   assets = 'assets',
   translate = 'translate',
+  menus = 'menus',
 }
 
 /**
@@ -48,8 +48,9 @@ export class XAdmin extends Localized(LitElement) {
 
   @internalProperty()
   private _person: Person | null = null;
+
   @internalProperty()
-  private _page: DashboardPages = DashboardPages.home;
+  private _page: DashboardPages = DashboardPages.pages;
 
   @internalProperty()
   private _strings: { source: IXliffSource, target: IXliffTarget }[] = [];
@@ -208,20 +209,20 @@ export class XAdmin extends Localized(LitElement) {
             ${this._person ? html`
               <img class="h-10 w-10 bg-white rounded-lg" src="https://avatars.dicebear.com/api/bottts/${this._person?.profile().stxAddress.mainnet}.svg" />
             ` : html``}
-            <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this._page === DashboardPages.home ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${XAdmin.MainPathPrefix}/${DashboardPages.home}" title="${msg('Dashboard')}">
-              <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-              </svg>
-            </a>
             <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this._page === DashboardPages.pages ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${XAdmin.MainPathPrefix}/${DashboardPages.pages}" title="${msg('Pages')}">
               <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
               </svg>
             </a>
+            <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this._page === DashboardPages.menus ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${XAdmin.MainPathPrefix}/${DashboardPages.menus}" title="${msg('Menus')}">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+              </svg>
+            </a>
           </div>
-          <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this._page === DashboardPages.settings ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${XAdmin.MainPathPrefix}/${DashboardPages.settings}" title="${msg('Settings')}">
-            <svg class="w-6 h-6 stroke-current"  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+          <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this._page === DashboardPages.translate ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${XAdmin.MainPathPrefix}/${DashboardPages.translate}" title="${msg('Translate')}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
             </svg>
           </a>
           <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this._page === DashboardPages.assets ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${XAdmin.MainPathPrefix}/${DashboardPages.assets}" title="${msg('Assets')}">
@@ -229,9 +230,9 @@ export class XAdmin extends Localized(LitElement) {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </a>
-          <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this._page === DashboardPages.translate ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${XAdmin.MainPathPrefix}/${DashboardPages.translate}" title="${msg('Translate')}">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+          <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this._page === DashboardPages.settings ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${XAdmin.MainPathPrefix}/${DashboardPages.settings}" title="${msg('Settings')}">
+            <svg class="w-6 h-6 stroke-current"  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
             </svg>
           </a>
           <a title="${msg('Logout')}" @click=${() => {
@@ -265,31 +266,41 @@ export class XAdmin extends Localized(LitElement) {
 
   private _pageForTitle(page: DashboardPages): TemplateResult {
     switch (page) {
-      case DashboardPages.home:
-        return html`
-        <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">
-          ${msg('Home')}
-        </h1>
-        <div class="max-w-full mx-4 py-6 sm:mx-auto sm:px-6 lg:px-8">
-          <div class="sm:flex sm:space-x-4">
-              <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow transform transition-all mb-4 w-full sm:w-1/3 sm:my-8">
-                  <div class="bg-white p-5">
-                      <div class="sm:flex sm:items-start">
-                          <div class="text-center sm:mt-0 sm:ml-2 sm:text-left">
-                              <h3 class="text-sm leading-6 font-medium text-gray-400">Total visitors</h3>
-                              <p class="text-3xl font-bold text-black">1234</p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-        `;
       case DashboardPages.pages:
         return html`
-        <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">
-          ${msg('Pages')}
-        </h1>
+        <div class="flex justify-between ml-4 mb-4 pt-6 pb-6">
+          <h1 class="text-xl">
+            ${msg('Pages')}
+          </h1>
+          <div class="flex flex-wrap">
+            <div class="w-full sm:w-6/12 md:w-4/12 px-4">
+              <div class="relative inline-flex align-middle w-full">
+                <button class="text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 bg-blueGray-700 ease-linear transition-all duration-150 font-normal px-6 py-2 rounded outline-none focus:outline-none mr-1 mb-1 capitalize w-full" type="button">
+                  Pages
+                </button>
+                <div class="bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1" style="min-width:12rem">
+                  <a href="#pablo" class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent  text-blueGray-700">
+                    Action
+                  </a>
+                  <a href="#pablo" class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent  text-blueGray-700">
+                    Another action
+                  </a>
+                  <a href="#pablo" class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent  text-blueGray-700">
+                    Something else here
+                  </a>
+                  <div class="h-0 my-2 border border-solid border-t-0 border-blueGray-800 opacity-25"></div>
+                  <a href="#pablo" class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent  text-blueGray-700">
+                    Seprated link
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
+            Add page
+          </button>
+        </div>
+
         <div id="holder" class="w-full p-4 border-4 rounded-sm"></div>
         `;
       case DashboardPages.settings:
@@ -297,8 +308,73 @@ export class XAdmin extends Localized(LitElement) {
         <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">
           ${msg('Settings')}
         </h1>
+        <div class="mt-5 md:mt-0 md:col-span-2">
+          <form action="#" method="POST">
+            <div class="shadow sm:rounded-md sm:overflow-hidden">
+              <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                <div class="grid grid-cols-3 gap-6">
+                  <div class="col-span-3 sm:col-span-2">
+                    <label for="company_website" class="block text-sm font-medium text-gray-700">
+                      Website
+                    </label>
+                    <div class="mt-1 flex rounded-md shadow-sm">
+                      <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                        https://
+                      </span>
+                      <input type="text" name="company_website" id="company_website" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300">
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="about" class="block text-sm font-medium text-gray-700">
+                    Description
+                  </label>
+                  <div class="mt-1">
+                    <textarea id="about" name="about" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-medium text-gray-700">
+                    Open graph
+                  </label>
+                  <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                    <div class="space-y-1 text-center">
+                      <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                      <div class="flex text-sm text-gray-600">
+                        <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                          <span>Upload a file</span>
+                          <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                        </label>
+                        <p class="pl-1">or drag and drop</p>
+                      </div>
+                      <p class="text-xs text-gray-500">
+                        PNG, JPG, GIF up to 10MB
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white terra-bg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  Save
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+        `;
+      case DashboardPages.menus:
+        return html`
+        <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">
+          ${msg('Menus')}
+        </h1>
         <div class="m-4">
-          TODO : Form to manage basic settings
+          TODO : Form to manage website menus
         </div>
         `;
       case DashboardPages.assets:
@@ -338,8 +414,18 @@ export class XAdmin extends Localized(LitElement) {
           <table class="table-auto w-full">
             <thead>
               <tr>
-                <th>Source (EN)</th>
-                <th>Target (FR)</th>
+                <th>
+                  Source
+                  <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200 uppercase last:mr-0 mr-1">
+                    EN
+                  </span>
+                </th>
+                <th>
+                  Target
+                  <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200 uppercase last:mr-0 mr-1">
+                    FR
+                  </span>
+                </th>
               </tr>
             </thead>
             <tbody>
