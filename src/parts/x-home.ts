@@ -16,12 +16,12 @@ export class XHome extends Localized(LitElement) {
     const strengths = [
       {
         title: msg('Safe'),
-        description: msg('Find us on the Luna Orbit chat on'), 
+        description: msg('Multi-cloud hosting across 12 regions on AWS, GCP, and Azure with 24/7 monitoring'), 
         link: null,
       },
       {
         title: msg('Distributed'),
-        description: msg('Multi-cloud hosting across 12 regions on AWS, GCP, and Azure with 24/7 monitoring'), 
+        description: msg('Geographically distributed across four continents to ensure validator stays online'), 
         link: null,
       },
       {

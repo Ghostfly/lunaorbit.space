@@ -1,17 +1,10 @@
-import {LitElement, html, TemplateResult, customElement, property} from 'lit-element';
+import {LitElement, html, TemplateResult, customElement, internalProperty} from 'lit-element';
 import {Localized} from '@lit/localize/localized-element';
 import { msg } from '@lit/localize';
 
-import 'wired-elements/lib/wired-elements';
-
-import { WiredButton, WiredInput } from 'wired-elements/lib/wired-elements';
-
-import IPFS from 'ipfs';
-
-import uint8ArrayConcat from 'uint8arrays/concat';
-import uint8ArrayToString from 'uint8arrays/to-string';
-
-const stringToUse = 'hello world from webpacked IPFS';
+import '@material/mwc-button';
+import { authenticate, getPerson, userSession } from '../auth';
+import { UserSession } from '@stacks/auth';
 
 /**
  * XAdmin component
@@ -19,74 +12,79 @@ const stringToUse = 'hello world from webpacked IPFS';
  */
 @customElement('x-admin')
 export class XAdmin extends Localized(LitElement) {
-  @property({type: Number})
-  public price = 0;
 
-  @property({type: String})
-  protocolVersion = '';
-  @property({type: String})
-  agentVersion = '';
-  @property({type: String})
-  addedFileHash = '';
-  @property({type: String})
-  addedFileContents = '';
+  static APPDomain = 'http://localhost:3000';
+  static RedirectURI = 'http://localhost:3000/panel';
+  static ManifestURI = 'http://localhost:3000/manifest.json';
+
+  @internalProperty()
+  private _signedIn = false;
+
+  private _userSession: UserSession | null = userSession;
+
+  constructor() {
+    super();
+  }
 
   createRenderRoot(): this {
     return this;
   }
 
-  async ops (): Promise<void> {
-    const node = await IPFS.create({ repo: String(Math.random() + Date.now()) })
-
-    console.log('IPFS node is ready');
-
-    const { id, agentVersion, protocolVersion } = await node.id();
-
-    this.id = id;
-    this.agentVersion = agentVersion;
-    this.protocolVersion = protocolVersion;
-
-    const { cid } = await node.add(stringToUse);
-    this.addedFileHash = cid.toString();
-
-    const bufs = []
-
-    for await (const buf of node.cat(cid)) {
-      bufs.push(buf)
+  async firstUpdated(): Promise<void> {
+    if (this._userSession?.isSignInPending()) {
+      const responseToken = localStorage.getItem('lunaorbit-response-token');
+      let pendingSignIn;
+      if (responseToken) {
+        pendingSignIn = await this._userSession.handlePendingSignIn(responseToken);
+      } else {
+        pendingSignIn = await this._userSession.handlePendingSignIn();
+      }
+      console.warn(pendingSignIn);
     }
 
-    const data = uint8ArrayConcat(bufs)
-    this.addedFileContents = uint8ArrayToString(data);
+    if(this._userSession?.isUserSignedIn()){
+      this._signedIn = true;
+    } else {
+      this._signedIn = false;
+    }
   }
 
-  async firstUpdated(): Promise<void> {
-    this.ops();
+  connect(): void {
+    authenticate(() => {
+      console.warn('canceled');
+      this._signedIn = false;
+    }, (payload) => {
+      this._userSession = payload.userSession;
+
+      console.warn('connected', payload, getPerson());
+
+      sessionStorage.setItem('lunaorbit-response-token', this._userSession.getAuthResponseToken());
+
+      this._signedIn = true;
+    });
   }
 
   render(): TemplateResult {
     return html`
       <div class="container  mx-auto py-12 px-6">
-        <h2 class="font-semibold">If you know, you know.</h2>
-        <wired-input type="password" class="m-4" placeholder="Password"></wired-input>
-        <wired-button elevation="2">${msg('Connect')}</wired-button>
+        <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">
+          ${msg('If you know, you know.')}
+        </h1>
 
-        <div>
-        <h1>Everything is working!</h1>
-        <p>Your ID is <strong>${this.id}</strong></p>
-        <p>Your IPFS version is <strong>${this.agentVersion}</strong></p>
-        <p>Your IPFS protocol version is <strong>${this.protocolVersion}</strong></p>
-        <hr />
-        <div>
-          Added a file! <br />
-          ${this.addedFileHash}
-        </div>
-        <br />
-        <br />
-        <p>
-          Contents of this file: <br />
-          ${this.addedFileContents}
-        </p>
-      </div>
+        ${!this._signedIn ? html`
+        <mwc-button @click=${() => {
+          this.connect();
+        }} raised label="${msg('Connect')}"></mwc-button>
+        ` : html``}
+
+
+        ${this._signedIn ? html`
+        <mwc-button @click=${() => {
+          this._userSession?.signUserOut();
+          this._signedIn = false;
+        }} raised label="${msg('Logout')}"></mwc-button>
+        ` : html``}
+
       </div>
     `;
   }
@@ -95,7 +93,5 @@ export class XAdmin extends Localized(LitElement) {
 declare global {
   interface HTMLElementTagNameMap {
     'x-admin': XAdmin;
-    'wired-button': WiredButton;
-    'wired-input': WiredInput;
   }
 }
