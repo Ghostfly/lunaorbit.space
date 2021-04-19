@@ -336,11 +336,11 @@ export class XAdmin extends Localized(LitElement) {
               <div class="grid grid-cols-2 gap-6">
                 <div class="col-span-3 sm:col-span-2">
                   <label for="company_website" class="block text-sm font-medium text-gray-700">
-                    Website
+                    ${msg('Website')}
                   </label>
                   <div class="mt-1 flex rounded-md shadow-sm">
                     <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-                      https://
+                      ${msg('https://')}
                     </span>
                     <input type="text" name="company_website" id="company_website" class="p-2 border-2 border-gray-300 border-dashed focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none sm:text-sm">
                   </div>
@@ -349,7 +349,7 @@ export class XAdmin extends Localized(LitElement) {
 
               <div>
                 <label for="about" class="block text-sm font-medium text-gray-700">
-                  Announcement
+                  ${msg('Announcement')}
                 </label>
                 <div class="mt-1">
                   <textarea id="Announcement" name="announcement" rows="3" class="p-2 shadow-sm border-2 border-gray-300 border-dashed focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm rounded-md"></textarea>
@@ -358,7 +358,7 @@ export class XAdmin extends Localized(LitElement) {
 
               <div>
                 <label for="about" class="block text-sm font-medium text-gray-700">
-                  Description
+                  ${msg('Description')}
                 </label>
                 <div class="mt-1">
                   <textarea id="about" name="about" rows="3" class="p-2 shadow-sm border-2 border-gray-300 border-dashed focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm rounded-md"></textarea>
@@ -367,7 +367,7 @@ export class XAdmin extends Localized(LitElement) {
 
               <div>
                 <label class="block text-sm font-medium text-gray-700">
-                  Open graph
+                  ${msg('Open graph')}
                 </label>
                 <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                   <div class="space-y-1 text-center">
@@ -376,13 +376,13 @@ export class XAdmin extends Localized(LitElement) {
                     </svg>
                     <div class="flex text-sm text-gray-600">
                       <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                        <span>Upload a file</span>
+                        <span>${msg('Upload a file')}</span>
                         <input id="file-upload" name="file-upload" type="file" class="sr-only">
                       </label>
-                      <p class="pl-1">or drag and drop</p>
+                      <p class="pl-1">${msg('or drag and drop')}</p>
                     </div>
                     <p class="text-xs text-gray-500">
-                      PNG, JPG, GIF up to 25MB
+                      ${msg('PNG, JPG, GIF up to 25MB')}
                     </p>
                   </div>
                 </div>
@@ -390,7 +390,7 @@ export class XAdmin extends Localized(LitElement) {
             </div>
             <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
               <button class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white terra-bg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Save
+                ${msg('Save')}
               </button>
             </div>
           </div>
@@ -420,9 +420,9 @@ export class XAdmin extends Localized(LitElement) {
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                 </svg>
-                <span class="ml-2">Upload file</span>
+                <span class="ml-2">${msg('Upload file')}</span>
             </button>
-            <input class="cursor-pointer absolute block opacity-0 pin-r pin-t" type="file" name="vacancyImageFiles" @change=${(change: Event) => {
+            <input class="cursor-pointer absolute block opacity-0 pin-r pin-t" type="file" name="files" @change=${(change: Event) => {
               console.warn(change);
             }} multiple>
           </div>
@@ -456,15 +456,15 @@ export class XAdmin extends Localized(LitElement) {
             <thead>
               <tr>
                 <th>
-                  Source
+                  ${msg('Source')}
                   <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200 uppercase last:mr-0 mr-1">
-                    EN
+                    ${msg('EN')}
                   </span>
                 </th>
                 <th>
-                  Target
+                  ${msg('Target')}
                   <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200 uppercase last:mr-0 mr-1">
-                    FR
+                    ${msg('FR')}
                   </span>
                 </th>
               </tr>
