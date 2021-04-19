@@ -8,9 +8,18 @@ import {
 
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
-import { putFile } from '../../storage';
+import { getFile, putFile } from '../../storage';
 
-import EditorJS from '@editorjs/editorjs';
+import EditorJS, { LogLevels } from '@editorjs/editorjs';
+import Header from '@editorjs/header';
+import SimpleImage from '@editorjs/simple-image'; 
+import RawTool from '@editorjs/raw'; 
+import Link from '@editorjs/link'; 
+import Checklist from '@editorjs/checklist'; 
+import NestedList from '@editorjs/nested-list';
+import Marker from '@editorjs/marker';
+import Quote from '@editorjs/quote';
+import Delimiter from '@editorjs/delimiter';
 
 /**
  * Pages component
@@ -23,6 +32,71 @@ export class WebsitePages extends Localized(LitElement) {
 
   createRenderRoot(): this {
     return this;
+  }
+
+  async firstUpdated(): Promise<void> {
+    const editorHolder = this.querySelector('#holder') as HTMLDivElement;
+    const editorInit = {
+      holder: editorHolder,
+      tools: {
+        header: {
+          class: Header,
+          inlineToolbar: ['link']
+        },
+        list: {
+          class: NestedList,
+          inlineToolbar: true
+        },
+        image: SimpleImage,
+        raw: {
+          class: RawTool
+        },
+        link: {
+          class: Link,
+        },
+        checklist: {
+          class: Checklist
+        },
+        marker: {
+          class: Marker,
+          shortcut: 'CMD+SHIFT+M',
+        },
+        quote: {
+          class: Quote,
+          inlineToolbar: true,
+          shortcut: 'CMD+SHIFT+O',
+          config: {
+            quotePlaceholder: 'Enter a quote',
+            captionPlaceholder: 'Quote\'s author',
+          },
+        },
+        delimiter: Delimiter,
+      },
+      autofocus: true,
+      placeholder: msg('Let`s write an awesome story!'),
+      logLevel: 'VERBOSE' as LogLevels,
+      onReady: () => {
+        // console.log('Editor.js is ready to work!');
+      },
+      onChange: () => {
+        // console.log('Now I know that Editor\'s content changed!');
+      },
+      data: undefined,
+    };
+
+    if (editorHolder) {
+      try {
+        const savedTest = await getFile('test.json', {
+          decrypt: false
+        });
+        const data = JSON.parse(savedTest as string);
+        editorInit.data = data;
+      } catch (err) {
+        console.error('no page found', err);
+      }
+
+      this.editor = new EditorJS(editorInit);
+    }
   }
 
   render(): TemplateResult {
