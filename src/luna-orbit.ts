@@ -187,13 +187,17 @@ export class LunaOrbit extends Localized(LitElement) {
   }
 
   render(): TemplateResult {
+    const isAdmin = this.router.location.pathname.indexOf('cockpit') === -1;
+
     return html`
       ${this._bannerMessage}
       <slot name="nav"></slot>
       <slot name="content"></slot>
+      ${isAdmin ? html`
       <slot name="equation"></slot>
       <slot name="divider"></slot>
       <slot name="footer"></slot>
+      ` : html``}
     `;
   }
 
@@ -262,6 +266,8 @@ export class LunaOrbit extends Localized(LitElement) {
     if (this.mobileMenu) {
       this.mobileMenu.style.display = 'none';
     }
+
+    this.requestUpdate();
   }
 }
 

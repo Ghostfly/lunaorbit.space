@@ -6,7 +6,7 @@ import { authenticate, getPerson, userSession } from '../auth';
 import { UserSession } from '@stacks/auth';
 import { Person } from '@stacks/profile';
 
-import EditorJS from '@editorjs/editorjs';
+import EditorJS, { LogLevels } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import List from '@editorjs/list'; 
 
@@ -80,6 +80,15 @@ export class XAdmin extends Localized(LitElement) {
               class: List, 
               inlineToolbar: true 
             },
+          },
+          autofocus: true,
+          placeholder: 'Let`s write an awesome story!',
+          logLevel: 'VERBOSE' as LogLevels,
+          onReady: () => {
+            console.log('Editor.js is ready to work!');
+          },
+          onChange: () => {
+            console.log('Now I know that Editor\'s content changed!');
           }
         });
         console.warn(editor);
