@@ -221,13 +221,11 @@ export class WebsitePages extends Localized(LitElement) {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
               </svg>
             </button>
-            <button @click=${async () => {
-              console.warn('will add page.');
-            }} class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
+            <!--<button class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-            </button>
+            </button>-->
             <button @click=${async () => {
               await deleteFile(this.editedPage);
               await this.loadFiles();
