@@ -18,6 +18,10 @@ import Quote from '@editorjs/quote';
 import Delimiter from '@editorjs/delimiter';
 import AttachesTool from '@editorjs/attaches';
 
+import './dashboard/settings';
+import './dashboard/assets';
+import './dashboard/translate';
+
 import { IXliffSource, IXliffTarget, XliffParser } from '@vtabary/xliff2js';
 
 // import ENGTranslation from '../assets/xliff/en.xlf?raw';
@@ -104,6 +108,7 @@ export class XAdmin extends Localized(LitElement) {
 
     if (this._page === DashboardPages.pages) {
       await this.updateComplete;
+
       const editorHolder = this.querySelector('#holder') as HTMLDivElement;
       if (editorHolder) {
         const savedTest = await getFile('test.json', {
@@ -158,13 +163,13 @@ export class XAdmin extends Localized(LitElement) {
             delimiter: Delimiter,
           },
           autofocus: true,
-          placeholder: 'Let`s write an awesome story!',
+          placeholder: msg('Let`s write an awesome story!'),
           logLevel: 'VERBOSE' as LogLevels,
           onReady: () => {
-            console.log('Editor.js is ready to work!');
+            // console.log('Editor.js is ready to work!');
           },
           onChange: () => {
-            console.log('Now I know that Editor\'s content changed!');
+            // console.log('Now I know that Editor\'s content changed!');
           },
           data
         });
@@ -340,75 +345,7 @@ export class XAdmin extends Localized(LitElement) {
         `;
       case DashboardPages.settings:
         return html`
-        <h1 class="text-xl ml-4 mb-4 pb-6">
-          ${msg('Settings')}
-        </h1>
-        <div class="mt-5 md:mt-0 md:col-span-2">
-          <div class="shadow sm:rounded-md sm:overflow-hidden">
-            <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-              <div class="grid grid-cols-2 gap-6">
-                <div class="col-span-3 sm:col-span-2">
-                  <label for="company_website" class="block text-sm font-medium text-gray-700">
-                    ${msg('Website')}
-                  </label>
-                  <div class="mt-1 flex rounded-md shadow-sm">
-                    <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-                      ${msg('https://')}
-                    </span>
-                    <input type="text" name="company_website" id="company_website" class="p-2 border-2 border-gray-300 border-dashed focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none sm:text-sm">
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <label for="about" class="block text-sm font-medium text-gray-700">
-                  ${msg('Announcement')}
-                </label>
-                <div class="mt-1">
-                  <textarea id="Announcement" name="announcement" rows="3" class="p-2 shadow-sm border-2 border-gray-300 border-dashed focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm rounded-md"></textarea>
-                </div>
-              </div>
-
-              <div>
-                <label for="about" class="block text-sm font-medium text-gray-700">
-                  ${msg('Description')}
-                </label>
-                <div class="mt-1">
-                  <textarea id="about" name="about" rows="3" class="p-2 shadow-sm border-2 border-gray-300 border-dashed focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm rounded-md"></textarea>
-                </div>
-              </div>
-
-              <div>
-                <label class="block text-sm font-medium text-gray-700">
-                  ${msg('Open graph')}
-                </label>
-                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                  <div class="space-y-1 text-center">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <div class="flex text-sm text-gray-600">
-                      <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                        <span>${msg('Upload a file')}</span>
-                        <input id="file-upload" name="file-upload" type="file" class="sr-only">
-                      </label>
-                      <p class="pl-1">${msg('or drag and drop')}</p>
-                    </div>
-                    <p class="text-xs text-gray-500">
-                      ${msg('PNG, JPG, GIF up to 25MB')}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-              <button class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white terra-bg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                ${msg('Save')}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+        <website-setting></website-setting>
         `;
       case DashboardPages.menus:
         return html`
@@ -421,87 +358,11 @@ export class XAdmin extends Localized(LitElement) {
         `;
       case DashboardPages.assets:
         return html`
-        <div class="flex justify-between gap-2 ml-4 mb-4 items-center">
-          <h1 class="text-xl">
-            ${msg('Assets')}
-          </h1>
-          <div class="overflow-hidden relative w-40">
-            <button class="terra-bg hover:bg-blue-700 text-white py-2 px-4 w-full inline-flex items-center rounded-md" @click=${(e:Event) => {
-              const clicked = e.currentTarget;
-              ((clicked as HTMLElement).nextElementSibling as HTMLInputElement).click();
-            }}>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                </svg>
-                <span class="ml-2">${msg('Upload file')}</span>
-            </button>
-            <input class="cursor-pointer absolute block opacity-0 pin-r pin-t" type="file" name="files" @change=${(change: Event) => {
-              console.warn(change);
-            }} multiple>
-          </div>
-        </div>
-        <div class="m-4">
-            <h1 class="text-xl mt-10">
-              ${msg('Gallery')}
-              <div class="grid sm: grid-cols-2 md:grid-cols-4 lg:grid-cols-6 justify-items-center">
-                <div class="h-24 w-24 p-4 m-4 bg-gray-100 border border-gray-200"></div>
-                <div class="h-24 w-24 p-4 m-4 bg-gray-100 border border-gray-200"></div>
-                <div class="h-24 w-24 p-4 m-4 bg-gray-100 border border-gray-200"></div>
-                <div class="h-24 w-24 p-4 m-4 bg-gray-100 border border-gray-200"></div>
-              </div>
-            </h1>
-        </div>
+        <website-assets></website-assets>
         `;
       case DashboardPages.translate:
         return html`
-        <div class="flex justify-between gap-2 ml-4 mb-4 pb-6">
-          <h1 class="text-xl">
-            ${msg('Translate')}
-          </h1>
-          <button class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-            </svg>
-          </button>
-        </div>
-        <div class="m-4">
-          <table class="table-auto w-full">
-            <thead>
-              <tr>
-                <th>
-                  ${msg('Source')}
-                  <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200 uppercase last:mr-0 mr-1">
-                    ${msg('EN')}
-                  </span>
-                </th>
-                <th>
-                  ${msg('Target')}
-                  <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200 uppercase last:mr-0 mr-1">
-                    ${msg('FR')}
-                  </span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              ${this._strings.map(translatable => {
-                return html`
-                <tr>
-                    <td>
-                      <div class="m-3 pt-0">
-                        <input readonly type="text" .value=${translatable.source.children[0] as unknown as string} class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="m-3 pt-0">
-                        <input type="text" .value=${translatable.target?.children[0] as unknown as string ?? ''} class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
-                      </div>
-                    </td>
-                </tr>
-                `;
-              })}
-            </tbody>
-          </table>
-        </div>
+        <website-translate .strings=${this._strings}></website-translate>
         `;
     }
   }
