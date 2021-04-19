@@ -24,6 +24,7 @@ import { IXliffSource, IXliffTarget, XliffParser } from '@vtabary/xliff2js';
 import FRTranslation from '../assets/xliff/fr.xlf?raw';
 
 enum DashboardPages {
+  cockpit = '/cockpit',
   pages = 'pages',
   settings = 'settings',
   assets = 'assets',
@@ -61,7 +62,7 @@ export class XAdmin extends Localized(LitElement) {
 
   async firstUpdated(): Promise<void> {
     const orbit = document.querySelector('luna-orbit');
-    this._page = orbit?.router.location.pathname.replace(XAdmin.MainPathPrefix + '/', '') as DashboardPages ?? 'home';
+    this._page = orbit?.router.location.pathname.replace(XAdmin.MainPathPrefix + '/', '') as DashboardPages;
 
     if (this._userSession?.isSignInPending()) {
       const responseToken = localStorage.getItem('lunaorbit-response-token');
@@ -266,43 +267,57 @@ export class XAdmin extends Localized(LitElement) {
 
   private _pageForTitle(page: DashboardPages): TemplateResult {
     switch (page) {
+      case DashboardPages.cockpit:
+        return html`
+        <div class="flex justify-between ml-4 mb-4 pb-6">
+          <h1 class="text-xl">
+            ${msg('Home')}
+          </h1>
+        </div>
+        `;
       case DashboardPages.pages:
         return html`
         <div class="flex justify-between ml-4 mb-4 pb-6">
           <h1 class="text-xl">
             ${msg('Pages')}
           </h1>
-          <div class="relative">
-            <select
-              class="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-7"
-            >
-              <option>Staking</option>
-              <option>How to</option>
-              <option>Tools</option>
-              <option>Contact</option>
-            </select>
-            <span
-              class="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center"
-            >
-              <svg
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                class="w-4 h-4"
-                viewBox="0 0 24 24"
+          <div class="flex justify-between gap-2">
+            <div class="relative">
+              <select
+                class="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-7"
               >
-                <path d="M6 9l6 6 6-6"></path>
+                <option>Staking</option>
+                <option>How to</option>
+                <option>Tools</option>
+                <option>Contact</option>
+              </select>
+              <span
+                class="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center"
+              >
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  class="w-4 h-4"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </span>
+            </div>
+            <button class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-            </span>
+            </button>
+            <button class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </button>
           </div>
-          <button class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
-            Remove page
-          </button>
-          <button class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
-            Add page
-          </button>
         </div>
 
         <div id="holder" class="w-full p-4 border-4 rounded-sm"></div>
@@ -387,9 +402,6 @@ export class XAdmin extends Localized(LitElement) {
           ${msg('Assets')}
         </h1>
         <div class="m-4">
-          <div class="text-md">
-            Here you can manage the website files
-          </div>
           <div class="overflow-hidden relative w-64 mt-4 mb-4">
               <button class="bg-blue-500 hover:terra-bg text-white py-2 px-4 w-full inline-flex items-center" @click=${(e:Event) => {
                 const clicked = e.currentTarget;
@@ -404,9 +416,9 @@ export class XAdmin extends Localized(LitElement) {
                 console.warn(change);
               }} multiple>
             </div>
-            <div class="text-md">
-              Files gallery
-            </div>
+            <h1 class="text-xl mt-10">
+              ${msg('Gallery')}
+            </h1>
         </div>
         `;
       case DashboardPages.translate:
