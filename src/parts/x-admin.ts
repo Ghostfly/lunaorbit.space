@@ -268,34 +268,38 @@ export class XAdmin extends Localized(LitElement) {
     switch (page) {
       case DashboardPages.pages:
         return html`
-        <div class="flex justify-between ml-4 mb-4 pt-6 pb-6">
+        <div class="flex justify-between ml-4 mb-4 pb-6">
           <h1 class="text-xl">
             ${msg('Pages')}
           </h1>
-          <div class="flex flex-wrap">
-            <div class="w-full sm:w-6/12 md:w-4/12 px-4">
-              <div class="relative inline-flex align-middle w-full">
-                <button class="text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 bg-blueGray-700 ease-linear transition-all duration-150 font-normal px-6 py-2 rounded outline-none focus:outline-none mr-1 mb-1 capitalize w-full" type="button">
-                  Pages
-                </button>
-                <div class="bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1" style="min-width:12rem">
-                  <a href="#pablo" class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent  text-blueGray-700">
-                    Action
-                  </a>
-                  <a href="#pablo" class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent  text-blueGray-700">
-                    Another action
-                  </a>
-                  <a href="#pablo" class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent  text-blueGray-700">
-                    Something else here
-                  </a>
-                  <div class="h-0 my-2 border border-solid border-t-0 border-blueGray-800 opacity-25"></div>
-                  <a href="#pablo" class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent  text-blueGray-700">
-                    Seprated link
-                  </a>
-                </div>
-              </div>
-            </div>
+          <div class="relative">
+            <select
+              class="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-7"
+            >
+              <option>Staking</option>
+              <option>How to</option>
+              <option>Tools</option>
+              <option>Contact</option>
+            </select>
+            <span
+              class="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center"
+            >
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                class="w-4 h-4"
+                viewBox="0 0 24 24"
+              >
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </span>
           </div>
+          <button class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
+            Remove page
+          </button>
           <button class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
             Add page
           </button>
@@ -305,7 +309,7 @@ export class XAdmin extends Localized(LitElement) {
         `;
       case DashboardPages.settings:
         return html`
-        <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">
+        <h1 class="text-xl ml-4 mb-4 pb-6">
           ${msg('Settings')}
         </h1>
         <div class="mt-5 md:mt-0 md:col-span-2">
@@ -370,7 +374,7 @@ export class XAdmin extends Localized(LitElement) {
         `;
       case DashboardPages.menus:
         return html`
-        <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">
+        <h1 class="text-xl ml-4 mb-4 pb-6">
           ${msg('Menus')}
         </h1>
         <div class="m-4">
@@ -379,7 +383,7 @@ export class XAdmin extends Localized(LitElement) {
         `;
       case DashboardPages.assets:
         return html`
-        <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">
+        <h1 class="text-xl ml-4 mb-4 pb-6">
           ${msg('Assets')}
         </h1>
         <div class="m-4">
@@ -407,7 +411,7 @@ export class XAdmin extends Localized(LitElement) {
         `;
       case DashboardPages.translate:
         return html`
-        <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">
+        <h1 class="text-xl ml-4 mb-4 pb-6">
           ${msg('Translate')}
         </h1>
         <div class="m-4">
