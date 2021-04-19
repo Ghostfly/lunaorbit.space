@@ -145,6 +145,10 @@ export class XAdmin extends Localized(LitElement) {
     `;
   }
 
+  public logout(): void {
+    this._signedIn = false;
+  }
+
   private _pageForTitle(page: DashboardPages): TemplateResult {
     switch (page) {
       case DashboardPages.cockpit:
