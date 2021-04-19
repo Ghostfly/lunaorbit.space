@@ -22,6 +22,7 @@ import { IXliffSource, IXliffTarget, XliffParser } from '@vtabary/xliff2js';
 
 // import ENGTranslation from '../assets/xliff/en.xlf?raw';
 import FRTranslation from '../assets/xliff/fr.xlf?raw';
+import { getFile, putFile } from '../storage';
 
 enum DashboardPages {
   cockpit = '/cockpit',
@@ -55,6 +56,8 @@ export class XAdmin extends Localized(LitElement) {
 
   @internalProperty()
   private _strings: { source: IXliffSource, target: IXliffTarget }[] = [];
+
+  private _editor: EditorJS | null = null;
 
   createRenderRoot(): this {
     return this;
@@ -103,7 +106,13 @@ export class XAdmin extends Localized(LitElement) {
       await this.updateComplete;
       const editorHolder = this.querySelector('#holder') as HTMLDivElement;
       if (editorHolder) {
-        const editor = new EditorJS({
+        const savedTest = await getFile('test.json', {
+          decrypt: false
+        });
+
+        const data = JSON.parse(savedTest as string);
+
+        this._editor = new EditorJS({
           holder: editorHolder,
           tools: { 
             header: {
@@ -157,13 +166,8 @@ export class XAdmin extends Localized(LitElement) {
           onChange: () => {
             console.log('Now I know that Editor\'s content changed!');
           },
-          data: {
-            time: 1552744582955,
-            blocks: [],
-            version: "2.11.10"
-          }
+          data
         });
-        console.warn(editor);
       }
     }
   }
@@ -305,7 +309,16 @@ export class XAdmin extends Localized(LitElement) {
                 </svg>
               </span>
             </div>
-            <button class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
+            <button @click=${async () => {
+              const outputData = await this._editor?.save();
+              const savedTest = await putFile('test.json', JSON.stringify(outputData), {
+                contentType: 'text/html',
+                encrypt: false,
+                dangerouslyIgnoreEtag: false
+              });
+          
+              console.warn(savedTest);
+            }} class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
               </svg>
