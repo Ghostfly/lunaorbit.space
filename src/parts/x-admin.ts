@@ -208,7 +208,7 @@ export class XAdmin extends Localized(LitElement) {
         <div class="flex flex-col items-center w-16 h-100 overflow-hidden text-indigo-300 terra-bg">
           <div class="flex flex-col items-center mt-3">
             ${this._person ? html`
-              <img class="h-10 w-10 bg-white rounded-lg" src="https://avatars.dicebear.com/api/bottts/${this._person?.profile().stxAddress.mainnet}.svg" />
+              <img class="h-10 w-10 bg-white rounded-full" src="https://avatars.dicebear.com/api/bottts/${this._person?.profile().stxAddress.mainnet}.svg" />
             ` : html``}
             <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this._page === DashboardPages.pages ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${XAdmin.MainPathPrefix}/${DashboardPages.pages}" title="${msg('Pages')}">
               <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -418,6 +418,12 @@ export class XAdmin extends Localized(LitElement) {
             </div>
             <h1 class="text-xl mt-10">
               ${msg('Gallery')}
+              <div class="grid sm: grid-cols-2 md:grid-cols-4 lg:grid-cols-6 justify-items-center">
+                <div class="h-24 w-24 p-4 m-4 bg-gray-100 border border-gray-200"></div>
+                <div class="h-24 w-24 p-4 m-4 bg-gray-100 border border-gray-200"></div>
+                <div class="h-24 w-24 p-4 m-4 bg-gray-100 border border-gray-200"></div>
+                <div class="h-24 w-24 p-4 m-4 bg-gray-100 border border-gray-200"></div>
+              </div>
             </h1>
         </div>
         `;
