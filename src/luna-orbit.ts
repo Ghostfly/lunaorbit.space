@@ -11,20 +11,17 @@ import {Router, RouterLocation} from '@vaadin/router';
 
 import './styles.css';
 
-import './banner-message';
-import './locale-picker';
-import './airdrop-dialog';
-import './airdrop-toast';
+import './components/x-components';
+import './parts/x-parts';
 
+// Todo: lazy import
 import './parts/x-admin';
-
-import './x-parts';
 
 import config from './config';
 import {setLocaleFromUrl} from './localization';
 import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
-import {BannerMessage} from './banner-message';
+import {BannerMessage} from './components/banner-message';
 
 /**
  * Luna-orbit

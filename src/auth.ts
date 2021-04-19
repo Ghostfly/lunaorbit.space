@@ -7,11 +7,10 @@ export const userSession = new UserSession({ appConfig });
 
 export function authenticate(cancel: () => void, finished: (payload: FinishedData) => void): void {
   showConnect({
-    sendToSignIn: true,
     manifestPath: 'http://localhost:3000/manifest.json',
     appDetails: {
       name: 'Luna Orbit',
-      icon: window.location.origin + '/logo.svg',
+      icon: 'https://lunaorbit.ghostfly.dev/assets/apple-touch-icon.png',
     },
     onCancel:cancel,
     onFinish: finished,

@@ -12,7 +12,7 @@ import {
 } from 'lit-element';
 import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
-import {AnchorClaimResponse, MIRAirdrop, TerraQuery} from './terra-min';
+import {AnchorClaimResponse, MIRAirdrop, TerraQuery} from '../terra-min';
 import { Router } from '@vaadin/router';
 
 /**

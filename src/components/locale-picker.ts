@@ -1,6 +1,6 @@
 import {LitElement, html, TemplateResult, customElement} from 'lit-element';
-import {getLocale, setLocale} from './localization';
-import {allLocales} from './locale-codes';
+import {getLocale, setLocale} from '../localization';
+import {allLocales} from '../locale-codes';
 import {Localized} from '@lit/localize/localized-element';
 
 @customElement('locale-picker')

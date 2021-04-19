@@ -3,8 +3,10 @@ import {Localized} from '@lit/localize/localized-element';
 import { msg } from '@lit/localize';
 
 import '@material/mwc-button';
+
 import { authenticate, getPerson, userSession } from '../auth';
 import { UserSession } from '@stacks/auth';
+import { Person } from '@stacks/profile';
 
 /**
  * XAdmin component
@@ -12,15 +14,16 @@ import { UserSession } from '@stacks/auth';
  */
 @customElement('x-admin')
 export class XAdmin extends Localized(LitElement) {
-
   static APPDomain = 'http://localhost:3000';
   static RedirectURI = 'http://localhost:3000/panel';
   static ManifestURI = 'http://localhost:3000/manifest.json';
 
   @internalProperty()
   private _signedIn = false;
-
   private _userSession: UserSession | null = userSession;
+
+  @internalProperty()
+  private _person: Person | null = null;
 
   constructor() {
     super();
@@ -33,16 +36,17 @@ export class XAdmin extends Localized(LitElement) {
   async firstUpdated(): Promise<void> {
     if (this._userSession?.isSignInPending()) {
       const responseToken = localStorage.getItem('lunaorbit-response-token');
-      let pendingSignIn;
       if (responseToken) {
-        pendingSignIn = await this._userSession.handlePendingSignIn(responseToken);
+        await this._userSession.handlePendingSignIn(responseToken);
       } else {
-        pendingSignIn = await this._userSession.handlePendingSignIn();
+        await this._userSession.handlePendingSignIn();
       }
-      console.warn(pendingSignIn);
     }
 
-    if(this._userSession?.isUserSignedIn()){
+    if (this._userSession?.isUserSignedIn()) {
+      // eslint-disable-next-line no-debugger
+      debugger;
+      this._person = getPerson();
       this._signedIn = true;
     } else {
       this._signedIn = false;
@@ -55,11 +59,12 @@ export class XAdmin extends Localized(LitElement) {
       this._signedIn = false;
     }, (payload) => {
       this._userSession = payload.userSession;
+      this._person = getPerson();
 
-      console.warn('connected', payload, getPerson());
+      // eslint-disable-next-line no-debugger
+      debugger;
 
       sessionStorage.setItem('lunaorbit-response-token', this._userSession.getAuthResponseToken());
-
       this._signedIn = true;
     });
   }
@@ -79,6 +84,9 @@ export class XAdmin extends Localized(LitElement) {
 
 
         ${this._signedIn ? html`
+        ${this._person ? html`
+        ${this._person.profile().stxAddress.mainnet}
+        ` : html``}
         <mwc-button @click=${() => {
           this._userSession?.signUserOut();
           this._signedIn = false;
