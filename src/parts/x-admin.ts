@@ -245,7 +245,7 @@ export class XAdmin extends Localized(LitElement) {
               </span>
           </a>
         </div>
-        <div class="container px-4 py-6 col-span-1">
+        <div class="container px-4 py-6 h-screen">
           ${this._pageForTitle(this._page)}
         </div>
       </div>
@@ -348,12 +348,12 @@ export class XAdmin extends Localized(LitElement) {
                 <tr>
                     <td>
                       <div class="m-3 pt-0">
-                        <input readonly type="text" .value=${translatable.source.children as unknown as string} class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
+                        <input readonly type="text" .value=${translatable.source.children[0] as unknown as string} class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
                       </div>
                     </td>
                     <td>
                       <div class="m-3 pt-0">
-                        <input type="text" .value=${translatable.target.children as unknown as string} class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
+                        <input type="text" .value=${translatable.target?.children[0] as unknown as string ?? ''} class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
                       </div>
                     </td>
                 </tr>
