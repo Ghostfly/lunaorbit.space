@@ -8,13 +8,22 @@ import { Person } from '@stacks/profile';
 
 import EditorJS, { LogLevels } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
-import List from '@editorjs/list'; 
+import Image from '@editorjs/simple-image'; 
+import RawTool from '@editorjs/raw'; 
+import Link from '@editorjs/link'; 
+import Checklist from '@editorjs/checklist'; 
+import NestedList from '@editorjs/nested-list';
+import Marker from '@editorjs/marker';
+import Quote from '@editorjs/quote';
+import Delimiter from '@editorjs/delimiter';
+import AttachesTool from '@editorjs/attaches';
 
 enum DashboardPages {
   home = 'home',
   pages = 'pages',
   settings = 'settings',
   reports = 'reports',
+  assets = 'assets',
 }
 
 /**
@@ -77,9 +86,42 @@ export class XAdmin extends Localized(LitElement) {
               inlineToolbar: ['link'] 
             }, 
             list: { 
-              class: List, 
+              class: NestedList, 
               inlineToolbar: true 
             },
+            image: {
+              class: Image,
+            },
+            raw: {
+              class: RawTool
+            },
+            link: {
+              class: Link,
+            },
+            checklist: {
+              class: Checklist
+            },
+            marker: {
+              class: Marker,
+              shortcut: 'CMD+SHIFT+M',
+            },
+            quote: {
+              class: Quote,
+              inlineToolbar: true,
+              shortcut: 'CMD+SHIFT+O',
+              config: {
+                quotePlaceholder: 'Enter a quote',
+                captionPlaceholder: 'Quote\'s author',
+              },
+            },
+            attaches: {
+              class: AttachesTool,
+              inlineToolbar: true,
+              config: {
+                endpoint: 'http://localhost:8008/uploadFile'
+              }
+            },
+            delimiter: Delimiter,
           },
           autofocus: true,
           placeholder: 'Let`s write an awesome story!',
@@ -89,6 +131,11 @@ export class XAdmin extends Localized(LitElement) {
           },
           onChange: () => {
             console.log('Now I know that Editor\'s content changed!');
+          },
+          data: {
+            time: 1552744582955,
+            blocks: [],
+            version: "2.11.10"
           }
         });
         console.warn(editor);
@@ -140,6 +187,8 @@ export class XAdmin extends Localized(LitElement) {
             <a href="${XAdmin.MainPathPrefix}/${DashboardPages.pages}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${this._page === DashboardPages.pages ? 'bg-gray-900 text-white' : 'text-gray-300'}">${msg('Pages')}</a>
             <a href="${XAdmin.MainPathPrefix}/${DashboardPages.settings}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${this._page === DashboardPages.settings ? 'bg-gray-900 text-white' : 'text-gray-300'}">${msg('Settings')}</a>
             <a href="${XAdmin.MainPathPrefix}/${DashboardPages.reports}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${this._page === DashboardPages.reports ? 'bg-gray-900 text-white' : 'text-gray-300'}">${msg('Reports')}</a>
+            <a href="${XAdmin.MainPathPrefix}/${DashboardPages.assets}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${this._page === DashboardPages.assets ? 'bg-gray-900 text-white' : 'text-gray-300'}">${msg('Assets')}</a>
+
           </div>
           <div class="grid grid-flow-col grid-col-2 gap-4 justify-center">
             ${this._person ? html`
@@ -210,7 +259,13 @@ export class XAdmin extends Localized(LitElement) {
         <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">
           ${msg('Settings')}
         </h1>
-        `
+        `;
+      case DashboardPages.assets:
+        return html`
+        <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">
+          ${msg('Assets')}
+        </h1>
+        `;
     }
   }
 }
