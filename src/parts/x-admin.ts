@@ -408,24 +408,26 @@ export class XAdmin extends Localized(LitElement) {
         `;
       case DashboardPages.assets:
         return html`
-        <h1 class="text-xl ml-4 mb-4 pb-6">
-          ${msg('Assets')}
-        </h1>
+        <div class="flex justify-between gap-2 ml-4 mb-4 items-center">
+          <h1 class="text-xl">
+            ${msg('Assets')}
+          </h1>
+          <div class="overflow-hidden relative w-40">
+            <button class="terra-bg hover:bg-blue-700 text-white py-2 px-4 w-full inline-flex items-center rounded-md" @click=${(e:Event) => {
+              const clicked = e.currentTarget;
+              ((clicked as HTMLElement).nextElementSibling as HTMLInputElement).click();
+            }}>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>
+                <span class="ml-2">Upload file</span>
+            </button>
+            <input class="cursor-pointer absolute block opacity-0 pin-r pin-t" type="file" name="vacancyImageFiles" @change=${(change: Event) => {
+              console.warn(change);
+            }} multiple>
+          </div>
+        </div>
         <div class="m-4">
-          <div class="overflow-hidden relative w-64 mt-4 mb-4">
-              <button class="bg-blue-500 hover:terra-bg text-white py-2 px-4 w-full inline-flex items-center" @click=${(e:Event) => {
-                const clicked = e.currentTarget;
-                ((clicked as HTMLElement).nextElementSibling as HTMLInputElement).click();
-              }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                  </svg>
-                  <span class="ml-2">Upload file</span>
-              </button>
-              <input class="cursor-pointer absolute block opacity-0 pin-r pin-t" type="file" name="vacancyImageFiles" @change=${(change: Event) => {
-                console.warn(change);
-              }} multiple>
-            </div>
             <h1 class="text-xl mt-10">
               ${msg('Gallery')}
               <div class="grid sm: grid-cols-2 md:grid-cols-4 lg:grid-cols-6 justify-items-center">
