@@ -109,60 +109,66 @@ export class XAdmin extends Localized(LitElement) {
       await this.updateComplete;
 
       const editorHolder = this.querySelector('#holder') as HTMLDivElement;
+      const editorInit = {
+        holder: editorHolder,
+        tools: {
+          header: {
+            class: Header,
+            inlineToolbar: ['link']
+          },
+          list: {
+            class: NestedList,
+            inlineToolbar: true
+          },
+          image: SimpleImage,
+          raw: {
+            class: RawTool
+          },
+          link: {
+            class: Link,
+          },
+          checklist: {
+            class: Checklist
+          },
+          marker: {
+            class: Marker,
+            shortcut: 'CMD+SHIFT+M',
+          },
+          quote: {
+            class: Quote,
+            inlineToolbar: true,
+            shortcut: 'CMD+SHIFT+O',
+            config: {
+              quotePlaceholder: 'Enter a quote',
+              captionPlaceholder: 'Quote\'s author',
+            },
+          },
+          delimiter: Delimiter,
+        },
+        autofocus: true,
+        placeholder: msg('Let`s write an awesome story!'),
+        logLevel: 'VERBOSE' as LogLevels,
+        onReady: () => {
+          // console.log('Editor.js is ready to work!');
+        },
+        onChange: () => {
+          // console.log('Now I know that Editor\'s content changed!');
+        },
+        data: undefined,
+      };
+
       if (editorHolder) {
-        const savedTest = await getFile('test.json', {
-          decrypt: false
-        });
+        try {
+          const savedTest = await getFile('test.json', {
+            decrypt: false
+          });
+          const data = JSON.parse(savedTest as string);
+          editorInit.data = data;
+        } catch (err) {
+          console.error('no page found', err);
+        }
 
-        const data = JSON.parse(savedTest as string);
-
-        this._editor = new EditorJS({
-          holder: editorHolder,
-          tools: { 
-            header: {
-              class: Header,
-              inlineToolbar: ['link'] 
-            }, 
-            list: { 
-              class: NestedList, 
-              inlineToolbar: true 
-            },
-            image: SimpleImage,
-            raw: {
-              class: RawTool
-            },
-            link: {
-              class: Link,
-            },
-            checklist: {
-              class: Checklist
-            },
-            marker: {
-              class: Marker,
-              shortcut: 'CMD+SHIFT+M',
-            },
-            quote: {
-              class: Quote,
-              inlineToolbar: true,
-              shortcut: 'CMD+SHIFT+O',
-              config: {
-                quotePlaceholder: 'Enter a quote',
-                captionPlaceholder: 'Quote\'s author',
-              },
-            },
-            delimiter: Delimiter,
-          },
-          autofocus: true,
-          placeholder: msg('Let`s write an awesome story!'),
-          logLevel: 'VERBOSE' as LogLevels,
-          onReady: () => {
-            // console.log('Editor.js is ready to work!');
-          },
-          onChange: () => {
-            // console.log('Now I know that Editor\'s content changed!');
-          },
-          data
-        });
+        this._editor = new EditorJS(editorInit);
       }
     }
   }
