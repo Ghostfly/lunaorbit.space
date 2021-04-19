@@ -10,9 +10,6 @@ import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
 import { IXliffSource, IXliffTarget } from '@vtabary/xliff2js';
 
-/**
- * 404 component
- */
 @customElement('website-translate')
 export class WebsiteTranslate extends Localized(LitElement) {
   @property({type: Array})

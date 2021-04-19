@@ -10,9 +10,6 @@ import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
 import { deleteFile, listFiles, putFile } from '../../storage';
 
-/**
- * 404 component
- */
 @customElement('website-assets')
 export class WebsiteAssets extends Localized(LitElement) {
 

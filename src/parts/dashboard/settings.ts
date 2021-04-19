@@ -8,9 +8,6 @@ import {
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
 
-/**
- * 404 component
- */
 @customElement('website-setting')
 export class WebsiteSettings extends Localized(LitElement) {
   createRenderRoot(): this {
