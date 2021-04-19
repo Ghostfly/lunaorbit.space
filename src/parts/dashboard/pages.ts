@@ -9,7 +9,7 @@ import {
 
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
-import { deleteFile, getFile, listFiles, putFile } from '../../storage';
+import { deleteFile, getFile, putFile } from '../../storage';
 
 import EditorJS, { LogLevels } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
@@ -38,7 +38,7 @@ export class WebsitePages extends Localized(LitElement) {
   public lang = 'en';
 
   @property({ type: String })
-  public page = 'home';
+  public page = 'staking';
 
   private _data: undefined;
 
@@ -118,11 +118,8 @@ export class WebsitePages extends Localized(LitElement) {
   }
 
   async loadFiles(): Promise<void> {
-    const files = (await listFiles()).filter(file => file.name.startsWith('page-'));
-
-    const pages = [...systemPages, ...files];
-
-    this._files = pages;
+    // const files = (await listFiles()).filter(file => file.name.startsWith('page-'));
+    this._files = systemPages;
   }
 
   async firstUpdated(): Promise<void> {
@@ -190,12 +187,8 @@ export class WebsitePages extends Localized(LitElement) {
                 class="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-7"
               >
                 ${this._files.map(file => {
-                  const isSystemPage = file.name.split('-')[1] ?? file.name.toLowerCase();
-
-                  const name = isSystemPage ?? file.name;
-
                   return html`
-                    <option value="${name}">${name}</option>
+                    <option value="${file.name}">${file.name}</option>
                   `;
                 })}
               </select>

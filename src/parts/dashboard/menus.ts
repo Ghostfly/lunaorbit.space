@@ -8,7 +8,7 @@ import {
 import {msg} from '@lit/localize';
 import { Localized } from '@lit/localize/localized-element.js';
 
-interface MenuItem {
+export interface MenuItem {
   url: string;
   name: string;
 }
