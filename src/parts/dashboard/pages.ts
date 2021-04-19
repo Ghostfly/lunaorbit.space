@@ -118,7 +118,6 @@ export class WebsitePages extends Localized(LitElement) {
   }
 
   async loadFiles(): Promise<void> {
-    // const files = (await listFiles()).filter(file => file.name.startsWith('page-'));
     this._files = systemPages;
   }
 
@@ -188,7 +187,7 @@ export class WebsitePages extends Localized(LitElement) {
               >
                 ${this._files.map(file => {
                   return html`
-                    <option value="${file.name}">${file.name}</option>
+                    <option value="${file.url}">${file.name}</option>
                   `;
                 })}
               </select>
