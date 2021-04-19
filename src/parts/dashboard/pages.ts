@@ -8,7 +8,7 @@ import {
 
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
-import { getFile, putFile } from '../../storage';
+import { deleteFile, getFile, putFile } from '../../storage';
 
 import EditorJS, { LogLevels } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
@@ -94,7 +94,7 @@ export class WebsitePages extends Localized(LitElement) {
       this.editor?.destroy();
 
       try {
-        const savedTest = await getFile(`page-${this.page}-${this.lang}.json`, {
+        const savedTest = await getFile(this.editedPage, {
           decrypt: false
         });
         const data = JSON.parse(savedTest as string);
@@ -110,6 +110,10 @@ export class WebsitePages extends Localized(LitElement) {
 
   async firstUpdated(): Promise<void> {
     await this.loadEditor();
+  }
+
+  public get editedPage(): string {
+    return `page-${this.page}-${this.lang}.json`;
   }
 
   render(): TemplateResult {
@@ -160,7 +164,7 @@ export class WebsitePages extends Localized(LitElement) {
             </div>
             <button @click=${async () => {
               const outputData = await this.editor?.save();
-              const savedTest = await putFile(`page-${this.page}-${this.lang}.json`, JSON.stringify(outputData), {
+              const savedTest = await putFile(this.editedPage, JSON.stringify(outputData), {
                 contentType: 'text/html',
                 encrypt: false,
                 dangerouslyIgnoreEtag: false
@@ -172,12 +176,18 @@ export class WebsitePages extends Localized(LitElement) {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
               </svg>
             </button>
-            <button class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
+            <button @click=${async () => {
+              console.warn('will add page.');
+            }} class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </button>
-            <button class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
+            <button @click=${async () => {
+              console.warn('will drop page.');
+              await deleteFile(this.editedPage);
+              this.loadEditor();
+            }} class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
