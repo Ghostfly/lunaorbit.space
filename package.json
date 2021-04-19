@@ -22,6 +22,9 @@
   "author": "Gh0stfly_",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "@editorjs/editorjs": "^2.20.2",
+    "@editorjs/header": "^2.6.1",
+    "@editorjs/list": "^1.6.2",
     "@lit/localize": "^0.9.0",
     "@lit/localize-tools": "^0.2.1",
     "@stacks/auth": "^1.2.3",

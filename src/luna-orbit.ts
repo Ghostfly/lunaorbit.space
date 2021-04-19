@@ -129,31 +129,31 @@ export class LunaOrbit extends Localized(LitElement) {
 
     const links = [
       {
-        href: 'home',
+        href: '/home',
         class:
           'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
         value: msg('Staking'),
       },
       {
-        href: 'how-to',
+        href: '/how-to',
         class:
           'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
         value: msg('How to'),
       },
       {
-        href: 'tools',
+        href: '/tools',
         class:
           'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
         value: msg('Tools'),
       },
       {
-        href: 'contact',
+        href: '/contact',
         class:
           'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
         value: msg('Contact'),
       },
       {
-        href: 'airdrops',
+        href: '/airdrops',
         class:
           'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
         value: msg('Airdrops'),
