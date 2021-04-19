@@ -1,10 +1,15 @@
-import {LitElement, html, TemplateResult, customElement, internalProperty} from 'lit-element';
-import {Localized} from '@lit/localize/localized-element';
+import { LitElement, html, TemplateResult, customElement, internalProperty } from 'lit-element';
+import { Localized } from '@lit/localize/localized-element';
 import { msg } from '@lit/localize';
-
-import { authenticate, getPerson, userSession } from '../auth';
 import { UserSession } from '@stacks/auth';
 import { Person } from '@stacks/profile';
+
+import { IXliffSource, IXliffTarget, XliffParser } from '@vtabary/xliff2js';
+import FRTranslation from '../assets/xliff/fr.xlf?raw';
+
+import { authenticate, getPerson, userSession } from '../auth';
+
+import { AdminNav, DashboardPages } from './dashboard/nav';
 
 import './dashboard/settings';
 import './dashboard/assets';
@@ -13,14 +18,8 @@ import './dashboard/pages';
 import './dashboard/menus';
 import './dashboard/nav';
 
-import { IXliffSource, IXliffTarget, XliffParser } from '@vtabary/xliff2js';
-
-import FRTranslation from '../assets/xliff/fr.xlf?raw';
-import { AdminNav, DashboardPages } from './dashboard/nav';
-
 /**
  * XAdmin component
- *
  */
 @customElement('x-admin')
 export class XAdmin extends Localized(LitElement) {
@@ -87,12 +86,6 @@ export class XAdmin extends Localized(LitElement) {
     this._page = orbit?.router.location.pathname.replace(AdminNav.MainPathPrefix + '/', '') as DashboardPages;
 
     await this.handleAuth();
-
-    if (this._page === DashboardPages.pages) {
-      await this.updateComplete;
-
-
-    }
   }
 
   connect(): void {
