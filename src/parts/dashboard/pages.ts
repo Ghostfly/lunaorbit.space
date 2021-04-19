@@ -30,11 +30,17 @@ export class WebsitePages extends Localized(LitElement) {
   @property({ type: Object })
   public editor: EditorJS | null = null;
 
+  @property({ type: String })
+  public lang = 'en';
+
+  @property({ type: String })
+  public page = 'home';
+
   createRenderRoot(): this {
     return this;
   }
 
-  async firstUpdated(): Promise<void> {
+  async loadEditor(): Promise<void> {
     const editorHolder = this.querySelector('#holder') as HTMLDivElement;
     const editorInit = {
       holder: editorHolder,
@@ -85,18 +91,25 @@ export class WebsitePages extends Localized(LitElement) {
     };
 
     if (editorHolder) {
+      this.editor?.destroy();
+
       try {
-        const savedTest = await getFile('test.json', {
+        const savedTest = await getFile(`${this.page}-${this.lang}.json`, {
           decrypt: false
         });
         const data = JSON.parse(savedTest as string);
         editorInit.data = data;
       } catch (err) {
-        console.error('no page found', err);
+        editorInit.data = undefined;
+        // console.error('no page found', err);
       }
 
       this.editor = new EditorJS(editorInit);
     }
+  }
+
+  async firstUpdated(): Promise<void> {
+    await this.loadEditor();
   }
 
   render(): TemplateResult {
@@ -108,12 +121,20 @@ export class WebsitePages extends Localized(LitElement) {
           <div class="flex justify-between gap-2">
             <div class="relative">
               <select
+                  @change=${async (event: Event) => {
+                    this.lang = (event.target as HTMLSelectElement).value;
+                    await this.loadEditor();
+                  }}
                   class="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-7"
                 >
                   <option>EN</option>
                   <option>FR</option>
               </select>
               <select
+                @change=${async (event: Event) => {
+                  this.page = (event.target as HTMLSelectElement).value;
+                  await this.loadEditor();
+                }}
                 class="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-7"
               >
                 <option value="home">Staking</option>
@@ -139,7 +160,7 @@ export class WebsitePages extends Localized(LitElement) {
             </div>
             <button @click=${async () => {
               const outputData = await this.editor?.save();
-              const savedTest = await putFile('test.json', JSON.stringify(outputData), {
+              const savedTest = await putFile(`${this.page}-${this.lang}.json`, JSON.stringify(outputData), {
                 contentType: 'text/html',
                 encrypt: false,
                 dangerouslyIgnoreEtag: false
