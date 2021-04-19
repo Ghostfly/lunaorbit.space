@@ -10,3 +10,5 @@ declare module '@editorjs/marker';
 declare module '@editorjs/quote';
 declare module '@editorjs/delimiter';
 declare module '@editorjs/attaches';
+
+declare module '*.xlf?raw';

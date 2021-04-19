@@ -71,6 +71,10 @@ const commonConfig = merge([
     module: {
       rules: [
         {
+          resourceQuery: /raw/,
+          type: 'asset/source',
+        },
+        {
           test: /\.css$/i,
           include: resolve(__dirname, 'src'),
           use: ['style-loader', 'css-loader', 'postcss-loader'],
