@@ -30,7 +30,7 @@ export class WebsiteAssets extends Localized(LitElement) {
   async updateFiles(): Promise<void> {
     const filesList = await listFiles();
     if (Array.isArray(filesList)) {
-      this.files = filesList;
+      this.files = filesList.filter(file => !file.name.startsWith('page-'));
     } else {
       this.files = [];
     }
@@ -76,6 +76,9 @@ export class WebsiteAssets extends Localized(LitElement) {
             <h1 class="text-xl mt-10">
               ${msg('Gallery')}
               <div class="grid lg:grid-cols-3 sm:justify-items-start lg:justify-items-center m-4">
+                ${this.files.length === 0 ? html`
+                No files to show
+                ` : html``}
                 ${this.files.map((file) => {
                   return html`
                   <div class="flex flex-col justify-center items-end p-4 m-4 bg-gray-100 border border-gray-200">
