@@ -47,25 +47,6 @@ export class XAdmin extends Localized(LitElement) {
 
   async firstUpdated(): Promise<void> {
     const orbit = document.querySelector('luna-orbit');
-    const editorHolder = this.querySelector('#holder') as HTMLDivElement;
-    if (editorHolder) {
-      const editor = new EditorJS({
-        holder: editorHolder,
-        tools: { 
-          header: {
-            class: Header,
-            inlineToolbar: ['link'] 
-          }, 
-          list: { 
-            class: List, 
-            inlineToolbar: true 
-          }
-        }, 
-      });
-
-      console.warn(editor);
-    }
-
     this._page = orbit?.router.location.pathname.replace(XAdmin.MainPathPrefix + '/', '') as DashboardPages ?? 'home';
 
     if (this._userSession?.isSignInPending()) {
@@ -82,6 +63,27 @@ export class XAdmin extends Localized(LitElement) {
       this._signedIn = true;
     } else {
       this._signedIn = false;
+    }
+
+    if (this._page === DashboardPages.pages) {
+      await this.updateComplete;
+      const editorHolder = this.querySelector('#holder') as HTMLDivElement;
+      if (editorHolder) {
+        const editor = new EditorJS({
+          holder: editorHolder,
+          tools: { 
+            header: {
+              class: Header,
+              inlineToolbar: ['link'] 
+            }, 
+            list: { 
+              class: List, 
+              inlineToolbar: true 
+            },
+          }
+        });
+        console.warn(editor);
+      }
     }
   }
 
@@ -125,10 +127,10 @@ export class XAdmin extends Localized(LitElement) {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-flow-col grid-col-2 p-2">
           <div class="ml-10 flex space-x-4 items-center">
-            <a href="${XAdmin.MainPathPrefix}/${DashboardPages.home}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">${msg('Dashboard')}</a>
-            <a href="${XAdmin.MainPathPrefix}/${DashboardPages.pages}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">${msg('Pages')}</a>
-            <a href="${XAdmin.MainPathPrefix}/${DashboardPages.settings}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">${msg('Settings')}</a>
-            <a href="${XAdmin.MainPathPrefix}/${DashboardPages.reports}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">${msg('Reports')}</a>
+            <a href="${XAdmin.MainPathPrefix}/${DashboardPages.home}" class="px-3 py-2 rounded-md text-sm font-medium ${this._page === DashboardPages.home ? 'bg-gray-900 text-white' : 'text-gray-300'}">${msg('Dashboard')}</a>
+            <a href="${XAdmin.MainPathPrefix}/${DashboardPages.pages}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${this._page === DashboardPages.pages ? 'bg-gray-900 text-white' : 'text-gray-300'}">${msg('Pages')}</a>
+            <a href="${XAdmin.MainPathPrefix}/${DashboardPages.settings}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${this._page === DashboardPages.settings ? 'bg-gray-900 text-white' : 'text-gray-300'}">${msg('Settings')}</a>
+            <a href="${XAdmin.MainPathPrefix}/${DashboardPages.reports}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ${this._page === DashboardPages.reports ? 'bg-gray-900 text-white' : 'text-gray-300'}">${msg('Reports')}</a>
           </div>
           <div class="grid grid-flow-col grid-col-2 gap-4 justify-center">
             ${this._person ? html`
