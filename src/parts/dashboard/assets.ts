@@ -3,18 +3,37 @@ import {
   customElement,
   LitElement,
   TemplateResult,
+  property,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
+import { deleteFile, listFiles, putFile } from '../../storage';
 
 /**
  * 404 component
  */
 @customElement('website-assets')
 export class WebsiteAssets extends Localized(LitElement) {
+
+  @property({ type: Array })
+  public files: { name: string; url: string; }[] = []
+
   createRenderRoot(): this {
     return this;
+  }
+  
+  async firstUpdated(): Promise<void> {
+    await this.updateFiles();
+  }
+
+  async updateFiles(): Promise<void> {
+    const filesList = await listFiles();
+    if (Array.isArray(filesList)) {
+      this.files = filesList;
+    } else {
+      this.files = [];
+    }
   }
 
   render(): TemplateResult {
@@ -33,19 +52,51 @@ export class WebsiteAssets extends Localized(LitElement) {
                 </svg>
                 <span class="ml-2">${msg('Upload file')}</span>
             </button>
-            <input class="cursor-pointer absolute block opacity-0 pin-r pin-t" type="file" name="files" @change=${(change: Event) => {
-              console.warn(change);
-            }} multiple>
+            <input class="cursor-pointer absolute block opacity-0 pin-r pin-t" type="file" name="files" @change=${async (event: Event) => {
+                const target = event.target as HTMLInputElement;
+                if (target.files && target.files[0]) {
+                  const maxAllowedSize = 25 * 1024 * 1024;
+                  const file = target.files[0];
+
+                  if (file.size > maxAllowedSize) {
+                    // TODO : replace by alert.
+                    alert(msg('File is too big.'));
+                    target.value = '';
+                  } else {
+                    console.warn('will upload', file);
+                    const fileLink = await putFile(file.name, file, { encrypt: false });
+                    console.warn('uploaded', fileLink);
+                    await this.updateFiles();
+                  }
+              }
+            }}>
           </div>
         </div>
         <div class="m-4">
             <h1 class="text-xl mt-10">
               ${msg('Gallery')}
-              <div class="grid sm: grid-cols-2 md:grid-cols-4 lg:grid-cols-6 justify-items-center">
-                <div class="h-24 w-24 p-4 m-4 bg-gray-100 border border-gray-200"></div>
-                <div class="h-24 w-24 p-4 m-4 bg-gray-100 border border-gray-200"></div>
-                <div class="h-24 w-24 p-4 m-4 bg-gray-100 border border-gray-200"></div>
-                <div class="h-24 w-24 p-4 m-4 bg-gray-100 border border-gray-200"></div>
+              <div class="grid lg:grid-cols-3 sm:justify-items-start lg:justify-items-center m-4">
+                ${this.files.map((file) => {
+                  return html`
+                  <div class="flex flex-col justify-center items-end p-4 m-4 bg-gray-100 border border-gray-200">
+                    ${file.name}
+                    <div class="flex justify-between">
+                      <svg @click=${() => {
+                        console.warn(file.url);
+                      }} xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                      </svg>
+                      <svg @click=${async () => {
+                        await deleteFile(file.name);
+                        console.warn('deleted');
+                        await this.updateFiles();
+                      }} xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </div>
+                  </div>
+                  `;
+                })}
               </div>
             </h1>
         </div>

@@ -8,7 +8,7 @@ import { Person } from '@stacks/profile';
 
 import EditorJS, { LogLevels } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
-import Image from '@editorjs/simple-image'; 
+import SimpleImage from '@editorjs/simple-image'; 
 import RawTool from '@editorjs/raw'; 
 import Link from '@editorjs/link'; 
 import Checklist from '@editorjs/checklist'; 
@@ -16,7 +16,6 @@ import NestedList from '@editorjs/nested-list';
 import Marker from '@editorjs/marker';
 import Quote from '@editorjs/quote';
 import Delimiter from '@editorjs/delimiter';
-import AttachesTool from '@editorjs/attaches';
 
 import './dashboard/settings';
 import './dashboard/assets';
@@ -128,9 +127,7 @@ export class XAdmin extends Localized(LitElement) {
               class: NestedList, 
               inlineToolbar: true 
             },
-            image: {
-              class: Image,
-            },
+            image: SimpleImage,
             raw: {
               class: RawTool
             },
@@ -152,13 +149,6 @@ export class XAdmin extends Localized(LitElement) {
                 quotePlaceholder: 'Enter a quote',
                 captionPlaceholder: 'Quote\'s author',
               },
-            },
-            attaches: {
-              class: AttachesTool,
-              inlineToolbar: true,
-              config: {
-                endpoint: 'http://localhost:8008/uploadFile'
-              }
             },
             delimiter: Delimiter,
           },

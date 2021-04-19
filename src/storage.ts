@@ -36,21 +36,25 @@ export async function deleteFile(name: string, options?: {
   return true;
 }
 
-export async function listFiles(name?: string): Promise<string | string[] | ArrayBuffer | null> {
-  const files: string[] = [];
+export async function listFiles(): Promise<{ name: string; url: string; }[]> {
+  const fileNames: string[] = [];
+  const files: {
+    name: string;
+    url: string;
+  }[] = [];
 
-  storage.listFiles((filename) => {
-    if (name && name === filename) {
-      return true;
-    }
+  await storage.listFiles((filename) => {
+    fileNames.push(filename);
 
-    files.push(filename);
-
-    return false;
+    return true;
   });
 
-  if (name) {
-    return await storage.getFile(name);
+  for (const name of fileNames) {
+    const url = await getFileURL(name, {});
+    files.push({
+      name,
+      url
+    });
   }
 
   return files;
