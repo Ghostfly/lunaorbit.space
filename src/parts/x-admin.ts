@@ -17,11 +17,11 @@ import './dashboard/menus';
 import './dashboard/nav';
 
 import IPFS from 'ipfs';
-import uint8ArrayConcat from 'uint8arrays/concat';
-import uint8ArrayToString from 'uint8arrays/to-string';
+/*import uint8ArrayConcat from 'uint8arrays/concat';
+import uint8ArrayToString from 'uint8arrays/to-string';*/
 import config from '../config';
 
-let IPFSNode: IPFS.IPFS | null = null;
+export let IPFSNode: IPFS.IPFS | null = null;
 
 /**
  * XAdmin component
@@ -87,20 +87,24 @@ export class XAdmin extends Localized(LitElement) {
   async handleStorage(): Promise<void> {
     if (this._savedAddress) {
       IPFSNode = await IPFS.create({
-        repo: this._savedAddress
+        repo: this._savedAddress,
       });
 
-      // const { id, agentVersion, protocolVersion } = await node.id();
-      // console.warn('id', id, agentVersion, protocolVersion);
-      const { cid } = await IPFSNode.add(JSON.stringify(config));
-
-      const bufs = []
-      for await (const buf of IPFSNode.cat(cid)) {
-        bufs.push(buf)
+      try {
+        await IPFSNode.files.mkdir('/lunaorbit.space');
+        console.warn('created dir');
+      } catch (err) {
+        console.warn('dir already created');
       }
 
-      const data = uint8ArrayConcat(bufs);
-      console.warn('added', cid, uint8ArrayToString(data));
+      await IPFSNode.files.write('/lunaorbit.space/config.json', JSON.stringify(config), { create: true });
+      
+      const stats = await IPFSNode.files.stat('/lunaorbit.space');
+      console.warn(stats);
+
+      for await (const file of IPFSNode.files.ls('/lunaorbit.space')) {
+        console.warn('file', file);
+      }
     }
   }
 
