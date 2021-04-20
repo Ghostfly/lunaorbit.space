@@ -23,7 +23,7 @@ import Quote from '@editorjs/quote';
 import Delimiter from '@editorjs/delimiter';
 
 import { systemPages } from './menus';
-import { IPFSNode } from '../x-admin';
+import { IPFSNode, XAdmin } from '../x-admin';
 
 /**
  * Pages component
@@ -155,15 +155,12 @@ export class WebsitePages extends Localized(LitElement) {
   }
 
   private async _savePage() {
-    const outputData = await this.editor?.save();
-
     if (!IPFSNode) {
       return;
     }
-
-    const writtenFile = await IPFSNode.files.write('/lunaorbit.space/' + this.editedPage, JSON.stringify(outputData), { create: true });
     
-    console.warn(writtenFile);
+    const outputData = await this.editor?.save();
+    await IPFSNode.files.write(XAdmin.IPFS_DIRECTORY + '/' + this.editedPage, JSON.stringify(outputData), { create: true });
   }
 
   render(): TemplateResult {

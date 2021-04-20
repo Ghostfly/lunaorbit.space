@@ -34,6 +34,7 @@ export class XAdmin extends Localized(LitElement) {
 
   static ALLOWED_ADDRESS = 'terra103ftmy75ty3wv5jnvh6jr962gv60u3tgsxc4pj';
   static LOCAL_ADMIN_KEY = 'admin-terra-address';
+  static IPFS_DIRECTORY = '/lunaorbit.space';
 
   @internalProperty()
   private _signedIn = false;
@@ -91,18 +92,27 @@ export class XAdmin extends Localized(LitElement) {
       });
 
       try {
-        await IPFSNode.files.mkdir('/lunaorbit.space');
+        const generatedKey = await IPFSNode.key.gen('main-website');
+        console.warn(generatedKey);
+      } catch (err) {
+        // key already created.
+        const currentKey = await IPFSNode.key.info('main-website');
+        console.warn(currentKey);
+      }
+
+      try {
+        await IPFSNode.files.mkdir(XAdmin.IPFS_DIRECTORY);
         console.warn('created dir');
       } catch (err) {
         console.warn('dir already created');
       }
 
-      await IPFSNode.files.write('/lunaorbit.space/config.json', JSON.stringify(config), { create: true });
+      await IPFSNode.files.write(XAdmin.IPFS_DIRECTORY + '/config.json', JSON.stringify(config), { create: true });
       
-      const stats = await IPFSNode.files.stat('/lunaorbit.space');
-      console.warn(stats);
+      const stats = await IPFSNode.files.stat(XAdmin.IPFS_DIRECTORY);
+      console.warn('Folder CID:', stats.cid.toString());
 
-      for await (const file of IPFSNode.files.ls('/lunaorbit.space')) {
+      for await (const file of IPFSNode.files.ls(XAdmin.IPFS_DIRECTORY)) {
         console.warn('file', file);
       }
     }

@@ -8,6 +8,7 @@ import {
 
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
+import { IPFSNode, XAdmin } from '../x-admin';
 // import { deleteFile, listFiles, putFile } from '../../storage';
 
 /**
@@ -15,6 +16,8 @@ import {Localized} from '@lit/localize/localized-element.js';
  */
 @customElement('website-assets')
 export class WebsiteAssets extends Localized(LitElement) {
+
+  static ASSETS_SUBPATH = '/assets';
 
   @property({ type: Array })
   public files: { name: string; url: string; }[] = []
@@ -63,9 +66,14 @@ export class WebsiteAssets extends Localized(LitElement) {
                     alert(msg('File is too big.'));
                     target.value = '';
                   } else {
-                    console.warn('will upload', file);
-                    // const fileLink = await putFile(file.name, file, { encrypt: false });
-                    // console.warn('uploaded', fileLink);
+                    try {
+                      await IPFSNode?.files.mkdir(XAdmin.IPFS_DIRECTORY + WebsiteAssets.ASSETS_SUBPATH);
+                    } catch (err) {
+                      console.warn('assets directory already there.');
+                    }
+
+                    await IPFSNode?.files.write(XAdmin.IPFS_DIRECTORY + WebsiteAssets.ASSETS_SUBPATH + '/' + file.name, file, { create: true });
+                    
                     await this.updateFiles();
                   }
               }
