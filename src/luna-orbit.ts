@@ -62,6 +62,7 @@ export class LunaOrbit extends Localized(LitElement) {
       },
       { path: '/', component: 'x-home' },
       { path: '/home', component: 'x-home' },
+      { path: '/test', component: 'x-test' },
       { path: '/how-to', component: 'x-how-to' },
       { path: '/tools', component: 'x-tools'},
       { path: '/contact', component: 'x-contact' },

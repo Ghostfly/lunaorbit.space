@@ -101,6 +101,7 @@ export class WebsitePages extends Localized(LitElement) {
 
     if (editorHolder) {
       this.editor?.destroy();
+      this.editor = null;
 
       try {
         const savedTest = await getFile(this.editedPage, {
