@@ -166,21 +166,19 @@ export class AirdropDialog extends Localized(LitElement) {
                     ${msg('Airdrops')}
                   </h3>
                   
-                  <div class="flex lg:w-full w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-2 sm:px-0 items-center m-10">
+                  <div class="flex sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-2 sm:px-0 items-center m-10">
                     <button .disabled=${this.loading} class="${this.loading ? 'opacity-50 cursor-wait' : ''} text-white terra-bg border-0 py-2 px-8 rounded text-lg" @click=${() => this._retrieveTerraAddress()}>
                       ${msg('Retrieve')}
                     </button>
-                    <button .disabled=${this.loading} class="${this.loading ? 'opacity-50 cursor-wait' : ''} text-white terra-bg border-0 py-2 px-8 rounded text-lg" @click=${() => this._checkAirdrops()}">
-                      ${msg('Check')}
-                    </button>
                   </div>
-                  <div class="relative flex-grow w-full">
+                  <div class="relative flex-grow">
                       <label for="terra-address" class="leading-7 text-sm text-gray-600">${msg(
                         'Terra address'
                       )}</label>
-                      <input id="address-input" .value=${
-                        this.terraAddress
-                      } @change=${(e: InputEvent) => this._onTerraAddressChange(e)} type="text" id="terra-address" name="terra-address" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                      <input id="address-input" .value=${this.terraAddress} @change=${(e: InputEvent) => this._onTerraAddressChange(e)} type="text" id="terra-address" name="terra-address" class="bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                      <button .disabled=${this.loading} class="${this.loading ? 'opacity-50 cursor-wait' : ''} text-white terra-bg border-0 py-2 px-8 rounded text-lg" @click=${() => this._checkAirdrops()}">
+                          ${msg('Check')}
+                      </button>
                   </div>
                 </div>
               </div>
