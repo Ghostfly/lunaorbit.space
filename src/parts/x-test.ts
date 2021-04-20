@@ -1,7 +1,5 @@
 import { LitElement, html, TemplateResult, customElement, property } from 'lit-element';
 import { Localized } from '@lit/localize/localized-element';
-import { getFileContents } from '../storage';
-import edjsParser from 'editorjs-parser';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 
 /**
@@ -18,7 +16,7 @@ export class XTest extends Localized(LitElement) {
   }
 
   async firstUpdated(): Promise<void> {
-    const fileContents = await getFileContents('page-staking-en.json', '', undefined, undefined, true);
+    /*const fileContents = await getFileContents('page-staking-en.json', '', undefined, undefined, true);
     const parser = new edjsParser({
       image: {
         use: "figure",
@@ -44,7 +42,7 @@ export class XTest extends Localized(LitElement) {
     if (fileContents) {
       const markup = parser.parse(JSON.parse(fileContents as string));
       this.html = markup;
-    }
+    }*/
   }
 
   render(): TemplateResult {

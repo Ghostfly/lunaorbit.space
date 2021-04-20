@@ -9,7 +9,7 @@ import {
 
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
-import { deleteFile, getFile, putFile } from '../../storage';
+// import { deleteFile, getFile, putFile } from '../../storage';
 
 import EditorJS, { LogLevels } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
@@ -104,12 +104,12 @@ export class WebsitePages extends Localized(LitElement) {
       this.editor = null;
 
       try {
-        const savedTest = await getFile(this.editedPage, {
+        /*const savedTest = await getFile(this.editedPage, {
           decrypt: false
         });
         const data = JSON.parse(savedTest as string);
         this._data = data;
-        editorInit.data = this._data;
+        editorInit.data = this._data;*/
       } catch (err) {
         editorInit.data = undefined;
       }
@@ -210,13 +210,13 @@ export class WebsitePages extends Localized(LitElement) {
             </div>
             <button @click=${async () => {
               const outputData = await this.editor?.save();
-              const savedTest = await putFile(this.editedPage, JSON.stringify(outputData), {
+              /*const savedTest = await putFile(this.editedPage, JSON.stringify(outputData), {
                 contentType: 'text/html',
                 encrypt: false,
                 dangerouslyIgnoreEtag: false
-              });
+              });*/
           
-              console.warn(savedTest);
+              console.warn(outputData);
             }} class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
@@ -228,7 +228,7 @@ export class WebsitePages extends Localized(LitElement) {
               </svg>
             </button>-->
             <button @click=${async () => {
-              await deleteFile(this.editedPage);
+              // await deleteFile(this.editedPage);
               await this.loadFiles();
               await this.loadEditor();
             }} class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">

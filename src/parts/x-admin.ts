@@ -26,6 +26,8 @@ export class XAdmin extends Localized(LitElement) {
   static RedirectURI = 'http://localhost:3000/panel';
   static ManifestURI = 'http://localhost:3000/manifest.json';
 
+  static ALLOWED_ADDRESS = 'terra103ftmy75ty3wv5jnvh6jr962gv60u3tgsxc4pj';
+
   @internalProperty()
   private _signedIn = false;
 
@@ -43,7 +45,8 @@ export class XAdmin extends Localized(LitElement) {
   }
 
   private async handleAuth(): Promise<void> {
-    if (localStorage.getItem('terra-address')) {
+    const savedAddress = localStorage.getItem('terra-address');
+    if (savedAddress === XAdmin.ALLOWED_ADDRESS) {
       this._signedIn = true;
     } else {
       this._signedIn = false;
@@ -52,7 +55,6 @@ export class XAdmin extends Localized(LitElement) {
     if (this._page === DashboardPages.translate) {
       const parser = new XliffParser();
 
-      // const english = parser.parse(ENGTranslation)?.children[0].children;
       const french = parser.parse(FRTranslation)?.children[0].children[0].children;
 
       if (french) {
@@ -78,7 +80,7 @@ export class XAdmin extends Localized(LitElement) {
 
   async connect(): Promise<boolean> {
     const terraAdr = await ExtensionSingleton.connect();
-    if (terraAdr.address === 'terra103ftmy75ty3wv5jnvh6jr962gv60u3tgsxc4pj') {
+    if (terraAdr.address === XAdmin.ALLOWED_ADDRESS) {
       this._signedIn = true;
       localStorage.setItem('terra-address', terraAdr.address);
     } else {

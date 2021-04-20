@@ -8,7 +8,7 @@ import {
 
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
-import { deleteFile, listFiles, putFile } from '../../storage';
+// import { deleteFile, listFiles, putFile } from '../../storage';
 
 /**
  * Assets component
@@ -28,12 +28,12 @@ export class WebsiteAssets extends Localized(LitElement) {
   }
 
   async updateFiles(): Promise<void> {
-    const filesList = await listFiles();
+    /*const filesList = await listFiles();
     if (Array.isArray(filesList)) {
       this.files = filesList.filter(file => !file.name.startsWith('page-'));
     } else {
       this.files = [];
-    }
+    }*/
   }
 
   render(): TemplateResult {
@@ -64,8 +64,8 @@ export class WebsiteAssets extends Localized(LitElement) {
                     target.value = '';
                   } else {
                     console.warn('will upload', file);
-                    const fileLink = await putFile(file.name, file, { encrypt: false });
-                    console.warn('uploaded', fileLink);
+                    // const fileLink = await putFile(file.name, file, { encrypt: false });
+                    // console.warn('uploaded', fileLink);
                     await this.updateFiles();
                   }
               }
@@ -90,7 +90,7 @@ export class WebsiteAssets extends Localized(LitElement) {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                       </svg>
                       <svg @click=${async () => {
-                        await deleteFile(file.name);
+                        // await deleteFile(file.name);
                         console.warn('deleted');
                         await this.updateFiles();
                       }} xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
