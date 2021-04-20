@@ -19,6 +19,9 @@ import './dashboard/nav';
 import IPFS from 'ipfs';
 import uint8ArrayConcat from 'uint8arrays/concat';
 import uint8ArrayToString from 'uint8arrays/to-string';
+import config from '../config';
+
+let IPFSNode: IPFS.IPFS | null = null;
 
 /**
  * XAdmin component
@@ -46,6 +49,10 @@ export class XAdmin extends Localized(LitElement) {
 
   createRenderRoot(): this {
     return this;
+  }
+
+  constructor() {
+    super();
   }
 
   private async handleAuth(): Promise<void> {
@@ -79,16 +86,16 @@ export class XAdmin extends Localized(LitElement) {
 
   async handleStorage(): Promise<void> {
     if (this._savedAddress) {
-      const node = await IPFS.create({
+      IPFSNode = await IPFS.create({
         repo: this._savedAddress
       });
 
       // const { id, agentVersion, protocolVersion } = await node.id();
       // console.warn('id', id, agentVersion, protocolVersion);
-      const { cid } = await node.add('test.json');
+      const { cid } = await IPFSNode.add(JSON.stringify(config));
 
       const bufs = []
-      for await (const buf of node.cat(cid)) {
+      for await (const buf of IPFSNode.cat(cid)) {
         bufs.push(buf)
       }
 
@@ -102,7 +109,9 @@ export class XAdmin extends Localized(LitElement) {
     this._page = orbit?.router.location.pathname.replace(AdminNav.MainPathPrefix + '/', '') as DashboardPages;
 
     await this.handleAuth();
-    await this.handleStorage();
+    if (!IPFSNode && this._savedAddress) {
+      await this.handleStorage();
+    }
   }
 
   async connect(): Promise<boolean> {
