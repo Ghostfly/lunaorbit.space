@@ -6,7 +6,7 @@ import {
   property,
   TemplateResult,
 } from 'lit-element';
-import {LunaPriceResponse, Validator} from './terra-min';
+import {LunaPriceResponse, Validator} from './terra/terra-min';
 import {Router, RouterLocation} from '@vaadin/router';
 
 import './styles.css';

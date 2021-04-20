@@ -11,7 +11,7 @@ import { authenticate, getPerson, userSession } from '../auth';
 
 import { AdminNav, DashboardPages } from './dashboard/nav';
 
-import ExtensionSingleton from '../terra-connect';
+import ExtensionSingleton from '../terra/terra-connect';
 
 import './dashboard/settings';
 import './dashboard/assets';
