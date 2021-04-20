@@ -22,7 +22,6 @@ import Marker from '@editorjs/marker';
 import Quote from '@editorjs/quote';
 import Delimiter from '@editorjs/delimiter';
 
-import edjsParser from 'editorjs-parser';
 import { systemPages } from './menus';
 
 /**
@@ -39,8 +38,6 @@ export class WebsitePages extends Localized(LitElement) {
 
   @property({ type: String })
   public page = 'staking';
-
-  private _data: undefined;
 
   @internalProperty()
   private _files: { name: string; url: string; }[] = [];
@@ -126,7 +123,7 @@ export class WebsitePages extends Localized(LitElement) {
     await this.loadFiles();
     await this.loadEditor();
 
-    const parser = new edjsParser({
+    /*const parser = new edjsParser({
       image: {
         use: "figure",
         imgClass: "img",
@@ -149,7 +146,7 @@ export class WebsitePages extends Localized(LitElement) {
     });
 
     const markup = parser.parse(this._data);
-    console.warn(markup);
+    console.warn(markup);*/
   }
 
   public get editedPage(): string {
