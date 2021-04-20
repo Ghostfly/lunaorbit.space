@@ -32,8 +32,10 @@
     "buffer": "^6.0.3",
     "editorjs-parser": "^1.5.3",
     "get-user-locale": "^1.4.0",
+    "ipfs": "^0.54.4",
     "lit-element": "^2.4.0",
     "node-polyfill-webpack-plugin": "^1.1.0",
+    "node-pre-gyp": "^0.17.0",
     "ramda": "^0.27.1",
     "stream-browserify": "^3.0.0",
     "xliff": "^5.5.3"

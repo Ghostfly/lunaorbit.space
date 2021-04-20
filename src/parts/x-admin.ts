@@ -16,6 +16,10 @@ import './dashboard/pages';
 import './dashboard/menus';
 import './dashboard/nav';
 
+import IPFS from 'ipfs';
+import uint8ArrayConcat from 'uint8arrays/concat';
+import uint8ArrayToString from 'uint8arrays/to-string';
+
 /**
  * XAdmin component
  */
@@ -73,11 +77,32 @@ export class XAdmin extends Localized(LitElement) {
     }
   }
 
+  async handleStorage(): Promise<void> {
+    if (this._savedAddress) {
+      const node = await IPFS.create({
+        repo: this._savedAddress
+      });
+
+      // const { id, agentVersion, protocolVersion } = await node.id();
+      // console.warn('id', id, agentVersion, protocolVersion);
+      const { cid } = await node.add('test.json');
+
+      const bufs = []
+      for await (const buf of node.cat(cid)) {
+        bufs.push(buf)
+      }
+
+      const data = uint8ArrayConcat(bufs);
+      console.warn('added', cid, uint8ArrayToString(data));
+    }
+  }
+
   async firstUpdated(): Promise<void> {
     const orbit = document.querySelector('luna-orbit');
     this._page = orbit?.router.location.pathname.replace(AdminNav.MainPathPrefix + '/', '') as DashboardPages;
 
     await this.handleAuth();
+    await this.handleStorage();
   }
 
   async connect(): Promise<boolean> {
