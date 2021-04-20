@@ -1,13 +1,10 @@
 import { LitElement, html, TemplateResult, customElement, internalProperty } from 'lit-element';
 import { Localized } from '@lit/localize/localized-element';
 import { msg } from '@lit/localize';
-import { UserSession } from '@stacks/auth';
 import { Person } from '@stacks/profile';
 
 import { IXliffSource, IXliffTarget, XliffParser } from '@vtabary/xliff2js';
 import FRTranslation from '../assets/xliff/fr.xlf?raw';
-
-import { authenticate, getPerson, userSession } from '../auth';
 
 import { AdminNav, DashboardPages } from './dashboard/nav';
 
@@ -31,7 +28,6 @@ export class XAdmin extends Localized(LitElement) {
 
   @internalProperty()
   private _signedIn = false;
-  private _userSession: UserSession | null = userSession;
 
   @internalProperty()
   private _person: Person | null = null;
@@ -47,17 +43,7 @@ export class XAdmin extends Localized(LitElement) {
   }
 
   private async handleAuth(): Promise<void> {
-    if (this._userSession?.isSignInPending()) {
-      const responseToken = localStorage.getItem('lunaorbit-response-token');
-      if (responseToken) {
-        await this._userSession.handlePendingSignIn(responseToken);
-      } else {
-        await this._userSession.handlePendingSignIn();
-      }
-    }
-
-    if (this._userSession?.isUserSignedIn()) {
-      this._person = getPerson();
+    if (localStorage.getItem('terra-address')) {
       this._signedIn = true;
     } else {
       this._signedIn = false;
@@ -90,17 +76,16 @@ export class XAdmin extends Localized(LitElement) {
     await this.handleAuth();
   }
 
-  connect(): void {
-    authenticate(() => {
-      console.warn('canceled');
-      this._signedIn = false;
-    }, (payload) => {
-      this._userSession = payload.userSession;
-      this._person = getPerson();
-
-      sessionStorage.setItem('lunaorbit-response-token', this._userSession.getAuthResponseToken());
+  async connect(): Promise<boolean> {
+    const terraAdr = await ExtensionSingleton.connect();
+    if (terraAdr.address === 'terra103ftmy75ty3wv5jnvh6jr962gv60u3tgsxc4pj') {
       this._signedIn = true;
-    });
+      localStorage.setItem('terra-address', terraAdr.address);
+    } else {
+      this._signedIn = false;
+    }
+    
+    return this._signedIn;
   }
 
   _connectButton(): TemplateResult {
@@ -109,10 +94,7 @@ export class XAdmin extends Localized(LitElement) {
       <div class="max-w-md w-full space-y-8">
         <div>
           <button @click=${async () => {
-            const terraAdr = await ExtensionSingleton.connect();
-            if (terraAdr.address === 'terra103ftmy75ty3wv5jnvh6jr962gv60u3tgsxc4pj') {
-              this._signedIn = true;
-            }
+            await this.connect();
           }} class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white terra-bg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
             <svg class="h-6 w-6" enable-background="new 0 0 935.7 947.3" version="1.1" viewBox="0 0 935.7 947.3" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
@@ -162,6 +144,7 @@ export class XAdmin extends Localized(LitElement) {
   }
 
   public logout(): void {
+    localStorage.removeItem('terra-address');
     this._signedIn = false;
   }
 
