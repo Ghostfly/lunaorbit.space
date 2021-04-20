@@ -26,6 +26,7 @@ export class XAdmin extends Localized(LitElement) {
   static ManifestURI = 'http://localhost:3000/manifest.json';
 
   static ALLOWED_ADDRESS = 'terra103ftmy75ty3wv5jnvh6jr962gv60u3tgsxc4pj';
+  static LOCAL_ADMIN_KEY = 'admin-terra-address';
 
   @internalProperty()
   private _signedIn = false;
@@ -44,7 +45,7 @@ export class XAdmin extends Localized(LitElement) {
   }
 
   private async handleAuth(): Promise<void> {
-    const savedAddress = localStorage.getItem('terra-address');
+    const savedAddress = localStorage.getItem(XAdmin.LOCAL_ADMIN_KEY);
     this._savedAddress = savedAddress;
     
     if (savedAddress === XAdmin.ALLOWED_ADDRESS) {
@@ -83,7 +84,7 @@ export class XAdmin extends Localized(LitElement) {
     const terraAdr = await ExtensionSingleton.connect();
     if (terraAdr.address === XAdmin.ALLOWED_ADDRESS) {
       this._signedIn = true;
-      localStorage.setItem('terra-address', terraAdr.address);
+      localStorage.setItem(XAdmin.LOCAL_ADMIN_KEY, terraAdr.address);
       this._savedAddress = terraAdr.address;
     } else {
       this._signedIn = false;
