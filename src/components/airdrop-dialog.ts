@@ -11,6 +11,8 @@ import {msg} from '@lit/localize';
 import {AnchorClaimResponse, MIRAirdrop, TerraQuery} from '../terra/terra-min';
 import { Router } from '@vaadin/router';
 
+import ExtensionSingleton from '../terra/terra-connect';
+
 /**
  * Airdrop dialog component
  */
@@ -133,6 +135,23 @@ export class AirdropDialog extends Localized(LitElement) {
     this.loading = false;
   }
 
+  private _onTerraAddressChange(change: InputEvent): void {
+    if (!this.terraAddress || !this.terraAddress.startsWith('terra')) {
+      this.input.classList.add('border-red-500');
+      this.loading = true;
+    } else {
+      this.input.classList.remove('border-red-500');
+      this.loading = false;
+    }
+
+    this.terraAddress = (change.target as HTMLInputElement).value;
+  }
+
+  private async _retrieveTerraAddress(): Promise<void> {
+      const info = await ExtensionSingleton.connect();
+      this.terraAddress = info.address;
+  }
+
   render(): TemplateResult {
     return html`
       <div id="dialog" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -141,35 +160,27 @@ export class AirdropDialog extends Localized(LitElement) {
           <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
           <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-              <div class="sm:flex sm:items-start">
-                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+              <div class="">
+                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                   <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
                     ${msg('Airdrops')}
                   </h3>
                   
-                  <div class="flex lg:w-full w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-2 sm:px-0 items-end m-10">
-                    <div class="relative flex-grow w-full">
+                  <div class="flex lg:w-full w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-2 sm:px-0 items-center m-10">
+                    <button .disabled=${this.loading} class="${this.loading ? 'opacity-50 cursor-wait' : ''} text-white terra-bg border-0 py-2 px-8 rounded text-lg" @click=${() => this._retrieveTerraAddress()}>
+                      ${msg('Retrieve')}
+                    </button>
+                    <button .disabled=${this.loading} class="${this.loading ? 'opacity-50 cursor-wait' : ''} text-white terra-bg border-0 py-2 px-8 rounded text-lg" @click=${() => this._checkAirdrops()}">
+                      ${msg('Check')}
+                    </button>
+                  </div>
+                  <div class="relative flex-grow w-full">
                       <label for="terra-address" class="leading-7 text-sm text-gray-600">${msg(
                         'Terra address'
                       )}</label>
                       <input id="address-input" .value=${
                         this.terraAddress
-                      } @change=${(change: InputEvent) => {
-      if (!this.terraAddress || !this.terraAddress.startsWith('terra')) {
-        this.input.classList.add('border-red-500');
-        this.loading = true;
-      } else {
-        this.input.classList.remove('border-red-500');
-        this.loading = false;
-      }
-
-      this.terraAddress = (change.target as HTMLInputElement).value;
-    }} type="text" id="terra-address" name="terra-address" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-                    </div>
-                    <button .disabled=${this.loading} class="${
-      this.loading ? 'opacity-50 cursor-wait' : ''
-    } text-white terra-bg border-0 py-2 px-8 rounded text-lg" @click=${() =>
-      this._checkAirdrops()}">${msg('Check')}</button>
+                      } @change=${(e: InputEvent) => this._onTerraAddressChange(e)} type="text" id="terra-address" name="terra-address" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                   </div>
                 </div>
               </div>
