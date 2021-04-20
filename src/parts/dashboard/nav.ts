@@ -8,8 +8,6 @@ import {
 
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
-import { userSession } from '../../auth';
-import { Person } from '@stacks/profile';
 
 export enum DashboardPages {
   cockpit = '/cockpit',
@@ -27,8 +25,8 @@ export enum DashboardPages {
 export class AdminNav extends Localized(LitElement) {
   static MainPathPrefix = '/cockpit'
 
-  @property({type: Object})
-  public person!: Person | null;
+  @property({type: String})
+  public address!: string | null;
 
   @property({type: String})
   public page!: DashboardPages;
@@ -40,8 +38,8 @@ export class AdminNav extends Localized(LitElement) {
   render(): TemplateResult {
     return html`
       <div class="flex flex-col items-center mt-3">
-        ${this.person ? html`
-          <img class="h-10 w-10 bg-white rounded-full" src="https://avatars.dicebear.com/api/bottts/${this.person?.profile().stxAddress.mainnet}.svg" />
+        ${this.address ? html`
+          <img class="h-10 w-10 bg-white rounded-full" src="https://avatars.dicebear.com/api/bottts/${this.address}.svg" />
         ` : html``}
         <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this.page === DashboardPages.pages ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${AdminNav.MainPathPrefix}/${DashboardPages.pages}" title="${msg('Pages')}">
           <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -70,9 +68,8 @@ export class AdminNav extends Localized(LitElement) {
         </svg>
       </a>
       <a title="${msg('Logout')}" @click=${() => {
-          userSession?.signUserOut();
           document.querySelector('x-admin')?.logout();
-        }} class="flex items-center justify-center w-12 h-12 mt-2 rounded cursor-pointer hover:bg-blue-700 hover:text-white">
+      }} class="flex items-center justify-center w-12 h-12 mt-2 rounded cursor-pointer hover:bg-blue-700 hover:text-white">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
         </svg>

@@ -20,7 +20,6 @@ interface ConnectResponse {
 }
 
 const ext = new Extension();
-
 class ExtensionSingleton {
   get init() {
     return !!ext.isAvailable

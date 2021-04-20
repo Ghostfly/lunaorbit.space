@@ -5,7 +5,7 @@ const { ProvidePlugin } = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 const { resolve, join } = require('path');
 
@@ -66,7 +66,11 @@ const commonConfig = merge([
       publicPath: ENV === 'production' ? '/' : '/'
     },
     resolve: {
-      extensions: [ '.ts', '.js', '.css' ]
+      extensions: [ '.ts', '.js', '.css' ],
+      fallback: {
+        "buffer": require.resolve('buffer'),
+        "stream": require.resolve('stream-browserify'),
+      }
     },
     module: {
       rules: [

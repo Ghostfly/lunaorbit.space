@@ -1,7 +1,6 @@
 import { LitElement, html, TemplateResult, customElement, internalProperty } from 'lit-element';
 import { Localized } from '@lit/localize/localized-element';
 import { msg } from '@lit/localize';
-import { Person } from '@stacks/profile';
 
 import { IXliffSource, IXliffTarget, XliffParser } from '@vtabary/xliff2js';
 import FRTranslation from '../assets/xliff/fr.xlf?raw';
@@ -32,13 +31,13 @@ export class XAdmin extends Localized(LitElement) {
   private _signedIn = false;
 
   @internalProperty()
-  private _person: Person | null = null;
-
-  @internalProperty()
   private _page: DashboardPages = DashboardPages.pages;
 
   @internalProperty()
   private _strings: { source: IXliffSource, target: IXliffTarget }[] = [];
+
+  @internalProperty()
+  private _savedAddress: string | null = null;
 
   createRenderRoot(): this {
     return this;
@@ -46,6 +45,8 @@ export class XAdmin extends Localized(LitElement) {
 
   private async handleAuth(): Promise<void> {
     const savedAddress = localStorage.getItem('terra-address');
+    this._savedAddress = savedAddress;
+    
     if (savedAddress === XAdmin.ALLOWED_ADDRESS) {
       this._signedIn = true;
     } else {
@@ -126,7 +127,7 @@ export class XAdmin extends Localized(LitElement) {
     return html`
         <div class="flex">
           <div class="flex flex-col items-center w-16 h-100 overflow-hidden text-indigo-300 terra-bg">
-            <admin-nav .person=${this._person} .page=${this._page}></admin-nav>
+            <admin-nav .address=${this._savedAddress}></admin-nav>
           </div>
           <div class="px-4 py-6 h-screen w-full">
             ${this._pageForTitle(this._page)}
