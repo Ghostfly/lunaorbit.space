@@ -84,6 +84,7 @@ export class XAdmin extends Localized(LitElement) {
     if (terraAdr.address === XAdmin.ALLOWED_ADDRESS) {
       this._signedIn = true;
       localStorage.setItem('terra-address', terraAdr.address);
+      this._savedAddress = terraAdr.address;
     } else {
       this._signedIn = false;
     }
