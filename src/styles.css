@@ -9,6 +9,10 @@
   --anchor-color: #4bdb4b;
 }
 
+mwc-circular-progress {
+  --mdc-theme-primary: var(--terra-blue);
+}
+
 .anchor-bg {
   background-color: var(--anchor-color);
 }

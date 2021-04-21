@@ -31,13 +31,17 @@ export class AdminNav extends Localized(LitElement) {
   @property({type: String})
   public page!: DashboardPages;
 
+  @property({type: Boolean})
+  public disabled = false;
+
   createRenderRoot(): this {
     return this;
   }
 
   render(): TemplateResult {
     return html`
-      <div class="flex flex-col items-center mt-3">
+    <div class="${this.disabled ? 'pointer-events-none opacity-50' : ''}">
+      <div class="flex flex-col items-center mt-3 ">
         ${this.address ? html`
           <img class="h-10 w-10 bg-white rounded-full" src="https://avatars.dicebear.com/api/bottts/${this.address}.svg" />
         ` : html``}
@@ -74,6 +78,7 @@ export class AdminNav extends Localized(LitElement) {
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
         </svg>
       </a>
+    </div>
     `;
   }
 }

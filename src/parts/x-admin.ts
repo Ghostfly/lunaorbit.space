@@ -18,6 +18,8 @@ import './dashboard/nav';
 
 import '../components/sign-in-terra';
 
+import '@material/mwc-circular-progress';
+
 import { SupabaseClient } from '@supabase/supabase-js'
 import { retrieveSupabase } from '../luna-orbit';
 
@@ -50,6 +52,9 @@ export class XAdmin extends Localized(LitElement) {
   
   public supabase: SupabaseClient;
 
+  @internalProperty()
+  private _isChecking = false;
+
   createRenderRoot(): this {
     return this;
   }
@@ -69,9 +74,11 @@ export class XAdmin extends Localized(LitElement) {
   }
 
   private async _loginUsing(terraAddress: string): Promise<boolean> {
+    this._isChecking = true;
     if (!await this._needsLogin()) {
       this._signedIn = true;
       this._savedAddress = terraAddress;
+      this._isChecking = false;
       return true;
     }
 
@@ -82,6 +89,7 @@ export class XAdmin extends Localized(LitElement) {
 
       this._savedAddress = terraAddress;
       this._signedIn = true;
+      this._isChecking = false;
       return true;
     } else {
       localStorage.removeItem(XAdmin.LOCAL_ADMIN_KEY);
@@ -92,6 +100,8 @@ export class XAdmin extends Localized(LitElement) {
       this._savedAddress = null;
       this._signedIn = false;
     }
+
+    this._isChecking = false;
 
     return false;
   }
@@ -171,14 +181,24 @@ export class XAdmin extends Localized(LitElement) {
     `;
   }
 
-  private _adminNav(): TemplateResult {
+  private _adminContent(): TemplateResult {
     return html`
         <div class="flex">
           <div class="flex flex-col items-center w-16 h-100 overflow-hidden text-indigo-300 terra-bg">
-            <admin-nav .address=${this._savedAddress}></admin-nav>
+            <admin-nav .address=${this._savedAddress} .disabled=${!this._signedIn}></admin-nav>
           </div>
           <div class="px-4 py-6 h-screen w-full">
+          ${this._isChecking ? html`
+            <div class="loading flex w-full justify-center p-6">
+              <mwc-circular-progress indeterminate></mwc-circular-progress>
+            </div>
+          ` : html`
+            ${this._signedIn ? html`
             ${this._pageForTitle(this._page)}
+            ` : html`
+            ${this._connectButton()}
+            `}
+          `}
           </div>
         </div>
     `;
@@ -186,18 +206,16 @@ export class XAdmin extends Localized(LitElement) {
 
   render(): TemplateResult {
     return html`	
-    ${this._signedIn ? html`
-      ${this._adminNav()}
-    ` : html`
-      ${this._connectButton()}
-    `}
+      ${this._adminContent()}
     `;
   }
 
   public logout(): void {
     localStorage.removeItem(XAdmin.LOGGED_IN_AT_KEY);
     localStorage.removeItem(XAdmin.LOCAL_ADMIN_KEY);
+    this._savedAddress = null;
     this._signedIn = false;
+    this._isChecking = false;
   }
 
   private _pageForTitle(page: DashboardPages): TemplateResult {
