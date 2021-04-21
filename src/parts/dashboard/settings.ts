@@ -122,17 +122,17 @@ export class WebsiteSettings extends Localized(LitElement) {
       const component = document.querySelector('#' + setting.name) as HTMLInputElement;
       if (component && component.value !== setting.value) {
         const queryBuilder = database.from<WebsiteSettingsDB>('settings');
-        const { data, error } = await queryBuilder.update({
+        const { error } = await queryBuilder.update({
           value: component.value
         }).match({
           name: setting.name
         });
         
         if (error) {
-          // Show error toast
+          document.querySelector('x-admin')?.showSnack('Error while updating data');
         }
 
-        console.warn('updated data !', data);
+        document.querySelector('x-admin')?.showSnack('Updated.');
       }
     }
   }

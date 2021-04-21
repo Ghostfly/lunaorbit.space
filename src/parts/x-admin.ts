@@ -1,4 +1,4 @@
-import { LitElement, html, TemplateResult, customElement, internalProperty } from 'lit-element';
+import { LitElement, html, TemplateResult, customElement, internalProperty, query } from 'lit-element';
 import { Localized } from '@lit/localize/localized-element';
 
 import { AdminNav, DashboardPages } from './dashboard/nav';
@@ -14,6 +14,9 @@ import './dashboard/tools';
 import './dashboard/how-to';
 
 import '../components/sign-in-terra';
+import '@material/mwc-snackbar';
+
+import { Snackbar } from '@material/mwc-snackbar';
 
 import { SupabaseClient } from '@supabase/supabase-js'
 import { retrieveSupabase } from '../luna-orbit';
@@ -48,6 +51,9 @@ export class XAdmin extends Localized(LitElement) {
   @internalProperty()
   private _isChecking = false;
 
+  @query('mwc-snackbar')
+  public snackbar!: Snackbar;
+
   createRenderRoot(): this {
     return this;
   }
@@ -69,6 +75,11 @@ export class XAdmin extends Localized(LitElement) {
     }
 
     return isAllowed;
+  }
+
+  public showSnack(message: string): void {
+    this.snackbar.labelText = message;
+    this.snackbar.show();
   }
 
   private async _loginUsing(terraAddress: string): Promise<boolean> {
@@ -141,6 +152,10 @@ export class XAdmin extends Localized(LitElement) {
     this._page = orbit?.router.location.pathname.replace(AdminNav.MainPathPrefix + '/', '') as DashboardPages;
 
     await this.handleAuth();
+
+    if (!this.querySelector('mwc-snackbar')) {
+      // this.snackText = 'Logged in as ' + this._savedAddress;
+    }
   }
 
   async connect(): Promise<boolean> {
@@ -187,6 +202,7 @@ export class XAdmin extends Localized(LitElement) {
   render(): TemplateResult {
     return html`	
       ${this._adminContent()}
+      <mwc-snackbar></mwc-snackbar>
     `;
   }
 
