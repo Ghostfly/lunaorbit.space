@@ -9,8 +9,9 @@
   --anchor-color: #4bdb4b;
 }
 
-mwc-circular-progress {
+mwc-circular-progress, mwc-fab {
   --mdc-theme-primary: var(--terra-blue);
+  --mdc-theme-secondary: var(--terra-light);
 }
 
 .anchor-bg {

@@ -15,6 +15,7 @@ import './dashboard/how-to';
 
 import '../components/sign-in-terra';
 import '@material/mwc-snackbar';
+import '@material/mwc-fab';
 
 import { Snackbar } from '@material/mwc-snackbar';
 
