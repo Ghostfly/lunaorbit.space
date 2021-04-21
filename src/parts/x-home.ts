@@ -1,54 +1,45 @@
-import {html, customElement, LitElement, TemplateResult} from 'lit-element';
-import config from '../config';
+import {html, customElement, LitElement, TemplateResult, internalProperty} from 'lit-element';
 import {msg} from '@lit/localize';
 import { Localized } from '@lit/localize/localized-element.js';
 
 import '../components/cta-hero';
 
-const strengths = [
-  {
-    title: msg('Safe'),
-    description: msg('Multi-cloud hosting across 12 regions on AWS, GCP, and Azure with 24/7 monitoring'),
-    link: null,
-  },
-  {
-    title: msg('Distributed'),
-    description: msg('Geographically distributed across four continents to ensure validator stays online'),
-    link: null,
-  },
-  {
-    title: msg('Smart'),
-    description: msg('Geographically distributed across four continents to ensure validator stays online.'),
-    link: null,
-  },
-  {
-    title: msg('Fair'),
-    description: msg('0% commissions until') + ' ' + msg('May 10th 2021') + ' ' + msg(', then 2%.'),
-    link: null,
-  },
-  {
-    title: msg('Aware'),
-    description: msg('Changes in the commission rate will be announced 30 days in advance.'),
-    link: null,
-  },
-  {
-    title: msg('Reachable'),
-    description: msg('Find us on the Luna Orbit chat on'),
-    link: {
-      href: `http://t.me/${config.telegram}`,
-      name: msg('Telegram')
-    }
-  },
-];
+import { retrieveSupabase } from '../luna-orbit';
 
+export type Strength = {
+  title: string;
+  description: string;
+  link: {
+    href: string;
+    name: string;
+  }
+}
 
 /**
  * Home component
  */
 @customElement('x-home')
 export class XHome extends Localized(LitElement) {
+  @internalProperty()
+  private _strengths: Strength[] = [];
+
+  @internalProperty()
+  private loading = false;
+
   createRenderRoot(): this {
     return this;
+  }
+
+  public async firstUpdated(): Promise<void> {
+    const db = retrieveSupabase();
+    this.loading = true;
+
+    const savedStrengths = (await db.from<Strength>('strengths').select('title, description, link')).data;
+    if (savedStrengths) {
+      this._strengths = savedStrengths;
+    }
+
+    this.loading = false;
   }
 
   render(): TemplateResult {
@@ -59,16 +50,22 @@ export class XHome extends Localized(LitElement) {
         <cta-hero .title="${msg('Stake with us today !')}" .ctaText=${msg('Get started')} href="how-to"></cta-hero>
         <div class="container px-5 py-8 mx-auto">
           <div class="flex flex-wrap -m-4">
-            ${strengths.map(strength => {
+            ${this.loading ? html`
+            <div class="loading flex w-full justify-center p-6">
+              <mwc-circular-progress indeterminate></mwc-circular-progress>
+            </div>
+            ` : html`
+            ${this._strengths.map(strength => {
               return this._strengthBox(strength.title, strength.description, strength.link)
             })}
+            `}
           </div>
         </div>
       </section>
     `;
   }
 
-  private _strengthBox(title: string, message: string, link: {
+  protected _strengthBox(title: string, message: string, link: {
     href: string;
     name: string;
   } | null): TemplateResult {
