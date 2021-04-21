@@ -47,7 +47,7 @@ export class XAdmin extends Localized(LitElement) {
   @internalProperty()
   private _savedAddress: string | null = null;
   
-  private _supabase: SupabaseClient;
+  public supabase: SupabaseClient;
 
   createRenderRoot(): this {
     return this;
@@ -56,12 +56,12 @@ export class XAdmin extends Localized(LitElement) {
   constructor() {
     super();
     const supabaseUrl = 'https://ylqcozoikxxipzbvueua.supabase.co'
-    this._supabase = createClient(supabaseUrl, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxODk5MDIyNywiZXhwIjoxOTM0NTY2MjI3fQ.Nf1C2uRIocHV2bmfvbUxPGE8MTbRjbB9Kvft4V0dUaI');
+    this.supabase = createClient(supabaseUrl, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxODk5MDIyNywiZXhwIjoxOTM0NTY2MjI3fQ.Nf1C2uRIocHV2bmfvbUxPGE8MTbRjbB9Kvft4V0dUaI');
   }
 
 
   private async _isAllowed(terraAddress: string) {
-    const queryBuilder = this._supabase.from<AdminUser>('terraLogin');
+    const queryBuilder = this.supabase.from<AdminUser>('terraLogin');
     const query = queryBuilder.select('terraAddress').eq('terraAddress', terraAddress);
     const allowedAddresses = (await query).data;
 
