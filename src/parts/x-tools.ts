@@ -158,7 +158,7 @@ export class XTools extends Localized(LitElement) {
       },
       {
         id: Tools.Price,
-        name: 'Trading tools',
+        name: msg('Trading tools'),
         explain: '',
         links: [
           {

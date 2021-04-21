@@ -91,6 +91,11 @@ export class AirdropDialog extends Localized(LitElement) {
       };
     };
 
+    if (mirResponse.data.airdrop.length === 0) {
+      this.showMIR = false;
+      return;
+    }
+
     for (const airdrop of mirResponse.data.airdrop) {
       if (airdrop.claimable) {
         this.showMIR = true;
