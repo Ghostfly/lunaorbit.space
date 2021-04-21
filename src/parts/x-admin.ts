@@ -2,16 +2,12 @@ import { LitElement, html, TemplateResult, customElement, internalProperty } fro
 import { Localized } from '@lit/localize/localized-element';
 import { msg } from '@lit/localize';
 
-import { IXliffSource, IXliffTarget, XliffParser } from '@vtabary/xliff2js';
-import FRTranslation from '../assets/xliff/fr.xlf?raw';
-
 import { AdminNav, DashboardPages } from './dashboard/nav';
 
 import ExtensionSingleton from '../terra/terra-connect';
 
 import './dashboard/settings';
 import './dashboard/assets';
-import './dashboard/translate';
 import './dashboard/menus';
 import './dashboard/nav';
 import './dashboard/home';
@@ -41,9 +37,6 @@ export class XAdmin extends Localized(LitElement) {
 
   @internalProperty()
   private _page: DashboardPages = DashboardPages.strengths;
-
-  @internalProperty()
-  private _strings: { source: IXliffSource, target: IXliffTarget }[] = [];
 
   @internalProperty()
   private _savedAddress: string | null = null;
@@ -134,24 +127,6 @@ export class XAdmin extends Localized(LitElement) {
     if (savedAddress) {
       await this._loginUsing(savedAddress);
     }
-
-    if (this._page === DashboardPages.translate) {
-      const parser = new XliffParser();
-
-      const french = parser.parse(FRTranslation)?.children[0].children[0].children;
-
-      if (french) {
-        for (const transUnits of french) {
-          const [source, target] = transUnits.children;
-          const sourceDescriptor = source as IXliffSource;
-          const targetDescriptor = target as IXliffTarget;
-          this._strings.push({
-            source: sourceDescriptor,
-            target: targetDescriptor,
-          });
-        }
-      }
-    }
   }
 
   async firstUpdated(): Promise<void> {
@@ -241,10 +216,6 @@ export class XAdmin extends Localized(LitElement) {
       case DashboardPages.assets:
         return html`
         <website-assets></website-assets>
-        `;
-      case DashboardPages.translate:
-        return html`
-        <website-translate .strings=${this._strings}></website-translate>
         `;
     }
   }
