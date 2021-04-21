@@ -4,6 +4,7 @@ import {
   LitElement,
   TemplateResult,
   internalProperty,
+  property,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
@@ -31,22 +32,32 @@ export class XTools extends Localized(LitElement) {
 
   @internalProperty()
   private _sections: ToolSection[] = [];
+  @property({ type: Boolean })
+  public loading = false;
 
   createRenderRoot(): this {
     return this;
   }
 
   async firstUpdated(): Promise<void> {
+    await this._loadTools();
+  }
+
+  private async _loadTools() {
     const db = retrieveSupabase();
+
+    this.loading = true;
     
     const sections = (await db.from<ToolSection>('tools').select('name, explain, links')).data;
     
     if (sections) {
       this._sections = sections;
     }
+
+    this.loading = false;
   }
 
-  protected _sectionTemplate(description: ToolSection): TemplateResult {
+  private _sectionTemplate(description: ToolSection): TemplateResult {
     return html`
       <section class="text-gray-600 body-font">
         <div class="container px-2 py-2 mx-auto flex flex-wrap">
@@ -86,6 +97,12 @@ export class XTools extends Localized(LitElement) {
         class="container mx-auto px-2 py-4 text-gray-700 body-font border-t border-gray-200"
       >
         <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">${msg('Terra tools')}</h1>
+
+        ${this.loading ? html`
+        <div class="loading flex w-full justify-center p-6">
+          <mwc-circular-progress indeterminate></mwc-circular-progress>
+        </div>
+        ` : html``}
 
         ${this._sections.map((section) => {
           return this._sectionTemplate(section);

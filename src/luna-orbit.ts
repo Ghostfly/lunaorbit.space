@@ -11,6 +11,8 @@ import {Router, RouterLocation} from '@vaadin/router';
 
 import './styles.css';
 
+import '@material/mwc-circular-progress';
+
 import './components/x-components';
 import './parts/x-parts';
 

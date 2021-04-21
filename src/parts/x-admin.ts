@@ -18,8 +18,6 @@ import './dashboard/nav';
 
 import '../components/sign-in-terra';
 
-import '@material/mwc-circular-progress';
-
 import { SupabaseClient } from '@supabase/supabase-js'
 import { retrieveSupabase } from '../luna-orbit';
 
