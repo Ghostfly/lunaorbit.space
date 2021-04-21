@@ -49,8 +49,6 @@ export class XHome extends Localized(LitElement) {
           name: msg('Telegram')
         }
       },
-
-      
     ]
 
     return html`
