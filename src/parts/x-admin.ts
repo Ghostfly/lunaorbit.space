@@ -18,6 +18,11 @@ import './dashboard/nav';
 
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
+type AdminUser = {
+  id: number;
+  terraAddress: string;
+}
+
 /**
  * XAdmin component
  */
@@ -25,6 +30,8 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js'
 export class XAdmin extends Localized(LitElement) {
   static APPDomain = 'http://localhost:3000';
   static LOCAL_ADMIN_KEY = 'admin-terra-address';
+  static LOGGED_IN_AT_KEY = 'logged-in-at';
+  static TOKEN_DURATION = 60000;
 
   @internalProperty()
   private _signedIn = false;
@@ -51,24 +58,51 @@ export class XAdmin extends Localized(LitElement) {
   }
 
   private async _loginUsing(terraAddress: string): Promise<boolean> {
-    const queryBuilder = this._supabase.from('terraLogin');
+    if (!this._needsLogin()) {
+      this._signedIn = true;
+      this._savedAddress = terraAddress;
+      return true;
+    }
+
+    const queryBuilder = this._supabase.from<AdminUser>('terraLogin');
     const query = queryBuilder.select('terraAddress');
     const allowedAddresses = (await query).data;
 
     const isAllowed = allowedAddresses?.find((data) => data.terraAddress === terraAddress);
     if (isAllowed) {
       localStorage.setItem(XAdmin.LOCAL_ADMIN_KEY, terraAddress);
+      localStorage.setItem(XAdmin.LOGGED_IN_AT_KEY, new Date().getTime().toString());
+
       this._savedAddress = terraAddress;
       this._signedIn = true;
       return true;
     } else {
       localStorage.removeItem(XAdmin.LOCAL_ADMIN_KEY);
+      localStorage.removeItem(XAdmin.LOGGED_IN_AT_KEY);
+
       alert('This address isn\'t allowed.');
       this._savedAddress = null;
       this._signedIn = false;
     }
 
     return false;
+  }
+
+  private _needsLogin() {
+    const terraAddress = localStorage.getItem(XAdmin.LOCAL_ADMIN_KEY);
+    const loggedAtKey = localStorage.getItem(XAdmin.LOGGED_IN_AT_KEY);
+    if (!terraAddress) {
+      return true;
+    }
+
+    if (loggedAtKey) {
+      const loggedAt = parseInt(loggedAtKey, 10);
+      const isExpired = new Date(loggedAt) > new Date(loggedAt + XAdmin.TOKEN_DURATION);
+
+      return isExpired;
+    }
+    
+    return true;
   }
 
   private async handleAuth(): Promise<void> {
@@ -96,14 +130,6 @@ export class XAdmin extends Localized(LitElement) {
         }
       }
     }
-  }
-
-  async handleStorage(): Promise<void> {
-    if (!this._savedAddress) {
-      return;
-    }
-
-    
   }
 
   async firstUpdated(): Promise<void> {
@@ -179,6 +205,7 @@ export class XAdmin extends Localized(LitElement) {
   }
 
   public logout(): void {
+    localStorage.removeItem(XAdmin.LOGGED_IN_AT_KEY);
     localStorage.removeItem(XAdmin.LOCAL_ADMIN_KEY);
     this._signedIn = false;
   }
