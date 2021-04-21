@@ -57,27 +57,41 @@ export class WebsiteHome extends Localized(LitElement) {
     name: string;
   } | null): TemplateResult {
     return html`
-      <div class="strength-block flex justify-center gap-2 m-4">
-        <div class="relative">
-          <label for="${id}-title" class="leading-7 text-sm text-gray-600">Title</label>
-          <input name="${id}-title" id="${id}-title" type="text" .value=${title} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-        </div>
-        <div class="relative w-full">
-          <label for="${id}-text" class="leading-7 text-sm text-gray-600">Text</label>
-          <textarea id="${id}-text" name="${id}-text" .value=${message} class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-16 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+      <div class="w-full border-2 cursor-pointer select-none" @click=${(e: Event) => {
+      const editable = (e.currentTarget as HTMLElement).nextElementSibling;
+      if (editable?.classList.contains('hidden')) {
+        editable?.classList.remove('hidden');
+      } else {
+        editable?.classList.add('hidden');
+      }
+      }}>
+        <div class="bg-gray-100 rounded flex p-4 h-full items-center">
+          <span class="title-font font-medium">${title}</span>
         </div>
       </div>
-      <div class="flex justify-start gap-2 m-4">
-        ${link ? html`
-        <div class="relative">
-          <label for="${id}-name" class="leading-7 text-sm text-gray-600">Name</label>
-          <input name="${id}-name" id="${id}-name" type="text" .value=${link.name} class="bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+      <div class="editable hidden">
+        <div class="strength-block flex justify-center gap-2 m-4">
+          <div class="relative">
+            <label for="${id}-title" class="leading-7 text-sm text-gray-600">Title</label>
+            <input name="${id}-title" id="${id}-title" type="text" .value=${title} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+          </div>
+          <div class="relative w-full">
+            <label for="${id}-text" class="leading-7 text-sm text-gray-600">Text</label>
+            <textarea id="${id}-text" name="${id}-text" .value=${message} class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-16 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+          </div>
         </div>
-        <div class="relative w-full">
-          <label for="${id}-href" class="leading-7 text-sm text-gray-600">URL</label>
-          <input name="${id}-href" id="${id}-href" type="text" .value=${link.href} class="bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out w-full" />
+        <div class="flex justify-start gap-2 m-4">
+          ${link ? html`
+          <div class="relative">
+            <label for="${id}-name" class="leading-7 text-sm text-gray-600">Name</label>
+            <input name="${id}-name" id="${id}-name" type="text" .value=${link.name} class="bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+          </div>
+          <div class="relative w-full">
+            <label for="${id}-href" class="leading-7 text-sm text-gray-600">URL</label>
+            <input name="${id}-href" id="${id}-href" type="text" .value=${link.href} class="bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out w-full" />
+          </div>
+        ` : ''}
         </div>
-      ` : ''}
       </div>
     `;
   }
@@ -92,23 +106,25 @@ export class WebsiteHome extends Localized(LitElement) {
               ${msg('Save')}
           </button>
         </div>
-        <div class="m-4 p-4">
-          <h2 class="text-md mt-4 mb-4">
+        <div class="m-4 p-4 flex flex-wrap">
+          <h2 class="text-md mt-4 mb-4 w-full">
             ${msg('Call to action')}
           </h2>
           ${this._ctaEditor(0, msg('Stake with us today !'), msg('Get started'), 'how-to')}
-          <h1 class="text-md mt-4 mb-4">
-            ${msg('Strengths')}
-          </h1>
-          ${this.loading ? html`
-            <div class="loading flex w-full justify-center p-6">
-              <mwc-circular-progress indeterminate></mwc-circular-progress>
-            </div>
-            ` : html`
-            ${this._strengths.map(strength => {
-              return this._strengthBox(strength.id, strength.title, strength.description, strength.link)
-            })}
-          `}
+          <div class="strengths w-full">
+            <h1 class="text-md mt-8 mb-4">
+              ${msg('Strengths')}
+            </h1>
+            ${this.loading ? html`
+              <div class="loading flex w-full justify-center p-6">
+                <mwc-circular-progress indeterminate></mwc-circular-progress>
+              </div>
+              ` : html`
+              ${this._strengths.map(strength => {
+                return this._strengthBox(strength.id, strength.title, strength.description, strength.link)
+              })}
+            `}
+          </div>
         </div>
     `;
   }

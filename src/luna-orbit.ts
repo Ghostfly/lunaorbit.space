@@ -30,7 +30,7 @@ import { WebsiteSettingsDB } from './parts/dashboard/settings';
 
 export function retrieveSupabase(token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxODk5MDIyNywiZXhwIjoxOTM0NTY2MjI3fQ.Nf1C2uRIocHV2bmfvbUxPGE8MTbRjbB9Kvft4V0dUaI'): SupabaseClient {
   const supabaseUrl = 'https://ylqcozoikxxipzbvueua.supabase.co';
-  
+
   return createClient(supabaseUrl, token);
 }
 
@@ -97,7 +97,7 @@ export class LunaOrbit extends Localized(LitElement) {
     document.body.appendChild(document.createElement('airdrop-dialog'));
   }
 
-  private async _updateBannerMessage(): Promise<void> {
+  public async updateBannerMessage(): Promise<void> {
     if (sessionStorage.getItem('lunaorbit-banner-hide')) {
       return;
     }
@@ -140,7 +140,7 @@ export class LunaOrbit extends Localized(LitElement) {
     await setLocaleFromUrl();
 
     this._showAirdropToast();
-    await this._updateBannerMessage();
+    await this.updateBannerMessage();
     this._setupMenus();
     this._handleMobileMenu();
 

@@ -133,6 +133,8 @@ export class WebsiteSettings extends Localized(LitElement) {
         }
 
         document.querySelector('x-admin')?.showSnack('Updated.');
+
+        document.querySelector('luna-orbit')?.updateBannerMessage();
       }
     }
   }
