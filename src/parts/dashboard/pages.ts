@@ -23,7 +23,6 @@ import Quote from '@editorjs/quote';
 import Delimiter from '@editorjs/delimiter';
 
 import { systemPages } from './menus';
-import { IPFSNode, XAdmin } from '../x-admin';
 
 /**
  * Pages component
@@ -155,12 +154,8 @@ export class WebsitePages extends Localized(LitElement) {
   }
 
   private async _savePage() {
-    if (!IPFSNode) {
-      return;
-    }
-    
-    const outputData = await this.editor?.save();
-    await IPFSNode.files.write(XAdmin.IPFS_DIRECTORY + '/' + this.editedPage, JSON.stringify(outputData), { create: true });
+    // const outputData = await this.editor?.save();
+    console.warn('not saved');
   }
 
   render(): TemplateResult {
@@ -226,7 +221,7 @@ export class WebsitePages extends Localized(LitElement) {
               </svg>
             </button>-->
             <button @click=${async () => {
-              // await deleteFile(this.editedPage);
+              console.warn('not deleted.');
               await this.loadFiles();
               await this.loadEditor();
             }} class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">

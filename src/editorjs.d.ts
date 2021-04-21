@@ -13,3 +13,4 @@ declare module '@editorjs/attaches';
 
 declare module '*.xlf?raw';
 declare module 'editorjs-parser';
+declare module 'orbit-db';

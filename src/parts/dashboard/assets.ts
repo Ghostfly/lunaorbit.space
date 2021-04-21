@@ -8,8 +8,6 @@ import {
 
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
-import { IPFSNode, XAdmin } from '../x-admin';
-// import { deleteFile, listFiles, putFile } from '../../storage';
 
 /**
  * Assets component
@@ -66,14 +64,7 @@ export class WebsiteAssets extends Localized(LitElement) {
                     alert(msg('File is too big.'));
                     target.value = '';
                   } else {
-                    try {
-                      await IPFSNode?.files.mkdir(XAdmin.IPFS_DIRECTORY + WebsiteAssets.ASSETS_SUBPATH);
-                    } catch (err) {
-                      console.warn('assets directory already there.');
-                    }
-
-                    await IPFSNode?.files.write(XAdmin.IPFS_DIRECTORY + WebsiteAssets.ASSETS_SUBPATH + '/' + file.name, file, { create: true });
-                    
+                    // TODO : UPLOAD FILE
                     await this.updateFiles();
                   }
               }

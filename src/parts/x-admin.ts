@@ -16,12 +16,7 @@ import './dashboard/pages';
 import './dashboard/menus';
 import './dashboard/nav';
 
-import IPFS from 'ipfs';
-/*import uint8ArrayConcat from 'uint8arrays/concat';
-import uint8ArrayToString from 'uint8arrays/to-string';*/
-import config from '../config';
-
-export let IPFSNode: IPFS.IPFS | null = null;
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
 /**
  * XAdmin component
@@ -29,12 +24,7 @@ export let IPFSNode: IPFS.IPFS | null = null;
 @customElement('x-admin')
 export class XAdmin extends Localized(LitElement) {
   static APPDomain = 'http://localhost:3000';
-  static RedirectURI = 'http://localhost:3000/panel';
-  static ManifestURI = 'http://localhost:3000/manifest.json';
-
-  static ALLOWED_ADDRESS = 'terra103ftmy75ty3wv5jnvh6jr962gv60u3tgsxc4pj';
   static LOCAL_ADMIN_KEY = 'admin-terra-address';
-  static IPFS_DIRECTORY = '/lunaorbit.space';
 
   @internalProperty()
   private _signedIn = false;
@@ -47,6 +37,8 @@ export class XAdmin extends Localized(LitElement) {
 
   @internalProperty()
   private _savedAddress: string | null = null;
+  
+  private _supabase: SupabaseClient;
 
   createRenderRoot(): this {
     return this;
@@ -54,16 +46,36 @@ export class XAdmin extends Localized(LitElement) {
 
   constructor() {
     super();
+    const supabaseUrl = 'https://ylqcozoikxxipzbvueua.supabase.co'
+    this._supabase = createClient(supabaseUrl, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxODk5MDIyNywiZXhwIjoxOTM0NTY2MjI3fQ.Nf1C2uRIocHV2bmfvbUxPGE8MTbRjbB9Kvft4V0dUaI');
+  }
+
+  private async _loginUsing(terraAddress: string): Promise<boolean> {
+    const queryBuilder = this._supabase.from('terraLogin');
+    const query = queryBuilder.select('terraAddress');
+    const allowedAddresses = (await query).data;
+
+    const isAllowed = allowedAddresses?.find((data) => data.terraAddress === terraAddress);
+    if (isAllowed) {
+      localStorage.setItem(XAdmin.LOCAL_ADMIN_KEY, terraAddress);
+      this._savedAddress = terraAddress;
+      this._signedIn = true;
+      return true;
+    } else {
+      localStorage.removeItem(XAdmin.LOCAL_ADMIN_KEY);
+      alert('This address isn\'t allowed.');
+      this._signedIn = false;
+    }
+
+    return false;
   }
 
   private async handleAuth(): Promise<void> {
     const savedAddress = localStorage.getItem(XAdmin.LOCAL_ADMIN_KEY);
     this._savedAddress = savedAddress;
-    
-    if (savedAddress === XAdmin.ALLOWED_ADDRESS) {
-      this._signedIn = true;
-    } else {
-      this._signedIn = false;
+
+    if (savedAddress) {
+      await this._loginUsing(savedAddress);
     }
 
     if (this._page === DashboardPages.translate) {
@@ -86,36 +98,11 @@ export class XAdmin extends Localized(LitElement) {
   }
 
   async handleStorage(): Promise<void> {
-    if (this._savedAddress) {
-      IPFSNode = await IPFS.create({
-        repo: this._savedAddress,
-      });
-
-      try {
-        const generatedKey = await IPFSNode.key.gen('main-website');
-        console.warn(generatedKey);
-      } catch (err) {
-        // key already created.
-        const currentKey = await IPFSNode.key.info('main-website');
-        console.warn(currentKey);
-      }
-
-      try {
-        await IPFSNode.files.mkdir(XAdmin.IPFS_DIRECTORY);
-        console.warn('created dir');
-      } catch (err) {
-        console.warn('dir already created');
-      }
-
-      await IPFSNode.files.write(XAdmin.IPFS_DIRECTORY + '/config.json', JSON.stringify(config), { create: true });
-      
-      const stats = await IPFSNode.files.stat(XAdmin.IPFS_DIRECTORY);
-      console.warn('Folder CID:', stats.cid.toString());
-
-      for await (const file of IPFSNode.files.ls(XAdmin.IPFS_DIRECTORY)) {
-        console.warn('file', file);
-      }
+    if (!this._savedAddress) {
+      return;
     }
+
+    
   }
 
   async firstUpdated(): Promise<void> {
@@ -123,20 +110,22 @@ export class XAdmin extends Localized(LitElement) {
     this._page = orbit?.router.location.pathname.replace(AdminNav.MainPathPrefix + '/', '') as DashboardPages;
 
     await this.handleAuth();
-    if (!IPFSNode && this._savedAddress) {
-      await this.handleStorage();
-    }
   }
 
   async connect(): Promise<boolean> {
     const terraAdr = await ExtensionSingleton.connect();
-    if (terraAdr.address === XAdmin.ALLOWED_ADDRESS) {
+
+    if (terraAdr.address) {
+      await this._loginUsing(terraAdr.address);
+    }
+
+    /*if (terraAdr.address === XAdmin.ALLOWED_ADDRESS) {
       this._signedIn = true;
       localStorage.setItem(XAdmin.LOCAL_ADMIN_KEY, terraAdr.address);
       this._savedAddress = terraAdr.address;
     } else {
       this._signedIn = false;
-    }
+    }*/
     
     return this._signedIn;
   }
@@ -197,7 +186,7 @@ export class XAdmin extends Localized(LitElement) {
   }
 
   public logout(): void {
-    localStorage.removeItem('terra-address');
+    localStorage.removeItem(XAdmin.LOCAL_ADMIN_KEY);
     this._signedIn = false;
   }
 
