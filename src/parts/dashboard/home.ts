@@ -89,6 +89,9 @@ export class WebsiteHome extends Localized(LitElement) {
           </button>
         </div>
         <div class="m-4">
+          <h2 class="text-md mt-4 mb-4">
+            ${msg('Call to action')}
+          </h2>
           ${this._ctaEditor(0, msg('Stake with us today !'), msg('Get started'), 'how-to')}
           <h1 class="text-md mt-4 mb-4">
             ${msg('Strengths')}

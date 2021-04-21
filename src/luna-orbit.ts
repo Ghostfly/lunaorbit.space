@@ -190,22 +190,7 @@ export class LunaOrbit extends Localized(LitElement) {
         elem.innerText = link.value;
         menuHolder.appendChild(elem);
       }
-      menuHolder.appendChild(document.createElement('locale-picker'));
     }
-  }
-
-  private _cleanMenus(): void {
-    const menuHolders = document.querySelectorAll('.menu-holder');
-    for (const menuHolder of menuHolders) {
-      menuHolder.innerHTML = '';
-    }
-  }
-
-  public refreshI18n(): void {
-    this._cleanMenus();
-    this._updateBannerMessage();
-    this._setupMenus();
-    this._showAirdropToast();
   }
 
   render(): TemplateResult {

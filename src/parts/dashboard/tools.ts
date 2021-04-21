@@ -79,28 +79,30 @@ export class WebsiteTools extends Localized(LitElement) {
             </h2>
             ${this._tools && this._tools.map(tool => {
               return html`
+              <div class="border-4 rounded-md p-2 m-2">
                 <label class="leading-7 text-sm text-gray-600">${tool.id}</label>
                 <div class="relative">
-                  <input name="${tool.id}-name" id="${tool.id}-name" .value=${tool.name} type="text" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-                  <textarea placeholder="Explain" name="${tool.id}-name" id="${tool.id}-explain" .value=${tool.explain} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
+                    <input name="${tool.id}-name" id="${tool.id}-name" .value=${tool.name} type="text" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                    <textarea placeholder="Explain" name="${tool.id}-name" id="${tool.id}-explain" .value=${tool.explain} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
 
-                  <div class="bg-gray-100 p-4 rounded-md">
-                    ${tool.links.map((link, idx) => {
-                      return html`
-                      <div class="flex">
-                        <div class="relative">
-                          <label for="${tool.id}-link-${idx}-title" class="leading-7 text-sm text-gray-600">Title</label>
-                          <input name="${tool.id}-link-${idx}-title" id="${tool.id}-link-${idx}-title" type="text" .value=${link.name} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                    <div class="bg-gray-100 p-4">
+                      ${tool.links.map((link, idx) => {
+                        return html`
+                        <div class="flex">
+                          <div class="relative">
+                            <label for="${tool.id}-link-${idx}-title" class="leading-7 text-sm text-gray-600">Title</label>
+                            <input name="${tool.id}-link-${idx}-title" id="${tool.id}-link-${idx}-title" type="text" .value=${link.name} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                          </div>
+                          <div class="relative">
+                            <label for="${tool.id}-link-${idx}-href" class="leading-7 text-sm text-gray-600">URL</label>
+                            <input name="${tool.id}-link-${idx}-href" id="${tool.id}-link-${idx}-href" type="text" .value=${link.href} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                          </div>
                         </div>
-                        <div class="relative">
-                          <label for="${tool.id}-link-${idx}-href" class="leading-7 text-sm text-gray-600">URL</label>
-                          <input name="${tool.id}-link-${idx}-href" id="${tool.id}-link-${idx}-href" type="text" .value=${link.href} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-                        </div>
-                      </div>
-                      `;
-                    })}
+                        `;
+                      })}
+                    </div>
                   </div>
-                </div>
+              </div>
               `;
             })}    
           `}

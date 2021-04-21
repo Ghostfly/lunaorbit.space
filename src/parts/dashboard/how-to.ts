@@ -60,6 +60,9 @@ export class WebsiteHowTo extends Localized(LitElement) {
         </div>
         <div class="m-4">
           ${this._cta ? html`
+            <h2 class="text-md mt-4 mb-4">
+                ${msg('Call to action')}
+            </h2>
             ${this._ctaEditor(this._cta.id, this._cta.title, this._cta['cta-text'], this._cta.href)}
           ` : html``}
           ${this.loading ? html`
