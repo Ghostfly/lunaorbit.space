@@ -64,6 +64,7 @@ export class XAdmin extends Localized(LitElement) {
     } else {
       localStorage.removeItem(XAdmin.LOCAL_ADMIN_KEY);
       alert('This address isn\'t allowed.');
+      this._savedAddress = null;
       this._signedIn = false;
     }
 
@@ -118,14 +119,6 @@ export class XAdmin extends Localized(LitElement) {
     if (terraAdr.address) {
       await this._loginUsing(terraAdr.address);
     }
-
-    /*if (terraAdr.address === XAdmin.ALLOWED_ADDRESS) {
-      this._signedIn = true;
-      localStorage.setItem(XAdmin.LOCAL_ADMIN_KEY, terraAdr.address);
-      this._savedAddress = terraAdr.address;
-    } else {
-      this._signedIn = false;
-    }*/
     
     return this._signedIn;
   }
