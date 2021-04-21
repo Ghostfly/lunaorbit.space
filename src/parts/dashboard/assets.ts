@@ -4,10 +4,16 @@ import {
   LitElement,
   TemplateResult,
   property,
+  internalProperty,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
+import { retrieveSupabase } from '../../luna-orbit';
+
+import { SupabaseStorageClient } from '@supabase/supabase-js/dist/main/lib/SupabaseStorageClient';
+import { StorageFileApi } from '@supabase/supabase-js/dist/main/lib/storage/StorageFileApi';
+import { FileObject } from '@supabase/supabase-js/dist/main/lib/storage/types';
 
 /**
  * Assets component
@@ -18,23 +24,34 @@ export class WebsiteAssets extends Localized(LitElement) {
   static ASSETS_SUBPATH = '/assets';
 
   @property({ type: Array })
-  public files: { name: string; url: string; }[] = []
+  public files: FileObject[] = [];
+
+  @internalProperty()
+  private _storageClient!: SupabaseStorageClient;
+  @internalProperty()
+  private _assetsRef!: StorageFileApi;
 
   createRenderRoot(): this {
     return this;
   }
   
   async firstUpdated(): Promise<void> {
+    this._storageClient = retrieveSupabase().storage;
+    this._assetsRef = this._storageClient.from('assets');
+
     await this.updateFiles();
   }
 
   async updateFiles(): Promise<void> {
-    /*const filesList = await listFiles();
-    if (Array.isArray(filesList)) {
-      this.files = filesList.filter(file => !file.name.startsWith('page-'));
-    } else {
-      this.files = [];
-    }*/
+    const filesList = (await this._assetsRef.list(undefined)).data;
+    if (!filesList) {
+      return;
+    }
+
+    this.files = [];
+    for (const file of filesList) {
+      this.files = [...this.files, file];
+    }
   }
 
   render(): TemplateResult {
@@ -60,11 +77,11 @@ export class WebsiteAssets extends Localized(LitElement) {
                   const file = target.files[0];
 
                   if (file.size > maxAllowedSize) {
-                    // TODO : replace by alert.
-                    alert(msg('File is too big.'));
+                    document.querySelector('x-admin')?.showSnack('File is too big.');
                     target.value = '';
                   } else {
-                    // TODO : UPLOAD FILE
+                    const assetsBucket = await this._assetsRef.upload(file.name, file);
+                    console.warn(assetsBucket.data);
                     await this.updateFiles();
                   }
               }
@@ -84,12 +101,12 @@ export class WebsiteAssets extends Localized(LitElement) {
                     ${file.name}
                     <div class="flex justify-between">
                       <svg @click=${() => {
-                        console.warn(file.url);
+                        console.warn(file.name);
                       }} xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                       </svg>
                       <svg @click=${async () => {
-                        // await deleteFile(file.name);
+                        await this._assetsRef.remove([file.name]);
                         console.warn('deleted');
                         await this.updateFiles();
                       }} xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
