@@ -57,6 +57,16 @@ export class XAdmin extends Localized(LitElement) {
     this._supabase = createClient(supabaseUrl, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxODk5MDIyNywiZXhwIjoxOTM0NTY2MjI3fQ.Nf1C2uRIocHV2bmfvbUxPGE8MTbRjbB9Kvft4V0dUaI');
   }
 
+
+  private async _isAllowed(terraAddress: string) {
+    const queryBuilder = this._supabase.from<AdminUser>('terraLogin');
+    const query = queryBuilder.select('terraAddress');
+    const allowedAddresses = (await query).data;
+
+    const isAllowed = allowedAddresses?.find((data) => data.terraAddress === terraAddress);
+    return isAllowed;
+  }
+
   private async _loginUsing(terraAddress: string): Promise<boolean> {
     if (!await this._needsLogin()) {
       this._signedIn = true;
@@ -64,11 +74,7 @@ export class XAdmin extends Localized(LitElement) {
       return true;
     }
 
-    const queryBuilder = this._supabase.from<AdminUser>('terraLogin');
-    const query = queryBuilder.select('terraAddress');
-    const allowedAddresses = (await query).data;
-
-    const isAllowed = allowedAddresses?.find((data) => data.terraAddress === terraAddress);
+    const isAllowed = await this._isAllowed(terraAddress);
     if (isAllowed) {
       localStorage.setItem(XAdmin.LOCAL_ADMIN_KEY, terraAddress);
       localStorage.setItem(XAdmin.LOGGED_IN_AT_KEY, new Date().getTime().toString());
@@ -96,11 +102,7 @@ export class XAdmin extends Localized(LitElement) {
     }
 
     if (loggedAtKey) {
-      const queryBuilder = this._supabase.from<AdminUser>('terraLogin');
-      const query = queryBuilder.select('terraAddress');
-      const allowedAddresses = (await query).data;
-  
-      const isAllowed = allowedAddresses?.find((data) => data.terraAddress === terraAddress);
+      const isAllowed = await this._isAllowed(terraAddress);
 
       if (isAllowed) {
         const loggedAt = parseInt(loggedAtKey, 10);
