@@ -15,6 +15,11 @@ export type CTA = {
   'cta-text': string;
 }
 
+export type Step = {
+  title: string;
+  img: string;
+}
+
 export type ToolSection = {
   id: number;
   name: string;
@@ -39,4 +44,8 @@ export async function ctaForPage(db: SupabaseClient, page: string): Promise<CTA 
 
 export async function loadTools(db: SupabaseClient): Promise<ToolSection[] | null> {
   return (await db.from<ToolSection>('tools').select('name, explain, links')).data;
+}
+
+export async function loadSteps(db: SupabaseClient): Promise<Step[] | null> {
+  return (await db.from<Step>('how-to-steps').select('title, img')).data;
 }

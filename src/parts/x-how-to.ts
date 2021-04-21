@@ -10,7 +10,7 @@ import {msg} from '@lit/localize';
 import { Localized } from '@lit/localize/localized-element.js';
 
 import '../components/cta-hero';
-import { CTA, ctaForPage } from '../backend';
+import { CTA, ctaForPage, loadSteps, Step } from '../backend';
 import { retrieveSupabase } from '../luna-orbit';
 
 /**
@@ -26,6 +26,8 @@ export class XHowTo extends Localized(LitElement) {
 
   @internalProperty()
   private _cta: CTA | null = null;
+  @internalProperty()
+  private _steps: Step[] | null = null;
 
   createRenderRoot(): this {
     return this;
@@ -36,6 +38,7 @@ export class XHowTo extends Localized(LitElement) {
 
     this.loading = true;
 
+    this._steps = await loadSteps(db);
     this._cta = await ctaForPage(db, 'how-to');
 
     this.loading = false;
@@ -145,21 +148,6 @@ export class XHowTo extends Localized(LitElement) {
       },
     ];
 
-    const tabItems = [
-      {
-        title: msg('Download Terra Station'),
-        img: '0'
-      },
-      {
-        title: msg('Choose the validator'),
-        img: '1'
-      },
-      {
-        title: msg('Delegate tokens'),
-        img: '2'
-      },
-    ];
-
     return html`
       <section
         class="container mx-auto px-2 py-4 text-gray-700 body-font border-t border-gray-200"
@@ -171,7 +159,7 @@ export class XHowTo extends Localized(LitElement) {
           class="list-reset flex border-b"
           @click=${this._onTabClick}
         >
-          ${tabItems.map(item => {
+          ${this._steps && this._steps.map(item => {
             return this._tabItem(item.title, item.img, this.step === item.img);
           })}          
         </ul>
