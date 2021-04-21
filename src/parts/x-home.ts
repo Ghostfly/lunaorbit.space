@@ -3,24 +3,9 @@ import { Localized } from '@lit/localize/localized-element.js';
 
 import '../components/cta-hero';
 
+import { Strength, CTA, ctaForPage } from '../backend';
+
 import { retrieveSupabase } from '../luna-orbit';
-
-export type Strength = {
-  id: number;
-  title: string;
-  description: string;
-  link: {
-    href: string;
-    name: string;
-  }
-}
-
-export type CTA = {
-  title: string;
-  href: string;
-  page: string;
-  'cta-text': string;
-}
 
 /**
  * Home component
@@ -47,12 +32,8 @@ export class XHome extends Localized(LitElement) {
     if (savedStrengths) {
       this._strengths = savedStrengths;
     }
-
-    const homeCTA = (await db.from<CTA>('cta').select('id, title, href, cta-text').match({ page: 'home' })).data;
-
-    if (homeCTA) {
-      this._cta = homeCTA[0];
-    }
+    
+    this._cta = await ctaForPage(db, 'home');
 
     this.loading = false;
   }

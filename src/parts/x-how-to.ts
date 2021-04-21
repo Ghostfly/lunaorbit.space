@@ -4,11 +4,14 @@ import {
   LitElement,
   internalProperty,
   TemplateResult,
+  property,
 } from 'lit-element';
 import {msg} from '@lit/localize';
 import { Localized } from '@lit/localize/localized-element.js';
 
 import '../components/cta-hero';
+import { CTA, ctaForPage } from '../backend';
+import { retrieveSupabase } from '../luna-orbit';
 
 /**
  * How to choose a validator component
@@ -18,8 +21,24 @@ export class XHowTo extends Localized(LitElement) {
   @internalProperty()
   private step = '0';
 
+  @property({ type: Boolean })
+  public loading = false;
+
+  @internalProperty()
+  private _cta: CTA | null = null;
+
   createRenderRoot(): this {
     return this;
+  }
+
+  async firstUpdated(): Promise<void> {
+    const db = retrieveSupabase();
+
+    this.loading = true;
+
+    this._cta = await ctaForPage(db, 'how-to');
+
+    this.loading = false;
   }
 
   private _onTabClick(e: Event) {
@@ -171,7 +190,9 @@ export class XHowTo extends Localized(LitElement) {
             })}
           </div>
         </div>
-        <cta-hero .title=${msg('Discover & Understand Terra')} href="tools" .ctaText=${msg('Tools')}></cta-hero>
+        ${this._cta ? html`
+        <cta-hero .title=${this._cta.title} href=${this._cta.href} .ctaText=${this._cta['cta-text']}></cta-hero>
+        ` : html``}
       </section>
     `;
   }

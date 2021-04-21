@@ -12,17 +12,9 @@ import {Localized} from '@lit/localize/localized-element.js';
 
 import '../components/cta-hero';
 import '../components/tailwind-quote';
-import { retrieveSupabase } from '../luna-orbit';
 
-interface ToolSection {
-  id: number;
-  name: string;
-  explain: string;
-  links: {
-    href: string;
-    name: string;
-  }[];
-}
+import { retrieveSupabase } from '../luna-orbit';
+import { CTA, ctaForPage, loadTools, ToolSection } from '../backend';
 
 /**
  * Tools component
@@ -31,7 +23,10 @@ interface ToolSection {
 export class XTools extends Localized(LitElement) {
 
   @internalProperty()
-  private _sections: ToolSection[] = [];
+  private _cta: CTA | null = null;
+
+  @internalProperty()
+  private _sections: ToolSection[] | null = [];
   @property({ type: Boolean })
   public loading = false;
 
@@ -40,19 +35,12 @@ export class XTools extends Localized(LitElement) {
   }
 
   async firstUpdated(): Promise<void> {
-    await this._loadTools();
-  }
-
-  private async _loadTools() {
     const db = retrieveSupabase();
 
     this.loading = true;
-    
-    const sections = (await db.from<ToolSection>('tools').select('name, explain, links')).data;
-    
-    if (sections) {
-      this._sections = sections;
-    }
+
+    this._cta = await ctaForPage(db, 'tools');
+    this._sections = await loadTools(db);
 
     this.loading = false;
   }
@@ -104,7 +92,7 @@ export class XTools extends Localized(LitElement) {
         </div>
         ` : html``}
 
-        ${this._sections.map((section) => {
+        ${this._sections && this._sections.map((section) => {
           return this._sectionTemplate(section);
         })}
 
@@ -122,7 +110,10 @@ export class XTools extends Localized(LitElement) {
         </tailwind-quote>
       </section>
 
-      <cta-hero .title=${msg('We are here to help.')} href="contact" .ctaText=${msg('Contact')}></cta-hero>
+      ${this._cta ? html`
+      <cta-hero .title=${this._cta.title} href="${this._cta.href}" .ctaText=${this._cta['cta-text']}></cta-hero>
+      ` : html``}
+
     `;
   }
 }

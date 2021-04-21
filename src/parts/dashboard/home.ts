@@ -9,7 +9,7 @@ import {
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
 import { retrieveSupabase } from '../../luna-orbit';
-import { Strength } from '../x-home';
+import { Strength } from '../../backend';
 
 @customElement('website-home')
 export class WebsiteHome extends Localized(LitElement) {
