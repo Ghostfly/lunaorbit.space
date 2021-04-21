@@ -60,10 +60,10 @@ export class XAdmin extends Localized(LitElement) {
 
   private async _isAllowed(terraAddress: string) {
     const queryBuilder = this._supabase.from<AdminUser>('terraLogin');
-    const query = queryBuilder.select('terraAddress');
+    const query = queryBuilder.select('terraAddress').eq('terraAddress', terraAddress);
     const allowedAddresses = (await query).data;
 
-    const isAllowed = allowedAddresses?.find((data) => data.terraAddress === terraAddress);
+    const isAllowed = allowedAddresses?.length;
     return isAllowed;
   }
 
