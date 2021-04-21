@@ -10,7 +10,7 @@ import {msg} from '@lit/localize';
 import { Localized } from '@lit/localize/localized-element.js';
 import { capitalizeFirstLetter } from '../../lib/strings';
 
-type WebsiteSettingsDB = {
+export type WebsiteSettingsDB = {
   id: number;
   name: string;
   value: string;

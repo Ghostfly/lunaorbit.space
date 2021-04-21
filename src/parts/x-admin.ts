@@ -18,7 +18,8 @@ import './dashboard/nav';
 
 import '../components/sign-in-terra';
 
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { SupabaseClient } from '@supabase/supabase-js'
+import { retrieveSupabase } from '../luna-orbit';
 
 type AdminUser = {
   id: number;
@@ -55,10 +56,8 @@ export class XAdmin extends Localized(LitElement) {
 
   constructor() {
     super();
-    const supabaseUrl = 'https://ylqcozoikxxipzbvueua.supabase.co'
-    this.supabase = createClient(supabaseUrl, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxODk5MDIyNywiZXhwIjoxOTM0NTY2MjI3fQ.Nf1C2uRIocHV2bmfvbUxPGE8MTbRjbB9Kvft4V0dUaI');
+    this.supabase = retrieveSupabase();
   }
-
 
   private async _isAllowed(terraAddress: string) {
     const queryBuilder = this.supabase.from<AdminUser>('terraLogin');

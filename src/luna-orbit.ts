@@ -21,7 +21,15 @@ import config from './config';
 import {setLocaleFromUrl} from './localization';
 import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
-import {BannerMessage} from './components/banner-message';
+import { BannerMessage } from './components/banner-message';
+
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { WebsiteSettingsDB } from './parts/dashboard/settings';
+
+export function retrieveSupabase(): SupabaseClient {
+  const supabaseUrl = 'https://ylqcozoikxxipzbvueua.supabase.co'
+  return createClient(supabaseUrl, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxODk5MDIyNywiZXhwIjoxOTM0NTY2MjI3fQ.Nf1C2uRIocHV2bmfvbUxPGE8MTbRjbB9Kvft4V0dUaI');
+}
 
 /**
  * Luna-orbit
@@ -49,9 +57,13 @@ export class LunaOrbit extends Localized(LitElement) {
   @internalProperty()
   private _price = 0;
 
+  @internalProperty()
+  private _supabase: SupabaseClient;
+
   constructor() {
     super();
-
+    
+    this._supabase = retrieveSupabase();
     this.mobileMenuToggle = document.querySelector('#mobile-menu-toggle');
     this.mobileMenu = document.querySelector('#mobile-menu');
 
@@ -82,25 +94,32 @@ export class LunaOrbit extends Localized(LitElement) {
     document.body.appendChild(document.createElement('airdrop-dialog'));
   }
 
-  private _updateBannerMessage(): void {
+  private async _updateBannerMessage(): Promise<void> {
     if (sessionStorage.getItem('lunaorbit-banner-hide')) {
       return;
     }
 
-    const banners = document.querySelectorAll('banner-message');
-    for (const banner of banners) {
-      banner.parentElement?.removeChild(banner);
+    const queryBuilder = this._supabase.from<WebsiteSettingsDB>('settings');
+    const query = queryBuilder.select('name, value, type').eq('name', 'announcement');
+
+    const settings = (await query).data;
+
+    if (settings?.length) {
+      const banners = document.querySelectorAll('banner-message');
+      for (const banner of banners) {
+        banner.parentElement?.removeChild(banner);
+      }
+  
+      const bannerNode = document.createElement('banner-message');
+      bannerNode.message = settings[0].value;
+  
+      bannerNode.addEventListener('click', function () {
+        bannerNode.parentElement?.removeChild(bannerNode);
+        sessionStorage.setItem('lunaorbit-banner-hide', 'true');
+      });
+  
+      document.body.insertBefore(bannerNode, document.body.firstChild);
     }
-
-    const bannerNode = document.createElement('banner-message');
-    bannerNode.message = msg('0% commissions until May 10th 2021');
-
-    bannerNode.addEventListener('click', function () {
-      bannerNode.parentElement?.removeChild(bannerNode);
-      sessionStorage.setItem('lunaorbit-banner-hide', 'true');
-    });
-
-    document.body.insertBefore(bannerNode, document.body.firstChild);
   }
 
   private _showAirdropToast() {
@@ -118,7 +137,7 @@ export class LunaOrbit extends Localized(LitElement) {
     await setLocaleFromUrl();
 
     this._showAirdropToast();
-    this._updateBannerMessage();
+    await this._updateBannerMessage();
     this._setupMenus();
     this._handleMobileMenu();
 
