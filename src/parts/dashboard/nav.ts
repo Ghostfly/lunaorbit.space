@@ -11,11 +11,11 @@ import {Localized} from '@lit/localize/localized-element.js';
 
 export enum DashboardPages {
   cockpit = '/cockpit',
-  pages = 'pages',
   settings = 'settings',
   assets = 'assets',
   translate = 'translate',
   menus = 'menus',
+  strengths = 'strengths',
 }
 
 /**
@@ -45,9 +45,9 @@ export class AdminNav extends Localized(LitElement) {
         ${this.address ? html`
           <img class="h-10 w-10 bg-white rounded-full" src="https://avatars.dicebear.com/api/bottts/${this.address}.svg" />
         ` : html``}
-        <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this.page === DashboardPages.pages ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${AdminNav.MainPathPrefix}/${DashboardPages.pages}" title="${msg('Pages')}">
-          <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+        <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this.page === DashboardPages.strengths ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${AdminNav.MainPathPrefix}/${DashboardPages.strengths}" title="${msg('Strengths')}">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
         </a>
         <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this.page === DashboardPages.menus ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${AdminNav.MainPathPrefix}/${DashboardPages.menus}" title="${msg('Menus')}">

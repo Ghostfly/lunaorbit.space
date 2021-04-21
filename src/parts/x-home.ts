@@ -1,5 +1,4 @@
 import {html, customElement, LitElement, TemplateResult, internalProperty} from 'lit-element';
-import {msg} from '@lit/localize';
 import { Localized } from '@lit/localize/localized-element.js';
 
 import '../components/cta-hero';
@@ -7,12 +6,20 @@ import '../components/cta-hero';
 import { retrieveSupabase } from '../luna-orbit';
 
 export type Strength = {
+  id: number;
   title: string;
   description: string;
   link: {
     href: string;
     name: string;
   }
+}
+
+export type CTA = {
+  title: string;
+  href: string;
+  page: string;
+  'cta-text': string;
 }
 
 /**
@@ -25,6 +32,8 @@ export class XHome extends Localized(LitElement) {
 
   @internalProperty()
   private loading = false;
+  @internalProperty()
+  private _cta: CTA | null = null;
 
   createRenderRoot(): this {
     return this;
@@ -39,6 +48,12 @@ export class XHome extends Localized(LitElement) {
       this._strengths = savedStrengths;
     }
 
+    const homeCTA = (await db.from<CTA>('cta').select('id, title, href, cta-text').match({ page: 'home' })).data;
+
+    if (homeCTA) {
+      this._cta = homeCTA[0];
+    }
+
     this.loading = false;
   }
 
@@ -47,7 +62,9 @@ export class XHome extends Localized(LitElement) {
       <section
         class="container mx-auto px-2 py-4 text-gray-700 body-font border-t border-gray-200 relative text-gray-700 body-font border-t border-gray-200 relative"
       >
-        <cta-hero .title="${msg('Stake with us today !')}" .ctaText=${msg('Get started')} href="how-to"></cta-hero>
+        ${this._cta ? html`
+        <cta-hero .title="${this._cta.title}" .ctaText=${this._cta['cta-text']} href="${this._cta.href}"></cta-hero>
+        ` : html``}
         <div class="container px-5 py-8 mx-auto">
           <div class="flex flex-wrap -m-4">
             ${this.loading ? html`

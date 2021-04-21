@@ -12,9 +12,9 @@ import ExtensionSingleton from '../terra/terra-connect';
 import './dashboard/settings';
 import './dashboard/assets';
 import './dashboard/translate';
-import './dashboard/pages';
 import './dashboard/menus';
 import './dashboard/nav';
+import './dashboard/home';
 
 import '../components/sign-in-terra';
 
@@ -40,7 +40,7 @@ export class XAdmin extends Localized(LitElement) {
   private _signedIn = false;
 
   @internalProperty()
-  private _page: DashboardPages = DashboardPages.pages;
+  private _page: DashboardPages = DashboardPages.strengths;
 
   @internalProperty()
   private _strings: { source: IXliffSource, target: IXliffTarget }[] = [];
@@ -225,10 +225,10 @@ export class XAdmin extends Localized(LitElement) {
             ${msg('Home')}
           </h1>
         </div>
-        `;
-      case DashboardPages.pages:
+      `;
+      case DashboardPages.strengths:
         return html`
-        <website-pages></website-pages>
+        <website-home></website-home>
         `;
       case DashboardPages.settings:
         return html`
