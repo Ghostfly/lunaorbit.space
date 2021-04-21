@@ -22,7 +22,125 @@ export class XHowTo extends Localized(LitElement) {
     return this;
   }
 
+  private _onTabClick(e: Event) {
+    const item = e.target as HTMLElement;
+    if (item.dataset.img) {
+      this.step = item.dataset.img;
+    }
+  }
+
+  private _glossaryItem(title: string, text: string): TemplateResult {
+    return html`
+      <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
+        <div class="ml-4">
+          <p class="text-base font-medium text-gray-900">
+            ${title}
+          </p>
+          <p class="mt-1 text-md text-gray-500">
+            ${text}
+          </p>
+        </div>
+      </a>
+    `;
+  }
+
+  private _tabItem(title: string, img: string, active?: boolean) {
+    return html`
+      <li class="mr-1">
+        <a
+          data-img="${img}"
+          class="cursor-pointer	bg-white inline-block rounded-t py-2 px-4 ${active ? 'active font-semibold border-l border-t border-r text-blue-800' : ''}"
+          >
+          ${title}
+        </a>
+      </li>
+    `;
+  }
+
   render(): TemplateResult {
+    const glossaryItems = [
+      {
+        title: msg('Voting power'),
+        text: msg(`This is the amount of Luna that has been validated to this node. For the sake of decentralization, it is better if this number is lower. If any one node has too much voting power, they have too much influence over voting.`),
+      },
+      {
+        title: msg('Self-delegation'),
+        text: msg(`This is skin in the game, but the number reported here is often not correct. For Luna Orbit, I am currently 10% self delegated (as of March 2021) but will be 25% within a month. If you find skin in the game important, I recommend reaching out to the validator to ask them the accurate number they have delegated.`),
+      },
+      {
+        title: msg('Validator commission'),
+        text: msg(`
+          This is currently the only way a validator makes money and it
+          comes out of rewards. For example, at a rate of commission at
+          5% and a reward of 1 Luna, a delegator would receive .95 Luna
+          and the validator would receive .05 Luna. Luna Orbit utilizes
+          enterprise grade hosting that should ensure maximum
+          reliability and performance but it comes at a cost. Delegators
+          must decide if reliability and performance is important to
+          them or if lower cost validators are worth the risk.
+        `),
+      },
+      {
+        title: msg('Delegation return'),
+        text: msg(`
+        This is the current annual return you can expect from staking
+        with this validator. Keep in mind that validators that are new
+        (less than 30 days) might show different actual rates. This
+        does not mean that a new delegator making 12% is better than
+        an established validator making 8%, it just means the returns
+        have gone up recently and the numbers fail to fairly represent
+        the true picture for delegation return. However - Do Kwon has
+        said that oracle performance will have a major impact on
+        delegation returns so pay attention to the performance of your
+        validators at this website (Look at http://terra.stake.id and
+        check the column "Missed Oracle Votes" to get an idea of
+        performance).
+        `),
+      },
+      {
+        title: msg('Uptime'),
+        text: msg(`
+        This might be the most important on the list, you want the
+        maximum amount of uptime. Anything less can lead to small
+        penalties "slashing" to "jailing" . A small penalty is .01%
+        while jailing would cut off rewards until you redelegate or
+        the node fixes the issues. You want to choose a node that is
+        reliable if you want good uptime.
+        `),
+      },
+      {
+        title: msg('The Blue check mark'),
+        text: msg('This means the validator has submitted a profile on github. This is cosmetic only and has no effect on anything.'),
+      },
+      {
+        title: msg('Other considerations'),
+        text: msg(`
+          Some validators are active in the community and help people
+          out, some are building useful tools, some are high end for
+          reliability, and some people just want to make sure they
+          support the smaller validators in order to decentralize. There
+          could be any number of reasons to choose particular validators
+          and they all have an incentive to help you and the Terra eco
+          system!
+        `),
+      },
+    ];
+
+    const tabItems = [
+      {
+        title: msg('Download Terra Station'),
+        img: '0'
+      },
+      {
+        title: msg('Choose the validator'),
+        img: '1'
+      },
+      {
+        title: msg('Delegate tokens'),
+        img: '2'
+      },
+    ];
+
     return html`
       <section
         class="container mx-auto px-2 py-4 text-gray-700 body-font border-t border-gray-200"
@@ -32,57 +150,13 @@ export class XHowTo extends Localized(LitElement) {
         </h1>
         <ul
           class="list-reset flex border-b"
-          @click=${(e: Event) => {
-            const activeElements = (e.currentTarget as HTMLElement).querySelectorAll(
-              '.active'
-            );
-            for (const activeElement of Array.from(activeElements)) {
-              activeElement.classList.remove(
-                'active',
-                'font-semibold',
-                'border-l',
-                'border-t',
-                'border-r',
-                'text-blue-800'
-              );
-            }
-
-            const item = e.target as HTMLElement;
-            if (item.dataset.img) {
-              this.step = item.dataset.img;
-              item.classList.add(
-                'active',
-                'font-semibold',
-                'border-l',
-                'border-t',
-                'border-r',
-                'text-blue-800'
-              );
-            }
-          }}
+          @click=${this._onTabClick}
         >
-          <li class="mr-1">
-            <a
-              data-img="0"
-              class="cursor-pointer	active bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-blue-800 font-semibold"
-              >${msg('Download Terra Station')}</a
-            >
-          </li>
-          <li class="mr-1">
-            <a
-              data-img="1"
-              class="cursor-pointer	bg-white inline-block py-2 px-4 hover:text-blue-800"
-              >${msg('Choose the validator')}</a
-            >
-          </li>
-          <li class="mr-1">
-            <a
-              data-img="2"
-              class="cursor-pointer	bg-white inline-block py-2 px-4 hover:text-blue-800"
-              >${msg('Delegate tokens')}</a
-            >
-          </li>
+          ${tabItems.map(item => {
+            return this._tabItem(item.title, item.img, this.step === item.img);
+          })}          
         </ul>
+        
         <div class="p-4" id="tabs">
           <img src=${`/assets/${this.step}.png`} alt="download terra station" />
         </div>
@@ -91,132 +165,10 @@ export class XHowTo extends Localized(LitElement) {
           class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden"
         >
           <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-            <h2 class="text-md pointer-events-none">Glossary</h2>
-            <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
-              <div class="ml-4">
-                <p class="text-base font-medium text-gray-900">
-                  ${msg('Voting power')}
-                </p>
-                <p class="mt-1 text-md text-gray-500">
-                  ${msg(`This is the amount of Luna that has been validated to this
-                  node. For the sake of decentralization, it is better if this
-                  number is lower. If any one node has too much voting power,
-                  they have too much influence over voting.`)}
-                </p>
-              </div>
-            </a>
-
-            <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
-              <div class="ml-4">
-                <p class="text-base font-medium text-gray-900">
-                  ${msg('Self-delegation')}
-                </p>
-                <p class="mt-1 text-md text-gray-500">
-                  ${msg(`
-                    This is skin in the game, but the number reported here is
-                    often not correct. For Luna Orbit, I am currently 10% self
-                    delegated (as of March 2021) but will be 25% within a month.
-                    If you find skin in the game important, I recommend reaching
-                    out to the validator to ask them the accurate number they have
-                    delegated.
-                  `)}
-                </p>
-              </div>
-            </a>
-
-            <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
-              <div class="ml-4">
-                <p class="text-base font-medium text-gray-900">
-                  ${msg('Validator commission')}
-                </p>
-                <p class="mt-1 text-md text-gray-500">
-                  ${msg(`
-                  This is currently the only way a validator makes money and it
-                  comes out of rewards. For example, at a rate of commission at
-                  5% and a reward of 1 Luna, a delegator would receive .95 Luna
-                  and the validator would receive .05 Luna. Luna Orbit utilizes
-                  enterprise grade hosting that should ensure maximum
-                  reliability and performance but it comes at a cost. Delegators
-                  must decide if reliability and performance is important to
-                  them or if lower cost validators are worth the risk.
-                  `)}
-                </p>
-              </div>
-            </a>
-
-            <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
-              <div class="ml-4">
-                <p class="text-base font-medium text-gray-900">
-                  ${msg('Delegation return')}
-                </p>
-                <p class="mt-1 text-sm text-gray-500">
-                  ${msg(`
-                  This is the current annual return you can expect from staking
-                  with this validator. Keep in mind that validators that are new
-                  (less than 30 days) might show different actual rates. This
-                  does not mean that a new delegator making 12% is better than
-                  an established validator making 8%, it just means the returns
-                  have gone up recently and the numbers fail to fairly represent
-                  the true picture for delegation return. However - Do Kwon has
-                  said that oracle performance will have a major impact on
-                  delegation returns so pay attention to the performance of your
-                  validators at this website (Look at http://terra.stake.id and
-                  check the column "Missed Oracle Votes" to get an idea of
-                  performance).
-                  `)}
-                </p>
-              </div>
-            </a>
-
-            <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
-              <div class="ml-4">
-                <p class="text-base font-medium text-gray-900">
-                  ${msg('Uptime')}
-                </p>
-                <p class="mt-1 text-sm text-gray-500">
-                  ${msg(`
-                  This might be the most important on the list, you want the
-                  maximum amount of uptime. Anything less can lead to small
-                  penalties "slashing" to "jailing" . A small penalty is .01%
-                  while jailing would cut off rewards until you redelegate or
-                  the node fixes the issues. You want to choose a node that is
-                  reliable if you want good uptime.
-                  `)}
-                </p>
-              </div>
-            </a>
-
-            <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
-              <div class="ml-4">
-                <p class="text-base font-medium text-gray-900">
-                  ${msg('The Blue check mark')}
-                </p>
-                <p class="mt-1 text-sm text-gray-500">
-                  ${msg(
-                    'This means the validator has submitted a profile on github. This is cosmetic only and has no effect on anything.'
-                  )}
-                </p>
-              </div>
-            </a>
-
-            <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
-              <div class="ml-4">
-                <p class="text-base font-medium text-gray-900">
-                  ${msg('Other considerations')}
-                </p>
-                <p class="mt-1 text-sm text-gray-500">
-                  ${msg(`
-                  Some validators are active in the community and help people
-                  out, some are building useful tools, some are high end for
-                  reliability, and some people just want to make sure they
-                  support the smaller validators in order to decentralize. There
-                  could be any number of reasons to choose particular validators
-                  and they all have an incentive to help you and the Terra eco
-                  system!
-                  `)}
-                </p>
-              </div>
-            </a>
+            <h2 class="text-md pointer-events-none">${msg('Glossary')}</h2>
+            ${glossaryItems.map(item => {
+              return this._glossaryItem(item.title, item.text)
+            })}
           </div>
         </div>
         <cta-hero .title=${msg('Discover & Understand Terra')} href="tools" .ctaText=${msg('Tools')}></cta-hero>
