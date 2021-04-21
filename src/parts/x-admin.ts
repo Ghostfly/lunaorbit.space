@@ -10,6 +10,8 @@ import './dashboard/assets';
 import './dashboard/menus';
 import './dashboard/nav';
 import './dashboard/home';
+import './dashboard/tools';
+import './dashboard/how-to';
 
 import '../components/sign-in-terra';
 
