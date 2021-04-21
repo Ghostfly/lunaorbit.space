@@ -38,7 +38,6 @@ export class WebsiteSettings extends Localized(LitElement) {
 
     const settings = (await query).data;
     this._settings = settings;
-    console.warn(settings);
   }
 
   render(): TemplateResult {
@@ -70,7 +69,7 @@ export class WebsiteSettings extends Localized(LitElement) {
                           ${capitalizeFirstLetter(setting.name)}
                         </label>
                         <div class="mt-1">
-                          <input type="text" id="${setting.name}" name="${setting.name}" class="p-2 shadow-sm border-2 border-gray-300 border-dashed focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm rounded-md" .value=${setting.value}></textarea>
+                          <input id=${setting.name} type="text" id="${setting.name}" name="${setting.name}" class="p-2 shadow-sm border-2 border-gray-300 border-dashed focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm rounded-md" .value=${setting.value}></textarea>
                         </div>
                       </div>
                     `;
@@ -88,7 +87,7 @@ export class WebsiteSettings extends Localized(LitElement) {
                           <div class="flex text-sm text-gray-600">
                             <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                               <span>${msg('Upload a file')}</span>
-                              <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                              <input id=${setting.name} name="file-upload" type="file" class="sr-only">
                             </label>
                             <p class="pl-1">${msg('or drag and drop')}</p>
                           </div>
@@ -103,7 +102,7 @@ export class WebsiteSettings extends Localized(LitElement) {
               })}
             </div>
             <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-              <button class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white terra-bg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <button @click=${this._onSave} class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white terra-bg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 ${msg('Save')}
               </button>
             </div>
@@ -111,6 +110,31 @@ export class WebsiteSettings extends Localized(LitElement) {
         </div>
       </div>
     `;
+  }
+
+  private async _onSave() {
+    const database = document.querySelector('x-admin')?.supabase;
+    if (!database || !this._settings) {
+      return;
+    }
+
+    for (const setting of this._settings) {
+      const component = document.querySelector('#' + setting.name) as HTMLInputElement;
+      if (component && component.value !== setting.value) {
+        const queryBuilder = database.from<WebsiteSettingsDB>('settings');
+        const { data, error } = await queryBuilder.update({
+          value: component.value
+        }).match({
+          name: setting.name
+        });
+        
+        if (error) {
+          // Show error toast
+        }
+
+        console.warn('updated data !', data);
+      }
+    }
   }
 }
 
