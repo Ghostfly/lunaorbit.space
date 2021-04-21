@@ -1,6 +1,5 @@
 import { LitElement, html, TemplateResult, customElement, internalProperty } from 'lit-element';
 import { Localized } from '@lit/localize/localized-element';
-import { msg } from '@lit/localize';
 
 import { AdminNav, DashboardPages } from './dashboard/nav';
 
@@ -195,15 +194,19 @@ export class XAdmin extends Localized(LitElement) {
     switch (page) {
       case DashboardPages.cockpit:
         return html`
-        <div class="flex justify-between ml-4 mb-4 pb-6">
-          <h1 class="text-xl">
-            ${msg('Home')}
-          </h1>
-        </div>
+        <website-home></website-home>
       `;
       case DashboardPages.strengths:
         return html`
         <website-home></website-home>
+        `;
+      case DashboardPages.howTo:
+        return html`
+        <website-how-to></website-how-to>
+        `;
+      case DashboardPages.tools:
+        return html`
+        <website-tools></website-tools>
         `;
       case DashboardPages.settings:
         return html`

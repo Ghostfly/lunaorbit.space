@@ -15,6 +15,8 @@ export enum DashboardPages {
   assets = 'assets',
   menus = 'menus',
   strengths = 'strengths',
+  howTo = 'how-to',
+  tools = 'tools',
 }
 
 /**
@@ -47,6 +49,16 @@ export class AdminNav extends Localized(LitElement) {
         <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this.page === DashboardPages.strengths ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${AdminNav.MainPathPrefix}/${DashboardPages.strengths}" title="${msg('Strengths')}">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </a>
+        <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this.page === DashboardPages.howTo ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${AdminNav.MainPathPrefix}/${DashboardPages.howTo}" title="${msg('How to')}">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </a>
+        <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this.page === DashboardPages.tools ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${AdminNav.MainPathPrefix}/${DashboardPages.tools}" title="${msg('Tools')}">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
           </svg>
         </a>
         <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this.page === DashboardPages.menus ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${AdminNav.MainPathPrefix}/${DashboardPages.menus}" title="${msg('Menus')}">
