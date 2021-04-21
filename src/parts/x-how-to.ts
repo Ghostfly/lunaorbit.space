@@ -6,7 +6,9 @@ import {
   TemplateResult,
 } from 'lit-element';
 import {msg} from '@lit/localize';
-import {Localized} from '@lit/localize/localized-element.js';
+import { Localized } from '@lit/localize/localized-element.js';
+
+import '../components/cta-hero';
 
 /**
  * How to choose a validator component
@@ -217,28 +219,7 @@ export class XHowTo extends Localized(LitElement) {
             </a>
           </div>
         </div>
-
-        <div
-          class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between"
-        >
-          <h2
-            class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl"
-          >
-            <span class="block terra-color"
-              >${msg('Discover & Understand Terra')}</span
-            >
-          </h2>
-          <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0">
-            <div class="inline-flex rounded-md shadow">
-              <a
-                href="tools"
-                class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white terra-bg"
-              >
-                ${msg('Tools')}
-              </a>
-            </div>
-          </div>
-        </div>
+        <cta-hero .title=${msg('Discover & Understand Terra')} href="tools" .ctaText=${msg('Tools')}></cta-hero>
       </section>
     `;
   }

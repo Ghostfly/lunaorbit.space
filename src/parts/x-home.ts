@@ -1,7 +1,9 @@
 import {html, customElement, LitElement, TemplateResult} from 'lit-element';
 import config from '../config';
 import {msg} from '@lit/localize';
-import {Localized} from '@lit/localize/localized-element.js';
+import { Localized } from '@lit/localize/localized-element.js';
+
+import '../components/cta-hero';
 
 /**
  * Home component
@@ -55,27 +57,7 @@ export class XHome extends Localized(LitElement) {
       <section
         class="container mx-auto px-2 py-4 text-gray-700 body-font border-t border-gray-200 relative text-gray-700 body-font border-t border-gray-200 relative"
       >
-        <div
-          class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between"
-        >
-          <h2
-            class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl"
-          >
-            <span class="block terra-color"
-              >${msg('Stake with us today !')}</span
-            >
-          </h2>
-          <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0">
-            <div class="inline-flex rounded-md shadow">
-              <a
-                href="how-to"
-                class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white terra-bg"
-              >
-                ${msg('Get started')}
-              </a>
-            </div>
-          </div>
-        </div>
+        <cta-hero .title="${msg('Stake with us today !')}" .ctaText=${msg('Get started')} href="how-to"></cta-hero>
         <div class="container px-5 py-8 mx-auto">
           <div class="flex flex-wrap -m-4">
             ${strengths.map(strength => {
