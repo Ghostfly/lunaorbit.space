@@ -58,7 +58,7 @@ export class XAdmin extends Localized(LitElement) {
   }
 
   private async _loginUsing(terraAddress: string): Promise<boolean> {
-    if (!this._needsLogin()) {
+    if (!await this._needsLogin()) {
       this._signedIn = true;
       this._savedAddress = terraAddress;
       return true;
@@ -88,7 +88,7 @@ export class XAdmin extends Localized(LitElement) {
     return false;
   }
 
-  private _needsLogin() {
+  private async _needsLogin() {
     const terraAddress = localStorage.getItem(XAdmin.LOCAL_ADMIN_KEY);
     const loggedAtKey = localStorage.getItem(XAdmin.LOGGED_IN_AT_KEY);
     if (!terraAddress) {
@@ -96,10 +96,20 @@ export class XAdmin extends Localized(LitElement) {
     }
 
     if (loggedAtKey) {
-      const loggedAt = parseInt(loggedAtKey, 10);
-      const isExpired = new Date(loggedAt) > new Date(loggedAt + XAdmin.TOKEN_DURATION);
+      const queryBuilder = this._supabase.from<AdminUser>('terraLogin');
+      const query = queryBuilder.select('terraAddress');
+      const allowedAddresses = (await query).data;
+  
+      const isAllowed = allowedAddresses?.find((data) => data.terraAddress === terraAddress);
 
-      return isExpired;
+      if (isAllowed) {
+        const loggedAt = parseInt(loggedAtKey, 10);
+        const isExpired = new Date(loggedAt) > new Date(loggedAt + XAdmin.TOKEN_DURATION);
+  
+        return isExpired;
+      } else {
+        return true;
+      }
     }
     
     return true;
