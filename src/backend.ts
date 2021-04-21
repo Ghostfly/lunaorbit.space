@@ -30,6 +30,11 @@ export type ToolSection = {
   }[];
 }
 
+export type Word = {
+  title: string;
+  text: string;
+}
+
 import { SupabaseClient } from '@supabase/supabase-js'
 
 export async function ctaForPage(db: SupabaseClient, page: string): Promise<CTA | null> {
@@ -48,4 +53,8 @@ export async function loadTools(db: SupabaseClient): Promise<ToolSection[] | nul
 
 export async function loadSteps(db: SupabaseClient): Promise<Step[] | null> {
   return (await db.from<Step>('how-to-steps').select('title, img')).data;
+}
+
+export async function loadGlossary(db: SupabaseClient): Promise<Word[] | null> {
+  return (await db.from<Word>('how-to-glossary').select('title, text')).data;
 }
