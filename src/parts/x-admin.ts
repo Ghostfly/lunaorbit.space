@@ -89,6 +89,7 @@ export class XAdmin extends Localized(LitElement) {
       localStorage.removeItem(XAdmin.LOGGED_IN_AT_KEY);
 
       alert('This address isn\'t allowed.');
+      
       this._savedAddress = null;
       this._signedIn = false;
     }

@@ -9,18 +9,6 @@ import {
 
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
-// import { deleteFile, getFile, putFile } from '../../storage';
-
-import EditorJS, { LogLevels } from '@editorjs/editorjs';
-import Header from '@editorjs/header';
-import SimpleImage from '@editorjs/simple-image'; 
-import RawTool from '@editorjs/raw'; 
-import Link from '@editorjs/link'; 
-import Checklist from '@editorjs/checklist'; 
-import NestedList from '@editorjs/nested-list';
-import Marker from '@editorjs/marker';
-import Quote from '@editorjs/quote';
-import Delimiter from '@editorjs/delimiter';
 
 import { systemPages } from './menus';
 
@@ -29,10 +17,6 @@ import { systemPages } from './menus';
  */
 @customElement('website-pages')
 export class WebsitePages extends Localized(LitElement) {
-
-  @property({ type: Object })
-  public editor: EditorJS | null = null;
-
   @property({ type: String })
   public lang = 'en';
 
@@ -46,107 +30,12 @@ export class WebsitePages extends Localized(LitElement) {
     return this;
   }
 
-  async loadEditor(): Promise<void> {
-    const editorHolder = this.querySelector('#holder') as HTMLDivElement;
-    const editorInit = {
-      holder: editorHolder,
-      tools: {
-        header: {
-          class: Header,
-          inlineToolbar: ['link']
-        },
-        list: {
-          class: NestedList,
-          inlineToolbar: true
-        },
-        image: SimpleImage,
-        raw: {
-          class: RawTool
-        },
-        link: {
-          class: Link,
-        },
-        checklist: {
-          class: Checklist
-        },
-        marker: {
-          class: Marker,
-          shortcut: 'CMD+SHIFT+M',
-        },
-        quote: {
-          class: Quote,
-          inlineToolbar: true,
-          shortcut: 'CMD+SHIFT+O',
-          config: {
-            quotePlaceholder: 'Enter a quote',
-            captionPlaceholder: 'Quote\'s author',
-          },
-        },
-        delimiter: Delimiter,
-      },
-      autofocus: true,
-      placeholder: msg('Let`s write an awesome story!'),
-      logLevel: 'VERBOSE' as LogLevels,
-      onReady: () => {
-        // console.log('Editor.js is ready to work!');
-      },
-      onChange: () => {
-        // console.log('Now I know that Editor\'s content changed!');
-      },
-      data: undefined,
-    };
-
-    if (editorHolder) {
-      this.editor?.destroy();
-      this.editor = null;
-
-      try {
-        /*const savedTest = await getFile(this.editedPage, {
-          decrypt: false
-        });
-        const data = JSON.parse(savedTest as string);
-        this._data = data;
-        editorInit.data = this._data;*/
-      } catch (err) {
-        editorInit.data = undefined;
-      }
-
-      this.editor = new EditorJS(editorInit);
-    }
-  }
-
   async loadFiles(): Promise<void> {
     this._files = systemPages;
   }
 
   async firstUpdated(): Promise<void> {
     await this.loadFiles();
-    await this.loadEditor();
-
-    /*const parser = new edjsParser({
-      image: {
-        use: "figure",
-        imgClass: "img",
-        figureClass: "fig-img",
-        figCapClass: "fig-cap",
-        path: "absolute",
-      },
-      paragraph: {
-        pClass: "paragraph",
-      },
-      code: {
-        codeBlockClass: "code-block",
-      },
-      embed: {
-        useProvidedLength: false,
-      },
-      quote: {
-        applyAlignment: false,
-      },
-    });
-
-    const markup = parser.parse(this._data);
-    console.warn(markup);*/
   }
 
   public get editedPage(): string {
@@ -154,8 +43,7 @@ export class WebsitePages extends Localized(LitElement) {
   }
 
   private async _savePage() {
-    // const outputData = await this.editor?.save();
-    console.warn('not saved');
+    console.warn('TODO : not saved');
   }
 
   render(): TemplateResult {
@@ -171,7 +59,6 @@ export class WebsitePages extends Localized(LitElement) {
               <select
                   @change=${async (event: Event) => {
                     this.lang = (event.target as HTMLSelectElement).value;
-                    await this.loadEditor();
                   }}
                   class="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-7"
                 >
@@ -184,7 +71,6 @@ export class WebsitePages extends Localized(LitElement) {
               <select
                 @change=${async (event: Event) => {
                   this.page = (event.target as HTMLSelectElement).value;
-                  await this.loadEditor();
                 }}
                 class="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-7"
               >
@@ -215,15 +101,9 @@ export class WebsitePages extends Localized(LitElement) {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
               </svg>
             </button>
-            <!--<button class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-            </button>-->
             <button @click=${async () => {
               console.warn('not deleted.');
               await this.loadFiles();
-              await this.loadEditor();
             }} class="bg-blue-500 hover:terra-bg text-white py-2 px-4 rounded">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -232,7 +112,7 @@ export class WebsitePages extends Localized(LitElement) {
           </div>
         </div>
 
-        <div id="holder" class="w-full p-4 border-4 rounded-sm"></div>
+        <div id="holder" class="w-full p-4"></div>
     `;
   }
 }

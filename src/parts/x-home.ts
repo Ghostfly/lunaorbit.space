@@ -5,6 +5,43 @@ import { Localized } from '@lit/localize/localized-element.js';
 
 import '../components/cta-hero';
 
+const strengths = [
+  {
+    title: msg('Safe'),
+    description: msg('Multi-cloud hosting across 12 regions on AWS, GCP, and Azure with 24/7 monitoring'),
+    link: null,
+  },
+  {
+    title: msg('Distributed'),
+    description: msg('Geographically distributed across four continents to ensure validator stays online'),
+    link: null,
+  },
+  {
+    title: msg('Smart'),
+    description: msg('Geographically distributed across four continents to ensure validator stays online.'),
+    link: null,
+  },
+  {
+    title: msg('Fair'),
+    description: msg('0% commissions until') + ' ' + msg('May 10th 2021') + ' ' + msg(', then 2%.'),
+    link: null,
+  },
+  {
+    title: msg('Aware'),
+    description: msg('Changes in the commission rate will be announced 30 days in advance.'),
+    link: null,
+  },
+  {
+    title: msg('Reachable'),
+    description: msg('Find us on the Luna Orbit chat on'),
+    link: {
+      href: `http://t.me/${config.telegram}`,
+      name: msg('Telegram')
+    }
+  },
+];
+
+
 /**
  * Home component
  */
@@ -15,42 +52,6 @@ export class XHome extends Localized(LitElement) {
   }
 
   render(): TemplateResult {
-    const strengths = [
-      {
-        title: msg('Safe'),
-        description: msg('Multi-cloud hosting across 12 regions on AWS, GCP, and Azure with 24/7 monitoring'), 
-        link: null,
-      },
-      {
-        title: msg('Distributed'),
-        description: msg('Geographically distributed across four continents to ensure validator stays online'), 
-        link: null,
-      },
-      {
-        title: msg('Smart'),
-        description: msg('Geographically distributed across four continents to ensure validator stays online.'), 
-        link: null,
-      },
-      {
-        title: msg('Fair'),
-        description: msg('0% commissions until') + ' ' + msg('May 10th 2021') + ' ' + msg(', then 2%.'), 
-        link: null,
-      },
-      {
-        title: msg('Aware'),
-        description: msg('Changes in the commission rate will be announced 30 days in advance.'), 
-        link: null,
-      },
-      {
-        title: msg('Reachable'),
-        description: msg('Find us on the Luna Orbit chat on'), 
-        link: {
-          href: `http://t.me/${config.telegram}`,
-          name: msg('Telegram')
-        }
-      },
-    ]
-
     return html`
       <section
         class="container mx-auto px-2 py-4 text-gray-700 body-font border-t border-gray-200 relative text-gray-700 body-font border-t border-gray-200 relative"
