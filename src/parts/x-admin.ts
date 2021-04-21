@@ -21,6 +21,7 @@ import { retrieveSupabase } from '../luna-orbit';
 type AdminUser = {
   id: number;
   terraAddress: string;
+  token: string;
 }
 
 /**
@@ -42,7 +43,7 @@ export class XAdmin extends Localized(LitElement) {
   @internalProperty()
   private _savedAddress: string | null = null;
   
-  public supabase: SupabaseClient;
+  public supabase!: SupabaseClient;
 
   @internalProperty()
   private _isChecking = false;
@@ -53,15 +54,20 @@ export class XAdmin extends Localized(LitElement) {
 
   constructor() {
     super();
-    this.supabase = retrieveSupabase();
   }
 
   private async _isAllowed(terraAddress: string) {
-    const queryBuilder = this.supabase.from<AdminUser>('terraLogin');
-    const query = queryBuilder.select('terraAddress').eq('terraAddress', terraAddress);
-    const allowedAddresses = (await query).data;
+    this.supabase = retrieveSupabase();
 
+    const queryBuilder = this.supabase.from<AdminUser>('terraLogin');
+    const query = queryBuilder.select('terraAddress, token').eq('terraAddress', terraAddress);
+    const allowedAddresses = (await query).data;
     const isAllowed = allowedAddresses?.length;
+
+    if (allowedAddresses && allowedAddresses.length > 0) {
+      this.supabase = retrieveSupabase(allowedAddresses[0].token);
+    }
+
     return isAllowed;
   }
 
