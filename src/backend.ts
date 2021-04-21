@@ -9,6 +9,7 @@ export type Strength = {
 }
 
 export type CTA = {
+  id: number;
   title: string;
   href: string;
   page: string;

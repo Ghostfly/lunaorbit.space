@@ -8,21 +8,25 @@ import {
 
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
-// import { retrieveSupabase } from '../../luna-orbit';
-// import { Step, Word, CTA } from '../../backend';
+import { retrieveSupabase } from '../../luna-orbit';
+import { CTA, ctaForPage } from '../../backend';
 
 @customElement('website-how-to')
 export class WebsiteHowTo extends Localized(LitElement) {
   @internalProperty()
   private loading = false;
+  @internalProperty()
+  private _cta: CTA | null = null;
   
   createRenderRoot(): this {
     return this;
   }
 
   public async firstUpdated(): Promise<void> {
-    // const db = retrieveSupabase();
+    const db = retrieveSupabase();
     this.loading = true;
+
+    this._cta = await ctaForPage(db, 'how-to');
 
     this.loading = false;
   }
@@ -55,7 +59,9 @@ export class WebsiteHowTo extends Localized(LitElement) {
           </button>
         </div>
         <div class="m-4">
-          ${this._ctaEditor(2, msg('Discover & Understand Terra'), msg('Tools'), 'tools')}
+          ${this._cta ? html`
+            ${this._ctaEditor(this._cta.id, this._cta.title, this._cta['cta-text'], this._cta.href)}
+          ` : html``}
           ${this.loading ? html`
             <div class="loading flex w-full justify-center p-6">
               <mwc-circular-progress indeterminate></mwc-circular-progress>
