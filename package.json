@@ -3,7 +3,7 @@
   "scripts": {
     "clean": "rimraf *{d.ts,d.ts.map,js,js.map}",
     "webpack:start": "webpack serve --mode=development",
-    "webpack:build": "webpack --mode=production",
+    "webpack:build": "rm -rf ./dist && webpack --mode=production",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint 'src/**/*.ts'",
     "lint:styles": "npx stylelint \"src/*.css\"",
