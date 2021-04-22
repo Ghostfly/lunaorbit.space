@@ -46,7 +46,6 @@ export interface MIRAirdrop {
   total: string; // Contains number
 }
 
-
 export interface LunaPriceResponse {
   lastPrice: number;
   oneDayVariation: string;
@@ -54,6 +53,6 @@ export interface LunaPriceResponse {
   prices: {
     datetime: number; // Timestamp
     denom: string;
-    price: number
-  }[]
+    price: number;
+  }[];
 }

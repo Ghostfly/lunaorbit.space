@@ -6,8 +6,8 @@ export type Strength = {
   link: {
     href: string;
     name: string;
-  }
-}
+  };
+};
 
 export type CTA = {
   id: number;
@@ -15,12 +15,12 @@ export type CTA = {
   href: string;
   page: string;
   'cta-text': string;
-}
+};
 
 export type Step = {
   title: string;
   img: string;
-}
+};
 
 export type ToolSection = {
   id: number;
@@ -31,12 +31,12 @@ export type ToolSection = {
     href: string;
     name: string;
   }[];
-}
+};
 
 export type Word = {
   title: string;
   text: string;
-}
+};
 
 export type MenuItem = {
   id: number;
@@ -45,12 +45,17 @@ export type MenuItem = {
   class?: string;
   component?: string;
   order: string;
-}
+};
 
-import { SupabaseClient } from '@supabase/supabase-js'
+import {SupabaseClient} from '@supabase/supabase-js';
 
-export async function ctaForPage(db: SupabaseClient, page: string): Promise<CTA | null> {
-  const ctaReq = (await db.from<CTA>('cta').select('id, title, href, cta-text').match({ page })).data;
+export async function ctaForPage(
+  db: SupabaseClient,
+  page: string
+): Promise<CTA | null> {
+  const ctaReq = (
+    await db.from<CTA>('cta').select('id, title, href, cta-text').match({page})
+  ).data;
 
   if (ctaReq) {
     return ctaReq[0];
@@ -59,10 +64,17 @@ export async function ctaForPage(db: SupabaseClient, page: string): Promise<CTA 
   return null;
 }
 
-export async function loadTools(db: SupabaseClient): Promise<ToolSection[] | null> {
-  return (await db.from<ToolSection>('tools').select('id, name, explain, links, order').order('order', {
-    ascending: true
-  })).data;
+export async function loadTools(
+  db: SupabaseClient
+): Promise<ToolSection[] | null> {
+  return (
+    await db
+      .from<ToolSection>('tools')
+      .select('id, name, explain, links, order')
+      .order('order', {
+        ascending: true,
+      })
+  ).data;
 }
 
 export async function loadSteps(db: SupabaseClient): Promise<Step[] | null> {
@@ -74,5 +86,10 @@ export async function loadGlossary(db: SupabaseClient): Promise<Word[] | null> {
 }
 
 export async function loadMenu(db: SupabaseClient): Promise<MenuItem[] | null> {
-  return (await db.from<MenuItem>('menu-items').select('id, url, name, order').order('order', {ascending: true}))?.data;
+  return (
+    await db
+      .from<MenuItem>('menu-items')
+      .select('id, url, name, order')
+      .order('order', {ascending: true})
+  )?.data;
 }

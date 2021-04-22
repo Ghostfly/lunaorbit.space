@@ -13,22 +13,21 @@ import {Localized} from '@lit/localize/localized-element.js';
 import '../components/cta-hero';
 import '../components/tailwind-quote';
 
-import { retrieveSupabase } from '../luna-orbit';
-import { CTA, ctaForPage, loadTools, ToolSection } from '../backend';
-import { loader } from './dashboard/home';
+import {retrieveSupabase} from '../luna-orbit';
+import {CTA, ctaForPage, loadTools, ToolSection} from '../backend';
+import {loader} from './dashboard/home';
 
 /**
  * Tools component
  */
 @customElement('x-tools')
 export class XTools extends Localized(LitElement) {
-
   @internalProperty()
   private _cta: CTA | null = null;
 
   @internalProperty()
   private _sections: ToolSection[] | null = [];
-  @property({ type: Boolean })
+  @property({type: Boolean})
   public loading = false;
 
   createRenderRoot(): this {
@@ -62,7 +61,9 @@ export class XTools extends Localized(LitElement) {
                     return html`
                       <li>
                         <a
-                          target="${link.href.indexOf('http') !== -1 ?'_blank' : '_self'}"
+                          target="${link.href.indexOf('http') !== -1
+                            ? '_blank'
+                            : '_self'}"
                           rel="noopener"
                           href="${link.href}"
                           class="text-base font-medium"
@@ -88,12 +89,14 @@ export class XTools extends Localized(LitElement) {
         <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">${msg('Terra tools')}</h1>
 
         ${this.loading ? loader() : html``}
-
-        ${this._sections && this._sections.map((section) => {
+        ${this._sections &&
+        this._sections.map((section) => {
           return this._sectionTemplate(section);
         })}
 
-        <tailwind-quote .author=${msg('Justin')} .text=${msg(`To understand why Luna could appreciate over time, you need to
+        <tailwind-quote
+          .author=${msg('Justin')}
+          .text=${msg(`To understand why Luna could appreciate over time, you need to
                 understand a few things. The first thing is to understand
                 the relationship between the market cap of UST and the price of
                 Luna. The second piece of the puzzle is to understand all
@@ -107,10 +110,15 @@ export class XTools extends Localized(LitElement) {
         </tailwind-quote>
       </section>
 
-      ${this._cta ? html`
-      <cta-hero .title=${this._cta.title} href="${this._cta.href}" .ctaText=${this._cta['cta-text']}></cta-hero>
-      ` : html``}
-
+      ${this._cta
+        ? html`
+            <cta-hero
+              .title=${this._cta.title}
+              href="${this._cta.href}"
+              .ctaText=${this._cta['cta-text']}
+            ></cta-hero>
+          `
+        : html``}
     `;
   }
 }

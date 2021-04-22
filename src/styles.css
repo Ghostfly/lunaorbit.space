@@ -9,7 +9,10 @@
   --anchor-color: #4bdb4b;
 }
 
-mwc-circular-progress, mwc-fab, mwc-button, mwc-switch {
+mwc-circular-progress,
+mwc-fab,
+mwc-button,
+mwc-switch {
   --mdc-theme-primary: var(--terra-blue);
   --mdc-theme-secondary: var(--terra-light);
 }
@@ -22,16 +25,17 @@ mwc-circular-progress, mwc-fab, mwc-button, mwc-switch {
   background-color: var(--terra-blue);
 }
 
-.strength:hover h2, .strength:hover a {
+.strength:hover h2,
+.strength:hover a {
   color: white;
 }
 
 footer .telegram svg {
   fill: white;
-  fill-rule:evenodd;
-  clip-rule:evenodd;
-  stroke-linejoin:round;
-  stroke-miterlimit:1.41421;
+  fill-rule: evenodd;
+  clip-rule: evenodd;
+  stroke-linejoin: round;
+  stroke-miterlimit: 1.41421;
 }
 
 .mirror-bg {

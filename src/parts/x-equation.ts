@@ -1,4 +1,10 @@
-import {LitElement, html, TemplateResult, customElement, property} from 'lit-element';
+import {
+  LitElement,
+  html,
+  TemplateResult,
+  customElement,
+  property,
+} from 'lit-element';
 import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
 
@@ -54,7 +60,7 @@ export class XEquation extends Localized(LitElement) {
                 >${msg(`Anchor`)}</a
               ></em
             >${msg(`'s competition is the`)}
-            <em class="font-semibold">${' ' +msg(`Federal Funds Rate`)}</em>.
+            <em class="font-semibold">${' ' + msg(`Federal Funds Rate`)}</em>.
           </li>
         </ul>
         <div class="flex m-4 justify-end">
@@ -68,9 +74,7 @@ export class XEquation extends Localized(LitElement) {
             />
             <h3 class="font-semibold ml-2">
               ${msg('Luna governs them all !')}
-              <p>
-              <em>$LUNA</em> : ${this.price.toFixed(3)} UST
-              </p>
+              <p><em>$LUNA</em> : ${this.price.toFixed(3)} UST</p>
             </h3>
           </a>
         </div>

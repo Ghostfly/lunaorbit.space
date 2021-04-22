@@ -7,12 +7,12 @@ import {
   property,
 } from 'lit-element';
 import {msg} from '@lit/localize';
-import { Localized } from '@lit/localize/localized-element.js';
+import {Localized} from '@lit/localize/localized-element.js';
 
 import '../components/cta-hero';
-import { CTA, ctaForPage, loadGlossary, loadSteps, Step, Word } from '../backend';
-import { retrieveSupabase } from '../luna-orbit';
-import { loader } from './dashboard/home';
+import {CTA, ctaForPage, loadGlossary, loadSteps, Step, Word} from '../backend';
+import {retrieveSupabase} from '../luna-orbit';
+import {loader} from './dashboard/home';
 
 /**
  * How to choose a validator component
@@ -22,7 +22,7 @@ export class XHowTo extends Localized(LitElement) {
   @internalProperty()
   private step = '0';
 
-  @property({ type: Boolean })
+  @property({type: Boolean})
   public loading = false;
 
   @internalProperty()
@@ -75,8 +75,10 @@ export class XHowTo extends Localized(LitElement) {
       <li class="mr-1">
         <a
           data-img="${img}"
-          class="cursor-pointer	bg-white inline-block rounded-t py-2 px-4 ${active ? 'active font-semibold border-l border-t border-r text-blue-800' : ''}"
-          >
+          class="cursor-pointer	bg-white inline-block rounded-t py-2 px-4 ${active
+            ? 'active font-semibold border-l border-t border-r text-blue-800'
+            : ''}"
+        >
           ${title}
         </a>
       </li>
@@ -92,35 +94,52 @@ export class XHowTo extends Localized(LitElement) {
           ${msg('How to start staking on Terra ?')}
         </h1>
 
-        ${this.loading ? loader() : html`
-        <ul
-          class="list-reset flex border-b"
-          @click=${this._onTabClick}
-        >
-          ${this._steps && this._steps.map(item => {
-            return this._tabItem(item.title, item.img, this.step === item.img);
-          })}          
-        </ul>
-        
-        <div class="p-4" id="tabs">
-          <img src=${`/assets/${this.step}.png`} alt="download terra station" />
-        </div>
+        ${this.loading
+          ? loader()
+          : html`
+              <ul class="list-reset flex border-b" @click=${this._onTabClick}>
+                ${this._steps &&
+                this._steps.map((item) => {
+                  return this._tabItem(
+                    item.title,
+                    item.img,
+                    this.step === item.img
+                  );
+                })}
+              </ul>
 
-        <div
-          class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden"
-        >
-          <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-            <h2 class="text-md pointer-events-none">${msg('Glossary')}</h2>
-            ${this._dictionary && this._dictionary.map(item => {
-              return this._glossaryItem(item.title, item.text)
-            })}
-          </div>
-        </div>
-        ${this._cta ? html`
-        <cta-hero .title=${this._cta.title} href=${this._cta.href} .ctaText=${this._cta['cta-text']}></cta-hero>
-        ` : html``}
-        `}
+              <div class="p-4" id="tabs">
+                <img
+                  src=${`/assets/${this.step}.png`}
+                  alt="download terra station"
+                />
+              </div>
 
+              <div
+                class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden"
+              >
+                <div
+                  class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8"
+                >
+                  <h2 class="text-md pointer-events-none">
+                    ${msg('Glossary')}
+                  </h2>
+                  ${this._dictionary &&
+                  this._dictionary.map((item) => {
+                    return this._glossaryItem(item.title, item.text);
+                  })}
+                </div>
+              </div>
+              ${this._cta
+                ? html`
+                    <cta-hero
+                      .title=${this._cta.title}
+                      href=${this._cta.href}
+                      .ctaText=${this._cta['cta-text']}
+                    ></cta-hero>
+                  `
+                : html``}
+            `}
       </section>
     `;
   }

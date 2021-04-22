@@ -1,12 +1,7 @@
-import {
-  html,
-  customElement,
-  LitElement,
-  TemplateResult,
-} from 'lit-element';
+import {html, customElement, LitElement, TemplateResult} from 'lit-element';
 
 import {msg} from '@lit/localize';
-import { Localized } from '@lit/localize/localized-element.js';
+import {Localized} from '@lit/localize/localized-element.js';
 
 import '../components/cta-hero';
 
@@ -25,7 +20,11 @@ export class X404 extends Localized(LitElement) {
         class="container mx-auto px-2 py-4 text-gray-700 body-font border-t border-gray-200"
       >
         <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">${msg('404 - Not found')}</h1>
-        <cta-hero .title=${msg('We are here to help.')} href="contact" .ctaText=${msg('Contact')}></cta-hero>
+        <cta-hero
+          .title=${msg('We are here to help.')}
+          href="contact"
+          .ctaText=${msg('Contact')}
+        ></cta-hero>
       </section>
     `;
   }

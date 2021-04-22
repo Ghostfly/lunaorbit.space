@@ -22,13 +22,15 @@ import './parts/x-admin';
 import config from './config';
 import {setLocaleFromUrl} from './localization';
 import {Localized} from '@lit/localize/localized-element';
-import { BannerMessage } from './components/banner-message';
+import {BannerMessage} from './components/banner-message';
 
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
-import { WebsiteSettingsDB } from './parts/dashboard/settings';
-import { loadMenu } from './backend';
+import {createClient, SupabaseClient} from '@supabase/supabase-js';
+import {WebsiteSettingsDB} from './parts/dashboard/settings';
+import {loadMenu} from './backend';
 
-export function retrieveSupabase(token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxODk5MDIyNywiZXhwIjoxOTM0NTY2MjI3fQ.Nf1C2uRIocHV2bmfvbUxPGE8MTbRjbB9Kvft4V0dUaI'): SupabaseClient {
+export function retrieveSupabase(
+  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxODk5MDIyNywiZXhwIjoxOTM0NTY2MjI3fQ.Nf1C2uRIocHV2bmfvbUxPGE8MTbRjbB9Kvft4V0dUaI'
+): SupabaseClient {
   const supabaseUrl = 'https://ylqcozoikxxipzbvueua.supabase.co';
 
   return createClient(supabaseUrl, token);
@@ -45,7 +47,8 @@ export class LunaOrbit extends Localized(LitElement) {
   private mobileMenuToggle!: HTMLButtonElement | null;
 
   static APIValidatorURL = 'https://lcd.terra.dev/staking/validators/';
-  static APILunaPrice = 'https://fcd.terra.dev/v1/market/price?denom=uusd&interval=15m';
+  static APILunaPrice =
+    'https://fcd.terra.dev/v1/market/price?denom=uusd&interval=15m';
 
   @internalProperty()
   private validatorInformation?: Validator;
@@ -65,7 +68,7 @@ export class LunaOrbit extends Localized(LitElement) {
 
   constructor() {
     super();
-    
+
     this._supabase = retrieveSupabase();
     this.mobileMenuToggle = document.querySelector('#mobile-menu-toggle');
     this.mobileMenu = document.querySelector('#mobile-menu');
@@ -75,16 +78,16 @@ export class LunaOrbit extends Localized(LitElement) {
         path: '',
         component: 'x-home',
       },
-      { path: '/', component: 'x-home' },
-      { path: '/home', component: 'x-home' },
-      { path: '/test', component: 'x-test' },
-      { path: '/how-to', component: 'x-how-to' },
-      { path: '/tools', component: 'x-tools'},
-      { path: '/contact', component: 'x-contact' },
-      { path: '/airdrops', component: 'airdrop-dialog' },
-      { path: '/cockpit', component: 'x-admin' },
-      { path: '/cockpit/:page', component: 'x-admin' },
-      { path: '(.*)',       component: 'x-404' }
+      {path: '/', component: 'x-home'},
+      {path: '/home', component: 'x-home'},
+      {path: '/test', component: 'x-test'},
+      {path: '/how-to', component: 'x-how-to'},
+      {path: '/tools', component: 'x-tools'},
+      {path: '/contact', component: 'x-contact'},
+      {path: '/airdrops', component: 'airdrop-dialog'},
+      {path: '/cockpit', component: 'x-admin'},
+      {path: '/cockpit/:page', component: 'x-admin'},
+      {path: '(.*)', component: 'x-404'},
     ]);
 
     window.addEventListener(
@@ -103,31 +106,35 @@ export class LunaOrbit extends Localized(LitElement) {
     }
 
     const queryBuilder = this._supabase.from<WebsiteSettingsDB>('settings');
-    const enabledReq = queryBuilder.select('name, value, type').eq('name', 'announcement-visible');
+    const enabledReq = queryBuilder
+      .select('name, value, type')
+      .eq('name', 'announcement-visible');
     const settings = (await enabledReq).data;
 
     if (settings && settings[0].value == 'true') {
       const queryBuilder = this._supabase.from<WebsiteSettingsDB>('settings');
-      const query = queryBuilder.select('name, value, type').eq('name', 'announcement');
+      const query = queryBuilder
+        .select('name, value, type')
+        .eq('name', 'announcement');
 
       const settingDetail = (await query).data;
       if (!settingDetail) {
         return;
       }
-  
+
       const banners = document.querySelectorAll('banner-message');
       for (const banner of banners) {
         banner.parentElement?.removeChild(banner);
       }
-  
+
       const bannerNode = document.createElement('banner-message');
       bannerNode.message = settingDetail[0].value;
-  
+
       bannerNode.addEventListener('click', function () {
         bannerNode.parentElement?.removeChild(bannerNode);
         sessionStorage.setItem('lunaorbit-banner-hide', 'true');
       });
-  
+
       document.body.insertBefore(bannerNode, document.body.firstChild);
     }
   }
@@ -138,14 +145,16 @@ export class LunaOrbit extends Localized(LitElement) {
     }
 
     const queryBuilder = this._supabase.from<WebsiteSettingsDB>('settings');
-    const enabledReq = queryBuilder.select('name, value, type').eq('name', 'airdrop-balloon-visible');
+    const enabledReq = queryBuilder
+      .select('name, value, type')
+      .eq('name', 'airdrop-balloon-visible');
     const settings = (await enabledReq).data;
     if (settings && settings[0].value == 'true') {
       const hasToast = this.shadowRoot?.querySelector('airdrop-toast');
       if (hasToast) {
         hasToast.parentElement?.removeChild(hasToast);
       }
-  
+
       this.shadowRoot?.appendChild(document.createElement('airdrop-toast'));
     }
   }
@@ -176,7 +185,9 @@ export class LunaOrbit extends Localized(LitElement) {
       for (const link of links) {
         const elem = document.createElement('a');
         elem.href = link.url;
-        elem.className = link.class ?? 'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium';
+        elem.className =
+          link.class ??
+          'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium';
         elem.innerText = link.name;
         menuHolder.appendChild(elem);
       }
@@ -190,11 +201,13 @@ export class LunaOrbit extends Localized(LitElement) {
       ${this._bannerMessage}
       <slot name="nav"></slot>
       <slot name="content"></slot>
-      ${isAdmin ? html`
-      <slot name="equation"></slot>
-      <slot name="divider"></slot>
-      <slot name="footer"></slot>
-      ` : html``}
+      ${isAdmin
+        ? html`
+            <slot name="equation"></slot>
+            <slot name="divider"></slot>
+            <slot name="footer"></slot>
+          `
+        : html``}
     `;
   }
 
@@ -212,7 +225,7 @@ export class LunaOrbit extends Localized(LitElement) {
 
   private async _retrieveCommissionAndPrice(): Promise<void> {
     const priceQuery = await fetch(LunaOrbit.APILunaPrice);
-    const price = await priceQuery.json() as LunaPriceResponse;
+    const price = (await priceQuery.json()) as LunaPriceResponse;
     this._price = price.lastPrice;
 
     const equation = document.querySelector('x-equation');
