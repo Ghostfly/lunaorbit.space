@@ -14,7 +14,7 @@ export type WebsiteSettingsDB = {
   id: number;
   name: string;
   value: string;
-  type: 'textarea' | 'image' | 'text';
+  type: 'textarea' | 'image' | 'text' | 'switch';
 }
 /**
  * Website settings component
@@ -73,6 +73,17 @@ export class WebsiteSettings extends Localized(LitElement) {
                         </div>
                       </div>
                     `;
+                  case 'switch':
+                  return html`
+                  <div>
+                      <label for="${setting.name}" class="block text-sm font-medium text-gray-700">
+                        ${capitalizeFirstLetter(setting.name.replace('-', ' ').replace('-', ' '))}
+                      </label>
+                      <div class="mt-1">
+                        <mwc-switch .checked=${setting.value === 'true'}></mwc-switch>
+                      </div>
+                    </div>
+                  `;
                   case 'image':
                     return html`
                     <div>

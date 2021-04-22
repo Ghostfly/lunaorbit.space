@@ -195,8 +195,8 @@ export class WebsiteHome extends Localized(LitElement) {
             ${msg('Home')}
           </h1>
           <div class="global-actions">
-            <mwc-fab icon="refresh" mini @click=${this._refresh}> </mwc-fab>
             <mwc-fab icon="add" mini @click=${this._addStrength}></mwc-fab>
+            <mwc-fab icon="refresh" mini @click=${this._refresh}> </mwc-fab>
             <mwc-fab icon="save" mini @click=${this._save}></mwc-fab>
           </div>
         </div>

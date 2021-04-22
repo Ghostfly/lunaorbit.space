@@ -19,6 +19,7 @@ import '@material/mwc-snackbar';
 import '@material/mwc-fab';
 import '@material/mwc-dialog';
 import '@material/mwc-button';
+import '@material/mwc-switch';
 
 import { Snackbar } from '@material/mwc-snackbar';
 

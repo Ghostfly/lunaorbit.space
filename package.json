@@ -29,6 +29,7 @@
     "@material/mwc-dialog": "^0.20.0",
     "@material/mwc-fab": "^0.20.0",
     "@material/mwc-snackbar": "^0.20.0",
+    "@material/mwc-switch": "^0.20.0",
     "@supabase/supabase-js": "^1.11.6",
     "@terra-money/terra.js": "^1.7.0",
     "@vaadin/router": "^1.7.4",
