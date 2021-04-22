@@ -43,12 +43,23 @@ export class AirdropDialog extends Localized(LitElement) {
   @property({type: Boolean})
   public loading = false;
 
+  @property({type: Boolean})
+  public retrieveDisabled = false;
+
   public close(): void {
     this.parentElement?.removeChild(this);
   }
 
   createRenderRoot(): this {
     return this;
+  }
+
+  async firstUpdated(): Promise<void> {
+    if (!ExtensionSingleton.init) {
+      this.retrieveDisabled = true;
+    } else {
+      this.retrieveDisabled = false;
+    }
   }
 
   public async checkAnchor(): Promise<void> {
@@ -153,8 +164,12 @@ export class AirdropDialog extends Localized(LitElement) {
   }
 
   private async _retrieveTerraAddress(): Promise<void> {
-    const info = await ExtensionSingleton.connect();
-    this.terraAddress = info.address;
+    if (ExtensionSingleton.init) {
+      const info = await ExtensionSingleton.connect();
+      this.terraAddress = info.address;
+    } else {
+      this.retrieveDisabled = true;
+    }
   }
 
   render(): TemplateResult {
@@ -172,12 +187,14 @@ export class AirdropDialog extends Localized(LitElement) {
                   </h3>
                   
                   <div class="flex sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-2 sm:px-0 items-center m-10">
+                    ${!this.retrieveDisabled ? html`
                     <button .disabled=${this.loading} class="${
-      this.loading ? 'opacity-50 cursor-wait' : ''
-    } text-white terra-bg border-0 py-2 px-8 rounded text-lg" @click=${() =>
-      this._retrieveTerraAddress()}>
+                      this.loading ? 'opacity-50 cursor-wait' : ''
+                    } text-white terra-bg border-0 py-2 px-8 rounded text-lg" @click=${() =>
+                      this._retrieveTerraAddress()}>
                       ${msg('Retrieve')}
                     </button>
+                    ` : ''}
                   </div>
                   <div class="relative flex-grow">
                       <label for="terra-address" class="leading-7 text-sm text-gray-600">${msg(
