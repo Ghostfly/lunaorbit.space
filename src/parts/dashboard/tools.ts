@@ -80,6 +80,10 @@ export class WebsiteTools extends Localized(LitElement) {
     }
 
     await db.from<ToolSection>('tools').upsert(this._tools);
+    if (this._cta) {
+      await db.from<CTA>('cta').update(this._cta).match({ id: `${this._cta.id}` });
+    }
+
     await this._loadTools();
 
     this._admin()?.showSnack('Saved.');
@@ -116,7 +120,7 @@ export class WebsiteTools extends Localized(LitElement) {
         <div class="m-4">
           ${this.loading ? loader() : html`
             ${this._cta ? html`
-              ${ctaEditor(this._cta.id, this._cta.title, this._cta['cta-text'], this._cta.href)}
+              ${ctaEditor(this._cta)}
           ` : html``}
 
             <h2 class="text-md mt-4 mb-4">

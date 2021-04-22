@@ -12,24 +12,35 @@ import { Localized } from '@lit/localize/localized-element';
 import { CTA, ctaForPage, Strength } from '../../backend';
 import { smoothDnD } from 'smooth-dnd';
 
-export function ctaEditor(id: number, title: string, ctaText: string, href: string): TemplateResult {
+export function ctaEditor(cta: CTA): TemplateResult {
   return html`
-  <h2 class="text-md mt-4 mb-4 w-full">
-    ${msg('Call to action')}
-  </h2>
-  <div class="cta-editor flex flex-wrap gap-2">
-    <div class="relative">
-        <label for="${id}-cta-title" class="leading-7 text-sm text-gray-600">Title</label>
-        <input name="${id}-cta-title" id="${id}-cta-title" type="text" .value=${title} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-      </div>
+  <div class="cta-wrapper">
+    <h2 class="text-md mt-4 mb-4 w-full">
+      ${msg('Call to action')}
+    </h2>
+    <div class="cta-editor flex flex-wrap gap-2">
       <div class="relative">
-        <label for="${id}-cta-text" class="leading-7 text-sm text-gray-600">Button title</label>
-        <input name="${id}-cta-text" id="${id}-cta-text" type="text" .value=${ctaText} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-      </div>
-      <div class="relative">
-        <label for="${id}-cta-link-href" class="leading-7 text-sm text-gray-600">URL</label>
-        <input name="${id}-cta-link-href" id="${id}-cta-link-href" type="text" .value=${href} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-      </div>
+          <label for="${cta.id}-cta-title" class="leading-7 text-sm text-gray-600">Title</label>
+          <input @change=${(e: Event) => {
+              const target = e.target as HTMLInputElement;
+              cta.title = target.value;
+          }} name="${cta.id}-cta-title" id="${cta.id}-cta-title" type="text" .value=${cta.title} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+        </div>
+        <div class="relative">
+          <label for="${cta.id}-cta-text" class="leading-7 text-sm text-gray-600">Button title</label>
+          <input @change=${(e: Event) => {
+              const target = e.target as HTMLInputElement;
+              cta['cta-text'] = target.value;
+          }} name="${cta.id}-cta-text" id="${cta.id}-cta-text" type="text" .value=${cta['cta-text']} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+        </div>
+        <div class="relative">
+          <label for="${cta.id}-cta-link-href" class="leading-7 text-sm text-gray-600">URL</label>
+          <input @change=${(e: Event) => {
+              const target = e.target as HTMLInputElement;
+              cta.href = target.value;
+          }} name="${cta.id}-cta-link-href" id="${cta.id}-cta-link-href" type="text" .value=${cta.href} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+        </div>
+    </div>
   </div>
   `;
 }
@@ -189,7 +200,17 @@ export class WebsiteHome extends Localized(LitElement) {
 
   private async _save() {
     console.warn('saving', this._strengths);
-    await document.querySelector('x-admin')?.supabase.from('strengths').upsert(this._strengths);
+    const db = document.querySelector('x-admin')?.supabase;
+    if (!db) {
+      return;
+    }
+
+    if (this._cta) {
+      await db.from<CTA>('cta').update(this._cta).match({ id: `${this._cta.id}` });
+    }
+
+    await db.from('strengths').upsert(this._strengths);
+    
     await this._loadStrengths();
     console.warn('saved', this._strengths);
   }
@@ -208,7 +229,7 @@ export class WebsiteHome extends Localized(LitElement) {
         </div>
         <div class="m-4 p-4 flex flex-wrap">
           ${this._cta ? html`
-              ${ctaEditor(this._cta.id, this._cta.title, this._cta['cta-text'], this._cta.href)}
+              ${ctaEditor(this._cta)}
           ` : html``}
           <div class="strengths w-full">
               <h1 class="text-md mt-8 mb-4">

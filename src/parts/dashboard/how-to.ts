@@ -41,10 +41,11 @@ export class WebsiteHowTo extends Localized(LitElement) {
           <mwc-fab icon="save" mini></mwc-fab>
         </div>
         <div class="m-4">
-          ${this._cta ? html`
-            ${ctaEditor(this._cta.id, this._cta.title, this._cta['cta-text'], this._cta.href)}
-          ` : html``}
-          ${this.loading ? loader() : html``}
+          ${this.loading ? loader() : html`
+            ${this._cta ? html`
+              ${ctaEditor(this._cta)}
+            ` : html``}
+          `}
         </div>
     `;
   }
