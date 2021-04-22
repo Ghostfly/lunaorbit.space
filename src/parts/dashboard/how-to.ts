@@ -52,8 +52,8 @@ export class WebsiteHowTo extends Localized(LitElement) {
             ${msg('Steps')}
           </h1>
           ${this._steps && this._steps.map(step => html`
-          <div class="step-box flex flex-wrap">
-            <div class="relative">
+          <div class="step-box flex flex-wrap w-full">
+            <div class="relative w-1/2">
               <label
                 for="${step.id}-step-title"
                 class="leading-7 text-sm text-gray-600"
@@ -71,7 +71,7 @@ export class WebsiteHowTo extends Localized(LitElement) {
                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
-            <div class="relative">
+            <div class="relative w-1/2">
               <label
                 for="${step.id}-step-image"
                 class="leading-7 text-sm text-gray-600"
