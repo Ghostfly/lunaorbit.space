@@ -6,12 +6,12 @@ import {
   internalProperty,
 } from 'lit-element';
 
-import {msg} from '@lit/localize';
-import {Localized} from '@lit/localize/localized-element.js';
-import { retrieveSupabase } from '../../luna-orbit';
+import { msg } from '@lit/localize';
+import { Localized } from '@lit/localize/localized-element';
+
 import { CTA, ctaForPage, loadTools, ToolSection } from '../../backend';
 import { ctaEditor, loader } from './home';
-import {smoothDnD} from 'smooth-dnd';
+import { smoothDnD } from 'smooth-dnd';
 
 @customElement('website-tools')
 export class WebsiteTools extends Localized(LitElement) {
@@ -27,7 +27,11 @@ export class WebsiteTools extends Localized(LitElement) {
   }
 
   public async firstUpdated(): Promise<void> {
-    const db = retrieveSupabase();
+    const db = document.querySelector('x-admin')?.supabase;
+    if (!db) {
+      return;
+    }
+
     this.loading = true;
 
     this._cta = await ctaForPage(db, 'tools');
@@ -39,26 +43,7 @@ export class WebsiteTools extends Localized(LitElement) {
     const sortableHolders = this.querySelectorAll('.sortable-holder') as NodeListOf<HTMLDivElement>;
     if (sortableHolders.length) {
       for (const holder of sortableHolders) {
-        smoothDnD(holder, {
-          /*onDragStart: () => {
-            console.warn('drag start');
-          },
-          onDragEnd: () => {
-            console.warn('drag end');
-           },
-          onDrop: () => {
-            console.warn('drop');
-          },
-          onDropReady: () => {
-            console.warn('drop-ready');
-          },
-          onDragEnter: () => {
-            console.warn('drag-enter');
-          },
-          onDragLeave: () => {
-            console.warn('drag-leave');
-          }*/
-        });
+        smoothDnD(holder);
       }
     }
   }
@@ -72,13 +57,26 @@ export class WebsiteTools extends Localized(LitElement) {
     }
   }
 
+  private async _saveChanges() {
+    const db = document.querySelector('x-admin')?.supabase;
+    if (!db || !this._tools) {
+      return;
+    }
+
+    console.warn('saving ', this._tools);
+
+    await db.from<ToolSection>('tools').upsert(this._tools);
+
+    console.warn('saved ', this._tools);
+  }
+
   render(): TemplateResult {
     return html`
         <div class="flex justify-between gap-2 ml-4 mb-4 pb-6">
           <h1 class="text-xl">
             ${msg('Tools')}
           </h1>
-          <mwc-fab icon="save" mini></mwc-fab>
+          <mwc-fab icon="save" mini @click=${async() => this._saveChanges()}></mwc-fab>
         </div>
         <div class="m-4">
           ${this.loading ? loader() : html`
@@ -128,7 +126,7 @@ export class WebsiteTools extends Localized(LitElement) {
 
   private _addTool() {
     this._tools?.push({
-      id: -1,
+      id: this._tools.length + 1,
       name: 'New tool',
       explain: 'Why?',
       links: [{
@@ -159,11 +157,17 @@ export class WebsiteTools extends Localized(LitElement) {
     <div class="flex gap-3">
       <div class="relative">
         <label for="${tool.id}-link-${idx}-title" class="leading-7 text-sm text-gray-600">Title</label>
-        <input name="${tool.id}-link-${idx}-title" id="${tool.id}-link-${idx}-title" type="text" .value=${link.name} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+        <input @change=${(e: Event) => {
+          const target = e.target as HTMLInputElement;
+          link.name = target.value;
+        }} name="${tool.id}-link-${idx}-title" id="${tool.id}-link-${idx}-title" type="text" .value=${link.name} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
       </div>
       <div class="relative">
         <label for="${tool.id}-link-${idx}-href" class="leading-7 text-sm text-gray-600">URL</label>
-        <input name="${tool.id}-link-${idx}-href" id="${tool.id}-link-${idx}-href" type="text" .value=${link.href} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+        <input @change=${(e: Event) => {
+          const target = e.target as HTMLInputElement;
+          link.href = target.value;
+        }} name="${tool.id}-link-${idx}-href" id="${tool.id}-link-${idx}-href" type="text" .value=${link.href} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
       </div>
       <div class="relative">
         <a title="Delete link" class="cursor-pointer flex items-center h-full" @click=${() => {
