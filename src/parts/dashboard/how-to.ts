@@ -35,13 +35,29 @@ export class WebsiteHowTo extends Localized(LitElement) {
     }
   }
 
+  private async _saveChanges() {
+    const admin = document.querySelector('x-admin');
+    const db = admin?.supabase;
+    if (db) {
+      if (this._steps) {
+        await db.from<Step>('how-to-steps').upsert(this._steps);
+      }
+
+      if (this._cta) {
+        await db.from<Step>('cta').update(this._cta).match({ id: `${this._cta.id}` });
+      }
+
+      admin?.showSnack('Updated');
+    }
+  }
+
   render(): TemplateResult {
     return html`
       <div class="flex justify-between gap-2 ml-4 mb-4 pb-6">
         <h1 class="text-xl">
           ${msg('How to?')}
         </h1>
-        <mwc-fab icon="save" mini></mwc-fab>
+        <mwc-fab icon="save" mini @click=${this._saveChanges}></mwc-fab>
       </div>
       <div class="m-4">
         ${this.loading
