@@ -29,7 +29,7 @@ export class XHome extends Localized(LitElement) {
     const db = retrieveSupabase();
     this.loading = true;
 
-    const savedStrengths = (await db.from<Strength>('strengths').select('title, description, link')).data;
+    const savedStrengths = (await db.from<Strength>('strengths').select('title, description, link, order').order('order')).data;
     if (savedStrengths) {
       this._strengths = savedStrengths;
     }

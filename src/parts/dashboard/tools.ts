@@ -27,7 +27,7 @@ export class WebsiteTools extends Localized(LitElement) {
   }
 
   public async firstUpdated(): Promise<void> {
-    const db = document.querySelector('x-admin')?.supabase;
+    const db = this._admin()?.supabase;
     if (!db) {
       return;
     }
@@ -49,7 +49,7 @@ export class WebsiteTools extends Localized(LitElement) {
   }
 
   private async _loadTools() {
-    const db = document.querySelector('x-admin')?.supabase;
+    const db = this._admin()?.supabase;
     if (!db) {
       return;
     }
@@ -105,6 +105,7 @@ export class WebsiteTools extends Localized(LitElement) {
             ${msg('Tools')}
           </h1>
           <div class="global-actions">
+            <mwc-fab icon="add" mini @click=${async () => this._addTool()}></mwc-fab>
             <mwc-fab icon="refresh" mini @click=${async () => {
               await this._loadTools();
               this._admin()?.showSnack('Refresh done.');
@@ -161,9 +162,6 @@ export class WebsiteTools extends Localized(LitElement) {
               `;
             })}
             </div>
-            <button type="button" class="m-4 w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-white terra-bg" @click=${this._addTool}>
-              ${msg('Add tool')}
-            </button>
           `}
         </div>
     `;

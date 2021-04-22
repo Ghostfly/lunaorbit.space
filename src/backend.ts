@@ -1,5 +1,6 @@
 export type Strength = {
   id: number;
+  order: number;
   title: string;
   description: string;
   link: {
