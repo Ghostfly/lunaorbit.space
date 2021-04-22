@@ -3,43 +3,63 @@ import {
   customElement,
   LitElement,
   TemplateResult,
+  internalProperty,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
-import { Localized } from '@lit/localize/localized-element.js';
+import { Localized } from '@lit/localize/localized-element';
 
-import SmoothDnD from 'smooth-dnd';
-
+import {smoothDnD} from 'smooth-dnd';
 
 export interface MenuItem {
   url: string;
   name: string;
 }
 
-export const systemPages = [
-  { url: 'staking', name: 'Staking' },
-  { url: 'how-to', name: 'How to' },
-  { url: 'tools', name: 'Tools' },
-  { url: 'contact', name: 'Contact' },
-  { url: 'airdrops', name: 'Airdrops' }
-];
-
 /**
  * Admin menu component
  */
 @customElement('admin-menu')
 export class AdminMenu extends Localized(LitElement) {
-  public systemPages: MenuItem[] = systemPages;
+  @internalProperty()
+  private _systemPages: MenuItem[] | null = null;
 
   createRenderRoot(): this {
     return this;
   }
 
-  firstUpdated(): void {
+  async firstUpdated(): Promise<void> {
+    const base = document.querySelector('x-admin')?.supabase;
+    const menuItems = (await base?.from<MenuItem>('menu-items').select('url, name'))?.data;
+    if (menuItems) {
+      this._systemPages = menuItems;
+    }
+
+    await this.updateComplete;
+
     const sortableHolders = this.querySelectorAll('.sortable-holder') as NodeListOf<HTMLDivElement>;
     if (sortableHolders.length) {
       for (const holder of sortableHolders) {
-        SmoothDnD(holder);
+        smoothDnD(holder, {
+          /*onDragStart: () => {
+            console.warn('drag start');
+          },
+          onDragEnd: () => {
+            console.warn('drag end');
+           },
+          onDrop: () => {
+            console.warn('drop');
+          },
+          onDropReady: () => {
+            console.warn('drop-ready');
+          },
+          onDragEnter: () => {
+            console.warn('drag-enter');
+          },
+          onDragLeave: () => {
+            console.warn('drag-leave');
+          }*/
+        });
       }
     }
   }
@@ -53,11 +73,12 @@ export class AdminMenu extends Localized(LitElement) {
         <div class="w-full max-w-screen-xl mx-auto px-6">
         <div class="flex justify-center p-4 px-3 py-10">
             <div class="w-full max-w-lg">
-                <div class="bg-white shadow-md rounded-lg px-3 py-2 mb-4 grid grid-cols-2">
+              ${this._systemPages ? html`
+              <div class="bg-white shadow-md rounded-lg px-3 py-2 mb-4 grid grid-cols-2">
                     <div class="py-3 text-sm">
                       <h1 class="font-semibold m-4">Available</h1>
                       <div class="sortable-holder">
-                        ${this.systemPages.map((page) => {
+                        ${this._systemPages.map((page) => {
                           return html`
                             <div class="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2">
                                 <div class="flex-grow font-medium px-2">${page.name}</div>
@@ -68,8 +89,8 @@ export class AdminMenu extends Localized(LitElement) {
                     </div>
                     <div class="py-3 text-sm opacity-75 select-none">
                       <h1 class="font-semibold m-4">Published</h1>
-                      <div>
-                        ${this.systemPages.map((page) => {
+                      <div class="sortable-holder">
+                        ${this._systemPages.map((page) => {
                           return html`
                             <div class="flex justify-start text-gray-700 rounded-md px-2 py-2 my-2">
                                 <div class="flex-grow font-medium px-2">${page.name}</div>
@@ -83,12 +104,20 @@ export class AdminMenu extends Localized(LitElement) {
                           })}
                       </div>
                     </div>
-                    <div class="block bg-gray-200 text-sm text-right py-2 px-3 -mx-3 -mb-2 rounded-b-lg">
-                        <button class="terra-bg hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            ${msg('Save')}
+                    <div class="block bg-gray-200 text-sm text-right py-2 px-3 -mx-3 -mb-2 rounded-b-lg flex justify-end">
+                        <button class="terra-bg hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center gap-2">
+                          <span class="text-sm">Save</span>
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                          </svg>
                         </button>
                     </div>
                 </div>
+              ` : html`
+              <div class="loading flex w-full justify-center p-6">
+                <mwc-circular-progress indeterminate></mwc-circular-progress>
+              </div>
+              `}
             </div>
         </div>
     </div>
