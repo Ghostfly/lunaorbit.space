@@ -46,9 +46,9 @@ export class WebsiteHowTo extends Localized(LitElement) {
     if (db) {
       this._cta = await ctaForPage(db, 'how-to');
       this._steps = await loadSteps(db);
+      this._words = await loadWords(db);
       admin?.showSnack('Refresh ok.');
     }
-    
   }
 
   private async _saveChanges() {
@@ -58,6 +58,10 @@ export class WebsiteHowTo extends Localized(LitElement) {
     if (db) {
       if (this._steps) {
         await db.from<Step>('how-to-steps').upsert(this._steps);
+      }
+
+      if (this._words) {
+        await db.from<Word>('how-to-glossary').upsert(this._words);
       }
 
       if (this._cta) {
@@ -77,6 +81,25 @@ export class WebsiteHowTo extends Localized(LitElement) {
     await this.requestUpdate('_steps');
   }
 
+  private async _addWord() {
+    this._words?.push({
+      id: `${this._words.length + 1}`,
+      title: 'New word',
+      text: 'Word explain'
+    });
+    await this.requestUpdate('_words');
+  }
+
+  private async _removeWord(word: Word) {
+    const admin = document.querySelector('x-admin');
+    const db = admin?.supabase;
+    if (db) {
+      await db.from<Step>('how-to-glossary').delete().match({ id: word.id });
+      await this._refresh();
+    }
+    admin?.showSnack('Removed word');
+  }
+
   private async _removeStep(step: Step) {
     const admin = document.querySelector('x-admin');
     const db = admin?.supabase;
@@ -84,7 +107,7 @@ export class WebsiteHowTo extends Localized(LitElement) {
       await db.from<Step>('how-to-steps').delete().match({ id: step.id });
       await this._refresh();
     }
-    admin?.showSnack('Removed');
+    admin?.showSnack('Removed step');
   }
 
   render(): TemplateResult {
@@ -173,14 +196,17 @@ export class WebsiteHowTo extends Localized(LitElement) {
           `)}
         </div>
         <div class="glossary mt-4">
-          <h1 class="text-md">
-            ${msg('Glossary')}
-          </h1>
+          <div class="header flex flex-wrap justify-between">
+            <h1 class="text-md">
+              ${msg('Glossary')}
+            </h1>
+            <mwc-fab icon="add" mini @click=${this._addWord}></mwc-fab>
+          </div>
           <div class="words-block flex flex-wrap w-full">
             ${this._words?.map(word => {
               return html`
               <div class="word w-full flex flex-wrap mt-4 mb-4 items-center gap-3">
-                <div class="fields flex flex-col w-full">
+                <div class="fields flex flex-col w-3/4">
                   <input
                     @change=${(e: Event) => {
                       const target = e.target as HTMLInputElement;
@@ -198,11 +224,9 @@ export class WebsiteHowTo extends Localized(LitElement) {
                     .value=${word.text}></textarea>
                 </div>
                   <a
-                    class="w-10"
+                    class="w-10 cursor-pointer"
                     title="Delete word"
-                    @click=${async () => {
-                      console.warn('should delete word');
-                    }}
+                    @click=${() => this._removeWord(word)}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
