@@ -12,6 +12,7 @@ import { Localized } from '@lit/localize/localized-element';
 import { CTA, ctaForPage, loadTools, ToolSection } from '../../backend';
 import { ctaEditor, loader } from './home';
 import { smoothDnD } from 'smooth-dnd';
+import { SupabaseClient } from '@supabase/supabase-js';
 
 @customElement('website-tools')
 export class WebsiteTools extends Localized(LitElement) {
@@ -35,7 +36,7 @@ export class WebsiteTools extends Localized(LitElement) {
     this.loading = true;
 
     this._cta = await ctaForPage(db, 'tools');
-    this._tools = await loadTools(db);
+    await this._loadTools(db);
     this.loading = false;
 
     await this.updateComplete;
@@ -46,6 +47,10 @@ export class WebsiteTools extends Localized(LitElement) {
         smoothDnD(holder);
       }
     }
+  }
+
+  private async _loadTools(db: SupabaseClient) {
+    this._tools = await loadTools(db);
   }
 
   private _openBox(e: Event) {
@@ -68,6 +73,7 @@ export class WebsiteTools extends Localized(LitElement) {
     await db.from<ToolSection>('tools').upsert(this._tools);
 
     console.warn('saved ', this._tools);
+    await this._loadTools(db);
   }
 
   render(): TemplateResult {
@@ -102,8 +108,14 @@ export class WebsiteTools extends Localized(LitElement) {
                 </div>
               </div>
               <div class="p-2 m-2 rounded hidden">
-                <input name="${tool.id}-name" id="${tool.id}-name" .value=${tool.name} type="text" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-                <textarea placeholder="Explain" name="${tool.id}-name" id="${tool.id}-explain" .value=${tool.explain} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
+                <input @change=${(e: Event) => {
+                  const target = e.target as HTMLInputElement;
+                  tool.name = target.value;
+                }}  name="${tool.id}-name" id="${tool.id}-name" .value=${tool.name} type="text" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                <textarea @change=${(e: Event) => {
+                  const target = e.target as HTMLInputElement;
+                  tool.explain = target.value;
+                }} placeholder="Explain" name="${tool.id}-name" id="${tool.id}-explain" .value=${tool.explain} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
 
                 <div class="tool-links flex flex-wrap gap-4 sortable-holder cursor-pointer m-4">
                   ${tool.links.map((link, idx) => {
