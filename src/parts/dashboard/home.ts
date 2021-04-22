@@ -10,6 +10,7 @@ import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
 import { retrieveSupabase } from '../../luna-orbit';
 import { Strength } from '../../backend';
+import { smoothDnD } from 'smooth-dnd';
 
 export function ctaEditor(id: number, title: string, ctaText: string, href: string): TemplateResult {
   return html`
@@ -63,14 +64,29 @@ export class WebsiteHome extends Localized(LitElement) {
     }
 
     this.loading = false;
+
+    await this.updateComplete;
+    const sortableHolders = this.querySelectorAll('.sortable-holder') as NodeListOf<HTMLDivElement>;
+    if (sortableHolders.length) {
+      for (const holder of sortableHolders) {
+        smoothDnD(holder);
+      }
+    }
   }
 
   private _openBox(e: Event) {
-    const editable = (e.currentTarget as HTMLElement).nextElementSibling;
-    if (editable?.classList.contains('hidden')) {
-      editable?.classList.remove('hidden');
+    const origin = e.target as HTMLElement;
+    if (!origin.classList.contains('expander')) {
+      return;
+    }
+
+    const box = (e.currentTarget as HTMLElement);
+    const expandable = box.querySelector('.expandable');
+    
+    if (expandable?.classList.contains('hidden')) {
+      expandable?.classList.remove('hidden');
     } else {
-      editable?.classList.add('hidden');
+      expandable?.classList.add('hidden');
     }
   }
 
@@ -79,38 +95,40 @@ export class WebsiteHome extends Localized(LitElement) {
     name: string;
   } | null): TemplateResult {
     return html`
-      <div class="w-full border-2 cursor-pointer mb-2 select-none" @click=${this._openBox}>
-        <div class="bg-gray-100 rounded flex p-4 h-full items-center justify-between">
-          <span class="title-font font-medium">${title}</span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-          </svg>
-        </div>
-      </div>
-      <div class="editable hidden">
-        <div class="strength-block flex justify-center gap-2 m-4">
-          <div class="relative">
-            <label for="${id}-title" class="leading-7 text-sm text-gray-600">Title</label>
-            <input name="${id}-title" id="${id}-title" type="text" .value=${title} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-          </div>
-          <div class="relative w-full">
-            <label for="${id}-text" class="leading-7 text-sm text-gray-600">Text</label>
-            <textarea id="${id}-text" name="${id}-text" .value=${message} class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-16 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+    <div class="strength-box" @click=${this._openBox}>
+      <div class="w-full border-2 cursor-pointer mb-2 select-none">
+          <div class="expander bg-gray-100 rounded flex p-4 h-full items-center justify-between">
+            <span class="title-font font-medium">${title}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
           </div>
         </div>
-        <div class="flex justify-start gap-2 m-4">
-          ${link ? html`
-          <div class="relative">
-            <label for="${id}-name" class="leading-7 text-sm text-gray-600">Name</label>
-            <input name="${id}-name" id="${id}-name" type="text" .value=${link.name} class="bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+        <div class="editable expandable hidden">
+          <div class="strength-block flex justify-center gap-2 m-4">
+            <div class="relative">
+              <label for="${id}-title" class="leading-7 text-sm text-gray-600">Title</label>
+              <input name="${id}-title" id="${id}-title" type="text" .value=${title} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+            </div>
+            <div class="relative w-full">
+              <label for="${id}-text" class="leading-7 text-sm text-gray-600">Text</label>
+              <textarea id="${id}-text" name="${id}-text" .value=${message} class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-16 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+            </div>
           </div>
-          <div class="relative w-full">
-            <label for="${id}-href" class="leading-7 text-sm text-gray-600">URL</label>
-            <input name="${id}-href" id="${id}-href" type="text" .value=${link.href} class="bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out w-full" />
+          <div class="flex justify-start gap-2 m-4">
+            ${link ? html`
+            <div class="relative">
+              <label for="${id}-name" class="leading-7 text-sm text-gray-600">Name</label>
+              <input name="${id}-name" id="${id}-name" type="text" .value=${link.name} class="bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+            </div>
+            <div class="relative w-full">
+              <label for="${id}-href" class="leading-7 text-sm text-gray-600">URL</label>
+              <input name="${id}-href" id="${id}-href" type="text" .value=${link.href} class="bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out w-full" />
+            </div>
+          ` : ''}
           </div>
-        ` : ''}
         </div>
-      </div>
+    </div>
     `;
   }
 
@@ -129,9 +147,11 @@ export class WebsiteHome extends Localized(LitElement) {
                 ${msg('Strengths')}
               </h1>
             ${this.loading ? loader() : html`
+              <div class="sortable-holder">
               ${this._strengths.map(strength => {
-                return this._strengthBox(strength.id, strength.title, strength.description, strength.link)
-              })}
+                  return this._strengthBox(strength.id, strength.title, strength.description, strength.link)
+                })}
+              </div>
               <button type="button" class="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-white terra-bg">
                   ${msg('Add strength')}
               </button>
