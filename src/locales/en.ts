@@ -55,7 +55,7 @@
 'sbeff9ac02dc2c474': `Anchor`,
 'sed5ff004b2f2cfac': `Federal Funds Rate`,
 's6ad93f1069d6191b': `Luna governs them all !`,
-'sce98ee58192f12e9': `\$LUNA`,
+'sce98ee58192f12e9': `$LUNA`,
 's61eea119db28d0d7': `UST`,
 'sc6c410afb0ca51bd': `404 - Not found`,
 'sc1e59c37f65f8a0b': `We are here to help.`,
