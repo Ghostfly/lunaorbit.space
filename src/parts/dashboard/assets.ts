@@ -116,7 +116,7 @@ export class WebsiteAssets extends Localized(LitElement) {
             </h1>
               ${
                 this.files.length === 0
-                  ? html`No files to show`
+                  ? html`${msg('No files to show')}`
                   : html`
                       <div class="flex flex-wrap mb-8 mt-6">
                         ${this.files.map((file) => {
@@ -176,7 +176,7 @@ export class WebsiteAssets extends Localized(LitElement) {
             ? html`
                 <mwc-dialog id="dialog-${this.currentFile.id}">
                   <div class="break-words">
-                    Delete file? ${this.currentFile.name}
+                    ${msg('Delete file?')} ${this.currentFile.name}
                   </div>
                   <mwc-button
                     @click=${async () => {
@@ -193,7 +193,7 @@ export class WebsiteAssets extends Localized(LitElement) {
                     slot="primaryAction"
                     dialogAction="delete"
                   >
-                    Delete
+                    ${msg('Delete')}
                   </mwc-button>
                 </mwc-dialog>
               `
@@ -204,7 +204,7 @@ export class WebsiteAssets extends Localized(LitElement) {
           this.currentLink && this.currentFile
             ? html`
                 <mwc-dialog id="dialog-show-link">
-                  <h1 class="mt-4 mb-4">Share link :</h1>
+                  <h1 class="mt-4 mb-4">${msg('Share link :')}</h1>
                   ${this.currentFile.name.endsWith('png')
                     ? html`
                         <img
@@ -221,7 +221,7 @@ export class WebsiteAssets extends Localized(LitElement) {
                     .value=${this.currentLink}
                   />
                   <mwc-button slot="primaryAction" dialogAction="delete">
-                    Ok
+                    ${msg('Ok')}
                   </mwc-button>
                 </mwc-dialog>
               `

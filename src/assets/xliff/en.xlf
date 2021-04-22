@@ -125,6 +125,12 @@
 <trans-unit id="s6ad93f1069d6191b">
   <source>Luna governs them all !</source>
 </trans-unit>
+<trans-unit id="sce98ee58192f12e9">
+  <source>$LUNA</source>
+</trans-unit>
+<trans-unit id="s61eea119db28d0d7">
+  <source>UST</source>
+</trans-unit>
 <trans-unit id="sc6c410afb0ca51bd">
   <source>404 - Not found</source>
 </trans-unit>
@@ -167,11 +173,38 @@
 <trans-unit id="s1e3a08abb66683bd">
   <source>Gallery</source>
 </trans-unit>
+<trans-unit id="saf5210b1833012cf">
+  <source>No files to show</source>
+</trans-unit>
+<trans-unit id="s186d1e56974e3665">
+  <source>Delete file?</source>
+</trans-unit>
+<trans-unit id="sdc673e73b5c13aea">
+  <source>Delete</source>
+</trans-unit>
+<trans-unit id="s1223eb1b27608456">
+  <source>Share link :</source>
+</trans-unit>
+<trans-unit id="s091d5d07b5b33dcf">
+  <source>Ok</source>
+</trans-unit>
+<trans-unit id="sd158a5fc0f062f18">
+  <source>Available</source>
+</trans-unit>
+<trans-unit id="s6d3b5b0561ba34c9">
+  <source>Published</source>
+</trans-unit>
 <trans-unit id="s5fc8ce1a5e481335">
   <source>Tools links</source>
 </trans-unit>
 <trans-unit id="sb23cea57a7629167">
   <source>How to?</source>
+</trans-unit>
+<trans-unit id="sd2023813cc70bf74">
+  <source>Steps</source>
+</trans-unit>
+<trans-unit id="s3d93f9ea0c5a13fa">
+  <source>Image</source>
 </trans-unit>
 <trans-unit id="sfa847f22cbd9bff5">
   <source>Translate</source>

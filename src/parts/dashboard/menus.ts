@@ -43,26 +43,7 @@ export class AdminMenu extends Localized(LitElement) {
     ) as NodeListOf<HTMLDivElement>;
     if (sortableHolders.length) {
       for (const holder of sortableHolders) {
-        smoothDnD(holder, {
-          /*onDragStart: () => {
-            console.warn('drag start');
-          },
-          onDragEnd: () => {
-            console.warn('drag end');
-           },
-          onDrop: () => {
-            console.warn('drop');
-          },
-          onDropReady: () => {
-            console.warn('drop-ready');
-          },
-          onDragEnter: () => {
-            console.warn('drag-enter');
-          },
-          onDragLeave: () => {
-            console.warn('drag-leave');
-          }*/
-        });
+        smoothDnD(holder);
       }
     }
   }
@@ -82,7 +63,7 @@ export class AdminMenu extends Localized(LitElement) {
                       class="bg-white shadow-md rounded-lg px-3 py-2 mb-4 grid grid-cols-2"
                     >
                       <div class="py-3 text-sm">
-                        <h1 class="font-semibold m-4">Available</h1>
+                        <h1 class="font-semibold m-4">${msg('Available')}</h1>
                         <div class="sortable-holder">
                           ${this._systemPages.map((page) => {
                             return html`
@@ -98,7 +79,7 @@ export class AdminMenu extends Localized(LitElement) {
                         </div>
                       </div>
                       <div class="py-3 text-sm opacity-75 select-none">
-                        <h1 class="font-semibold m-4">Published</h1>
+                        <h1 class="font-semibold m-4">${msg('Published')}</h1>
                         <div class="sortable-holder">
                           ${this._systemPages.map((page) => {
                             return html`
@@ -135,7 +116,7 @@ export class AdminMenu extends Localized(LitElement) {
                         <button
                           class="terra-bg hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center gap-2"
                         >
-                          <span class="text-sm">Save</span>
+                          <span class="text-sm">${msg('Save')}</span>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="h-6 w-6"

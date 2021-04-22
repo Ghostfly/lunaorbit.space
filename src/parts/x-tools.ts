@@ -94,6 +94,7 @@ export class XTools extends Localized(LitElement) {
           return this._sectionTemplate(section);
         })}
 
+        <!-- TODO : Make configurable -->
         <tailwind-quote
           .author=${msg('Justin')}
           .text=${msg(`To understand why Luna could appreciate over time, you need to

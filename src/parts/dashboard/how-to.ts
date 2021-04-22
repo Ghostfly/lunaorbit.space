@@ -158,7 +158,7 @@ export class WebsiteHowTo extends Localized(LitElement) {
               <label
                 for="${step.id}-step-image"
                 class="leading-7 text-sm text-gray-600"
-                >Image</label
+                >${msg('Image')}</label
               >
               <input
                 @change=${(e: Event) => {
