@@ -34,6 +34,8 @@ export class WebsiteAssets extends Localized(LitElement) {
   private _assetsRef!: StorageFileApi;
   @internalProperty()
   private currentFile: FileObject | null = null;
+  @internalProperty()
+  private currentLink: string | null = null;
 
   createRenderRoot(): this {
     return this;
@@ -58,14 +60,18 @@ export class WebsiteAssets extends Localized(LitElement) {
     }
   }
 
-  private async _onLinkRequest(e: Event, file: FileObject) {
-    const target = e.target as HTMLElement;
+  private async _onLinkRequest(_e: Event, file: FileObject) {
     const signedURL = await this._assetsRef.createSignedUrl(file.name, 12000);
 
     const fileHolder = document.createElement('img');
     fileHolder.src = signedURL.signedURL ?? '';
-    target.parentElement?.parentElement?.parentElement?.appendChild(fileHolder);
-    console.warn(signedURL);
+
+    this.currentLink = signedURL.signedURL;
+    this.currentFile = file;
+    await this.updateComplete;
+
+    const linkDialog = this.querySelector(`#dialog-show-link`) as Dialog;
+    linkDialog.open = true;
   }
 
   render(): TemplateResult {
@@ -138,6 +144,21 @@ export class WebsiteAssets extends Localized(LitElement) {
               slot="primaryAction"
               dialogAction="delete">
             Delete
+          </mwc-button>
+        </mwc-dialog>
+        ` : ''}
+
+        ${this.currentLink && this.currentFile? html`
+        <mwc-dialog id="dialog-show-link">
+          <h1 class="mt-4 mb-4">Share link :</h1>
+          ${this.currentFile.name.endsWith('png') ? html`
+          <img src="${this.currentLink}" alt=${this.currentFile.name} />
+          ` : ''}
+          <input id="showLink" type="text" name="showLink" class="p-2 shadow-sm border-2 border-gray-300 border-dashed focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm rounded-md" .value=${this.currentLink} />
+          <mwc-button
+              slot="primaryAction"
+              dialogAction="delete">
+            Ok
           </mwc-button>
         </mwc-dialog>
         ` : ''}

@@ -69,7 +69,7 @@ export class WebsiteSettings extends Localized(LitElement) {
                           ${capitalizeFirstLetter(setting.name)}
                         </label>
                         <div class="mt-1">
-                          <input id=${setting.name} type="text" id="${setting.name}" name="${setting.name}" class="p-2 shadow-sm border-2 border-gray-300 border-dashed focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm rounded-md" .value=${setting.value}></textarea>
+                          <input id=${setting.name} type="text" id="${setting.name}" name="${setting.name}" class="p-2 shadow-sm border-2 border-gray-300 border-dashed focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm rounded-md" .value=${setting.value} />
                         </div>
                       </div>
                     `;
