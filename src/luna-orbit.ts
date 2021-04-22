@@ -160,14 +160,14 @@ export class LunaOrbit extends Localized(LitElement) {
   }
 
   async firstUpdated(): Promise<void> {
-    await setLocaleFromUrl();
+    await Promise.all([
+      setLocaleFromUrl(),
+      this._setupMenus(),
+      this._showAirdropToast(),
+      this._retrieveCommissionAndPrice()
+    ]);
 
-    await this._showAirdropToast();
-    await this.updateBannerMessage();
-    await this._setupMenus();
     this._handleMobileMenu();
-
-    await this._retrieveCommissionAndPrice();
   }
 
   private async _setupMenus() {
@@ -224,7 +224,13 @@ export class LunaOrbit extends Localized(LitElement) {
   }
 
   private async _retrieveCommissionAndPrice(): Promise<void> {
-    const priceQuery = await fetch(LunaOrbit.APILunaPrice);
+    const [priceQuery, validatorQuery] = await Promise.all([
+      fetch(LunaOrbit.APILunaPrice),
+      fetch(
+        LunaOrbit.APIValidatorURL + config.address
+      )
+    ]);
+
     const price = (await priceQuery.json()) as LunaPriceResponse;
     this._price = price.lastPrice;
 
@@ -233,9 +239,6 @@ export class LunaOrbit extends Localized(LitElement) {
       equation.price = this._price;
     }
 
-    const validatorQuery = await fetch(
-      LunaOrbit.APIValidatorURL + config.address
-    );
     this.validatorInformation = await validatorQuery.json();
 
     if (this.validatorInformation) {
