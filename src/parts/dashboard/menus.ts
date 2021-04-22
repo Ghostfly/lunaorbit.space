@@ -13,6 +13,7 @@ import {smoothDnD} from 'smooth-dnd';
 import { loadMenu, MenuItem } from '../../backend';
 
 import '@material/mwc-circular-progress';
+import { loader } from './home';
 
 /**
  * Admin menu component
@@ -113,11 +114,7 @@ export class AdminMenu extends Localized(LitElement) {
                         </button>
                     </div>
                 </div>
-              ` : html`
-              <div class="loading flex w-full justify-center p-6">
-                <mwc-circular-progress indeterminate></mwc-circular-progress>
-              </div>
-              `}
+              ` : loader()}
             </div>
         </div>
     </div>

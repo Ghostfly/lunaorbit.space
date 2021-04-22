@@ -33,6 +33,14 @@ export function ctaEditor(id: number, title: string, ctaText: string, href: stri
   `;
 }
 
+export function loader(): TemplateResult {
+  return html`
+  <div class="loading flex w-full justify-center p-6">
+    <mwc-circular-progress indeterminate></mwc-circular-progress>
+  </div>
+  `;
+}
+
 @customElement('website-home')
 export class WebsiteHome extends Localized(LitElement) {
   @internalProperty()
@@ -120,11 +128,7 @@ export class WebsiteHome extends Localized(LitElement) {
               <h1 class="text-md mt-8 mb-4">
                 ${msg('Strengths')}
               </h1>
-            ${this.loading ? html`
-              <div class="loading flex w-full justify-center p-6">
-                <mwc-circular-progress indeterminate></mwc-circular-progress>
-              </div>
-              ` : html`
+            ${this.loading ? loader() : html`
               ${this._strengths.map(strength => {
                 return this._strengthBox(strength.id, strength.title, strength.description, strength.link)
               })}

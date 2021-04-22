@@ -10,7 +10,7 @@ import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
 import { retrieveSupabase } from '../../luna-orbit';
 import { CTA, ctaForPage, loadTools, ToolSection } from '../../backend';
-import { ctaEditor } from './home';
+import { ctaEditor, loader } from './home';
 import {smoothDnD} from 'smooth-dnd';
 
 @customElement('website-tools')
@@ -81,11 +81,7 @@ export class WebsiteTools extends Localized(LitElement) {
           <mwc-fab icon="save" mini></mwc-fab>
         </div>
         <div class="m-4">
-          ${this.loading ? html`
-            <div class="loading flex w-full justify-center p-6">
-              <mwc-circular-progress indeterminate></mwc-circular-progress>
-            </div>
-            ` : html`
+          ${this.loading ? loader() : html`
             ${this._cta ? html`
               ${ctaEditor(this._cta.id, this._cta.title, this._cta['cta-text'], this._cta.href)}
           ` : html``}

@@ -24,6 +24,7 @@ import { Snackbar } from '@material/mwc-snackbar';
 
 import { SupabaseClient } from '@supabase/supabase-js'
 import { retrieveSupabase } from '../luna-orbit';
+import { loader } from './dashboard/home';
 
 type AdminUser = {
   id: number;
@@ -183,11 +184,7 @@ export class XAdmin extends Localized(LitElement) {
             <admin-nav .address=${this._savedAddress} .disabled=${!this._signedIn}></admin-nav>
           </div>
           <div class="px-4 py-6 h-screen w-full">
-          ${this._isChecking ? html`
-            <div class="loading flex w-full justify-center p-6">
-              <mwc-circular-progress indeterminate></mwc-circular-progress>
-            </div>
-          ` : html`
+          ${this._isChecking ? loader() : html`
             ${this._signedIn ? html`
             ${this._pageForTitle(this._page)}
             ` : html`

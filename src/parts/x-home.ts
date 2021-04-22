@@ -6,6 +6,7 @@ import '../components/cta-hero';
 import { Strength, CTA, ctaForPage } from '../backend';
 
 import { retrieveSupabase } from '../luna-orbit';
+import { loader } from './dashboard/home';
 
 /**
  * Home component
@@ -48,11 +49,7 @@ export class XHome extends Localized(LitElement) {
         ` : html``}
         <div class="container px-5 py-8 mx-auto">
           <div class="flex flex-wrap -m-4">
-            ${this.loading ? html`
-            <div class="loading flex w-full justify-center p-6">
-              <mwc-circular-progress indeterminate></mwc-circular-progress>
-            </div>
-            ` : html`
+            ${this.loading ? loader() : html`
             ${this._strengths.map(strength => {
               return this._strengthBox(strength.title, strength.description, strength.link)
             })}

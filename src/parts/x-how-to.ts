@@ -12,6 +12,7 @@ import { Localized } from '@lit/localize/localized-element.js';
 import '../components/cta-hero';
 import { CTA, ctaForPage, loadGlossary, loadSteps, Step, Word } from '../backend';
 import { retrieveSupabase } from '../luna-orbit';
+import { loader } from './dashboard/home';
 
 /**
  * How to choose a validator component
@@ -91,11 +92,7 @@ export class XHowTo extends Localized(LitElement) {
           ${msg('How to start staking on Terra ?')}
         </h1>
 
-        ${this.loading ? html`
-        <div class="loading flex w-full justify-center p-6">
-          <mwc-circular-progress indeterminate></mwc-circular-progress>
-        </div>
-        ` : html`
+        ${this.loading ? loader() : html`
         <ul
           class="list-reset flex border-b"
           @click=${this._onTabClick}

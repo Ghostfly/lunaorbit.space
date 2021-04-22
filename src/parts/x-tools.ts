@@ -15,6 +15,7 @@ import '../components/tailwind-quote';
 
 import { retrieveSupabase } from '../luna-orbit';
 import { CTA, ctaForPage, loadTools, ToolSection } from '../backend';
+import { loader } from './dashboard/home';
 
 /**
  * Tools component
@@ -86,11 +87,7 @@ export class XTools extends Localized(LitElement) {
       >
         <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">${msg('Terra tools')}</h1>
 
-        ${this.loading ? html`
-        <div class="loading flex w-full justify-center p-6">
-          <mwc-circular-progress indeterminate></mwc-circular-progress>
-        </div>
-        ` : html``}
+        ${this.loading ? loader() : html``}
 
         ${this._sections && this._sections.map((section) => {
           return this._sectionTemplate(section);
