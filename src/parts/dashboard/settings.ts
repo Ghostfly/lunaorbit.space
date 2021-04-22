@@ -10,6 +10,8 @@ import {msg} from '@lit/localize';
 import { Localized } from '@lit/localize/localized-element.js';
 import { capitalizeFirstLetter } from '../../lib/strings';
 
+import { Switch } from '@material/mwc-switch';
+
 export type WebsiteSettingsDB = {
   id: number;
   name: string;
@@ -80,7 +82,10 @@ export class WebsiteSettings extends Localized(LitElement) {
                         ${capitalizeFirstLetter(setting.name.replace('-', ' ').replace('-', ' '))}
                       </label>
                       <div class="mt-1">
-                        <mwc-switch .checked=${setting.value === 'true'}></mwc-switch>
+                        <mwc-switch id="${setting.name}" .checked=${setting.value === 'true'} @change=${(e: Event) => {
+                          const switchField = e.target as Switch;
+                          setting.value = switchField.checked ? 'true' : 'false';
+                        }}></mwc-switch>
                       </div>
                     </div>
                   `;
@@ -129,11 +134,28 @@ export class WebsiteSettings extends Localized(LitElement) {
       return;
     }
 
+    let error;
+
     for (const setting of this._settings) {
-      const component = document.querySelector('#' + setting.name) as HTMLInputElement;
-      if (component && component.value !== setting.value) {
+      const component = document.querySelector('#' + setting.name) as HTMLInputElement | HTMLTextAreaElement | Switch;
+      if (component instanceof Switch) {
         const queryBuilder = database.from<WebsiteSettingsDB>('settings');
-        const { error } = await queryBuilder.update({
+        error = await queryBuilder.update({
+          value: component.checked ? 'true' : 'false'
+        }).match({
+          name: setting.name
+        });
+
+        if (error) {
+          document.querySelector('x-admin')?.showSnack('Error while updating data');
+        }
+
+        document.querySelector('x-admin')?.showSnack('Updated.');
+      }
+
+      if (component instanceof HTMLInputElement || component instanceof HTMLTextAreaElement) {
+        const queryBuilder = database.from<WebsiteSettingsDB>('settings');
+        error = await queryBuilder.update({
           value: component.value
         }).match({
           name: setting.name
@@ -146,8 +168,9 @@ export class WebsiteSettings extends Localized(LitElement) {
         document.querySelector('x-admin')?.showSnack('Updated.');
 
         document.querySelector('luna-orbit')?.updateBannerMessage();
-      }
+      } 
     }
+
   }
 }
 

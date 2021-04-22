@@ -93,7 +93,7 @@ export class LunaOrbit extends Localized(LitElement) {
     );
   }
 
-  public showAirdropDialog(): void {
+  public async showAirdropDialog(): Promise<void> {
     document.body.appendChild(document.createElement('airdrop-dialog'));
   }
 
@@ -103,18 +103,25 @@ export class LunaOrbit extends Localized(LitElement) {
     }
 
     const queryBuilder = this._supabase.from<WebsiteSettingsDB>('settings');
-    const query = queryBuilder.select('name, value, type').eq('name', 'announcement');
+    const enabledReq = queryBuilder.select('name, value, type').eq('name', 'announcement-visible');
+    const settings = (await enabledReq).data;
 
-    const settings = (await query).data;
+    if (settings && settings[0].value == 'true') {
+      const queryBuilder = this._supabase.from<WebsiteSettingsDB>('settings');
+      const query = queryBuilder.select('name, value, type').eq('name', 'announcement');
 
-    if (settings?.length) {
+      const settingDetail = (await query).data;
+      if (!settingDetail) {
+        return;
+      }
+  
       const banners = document.querySelectorAll('banner-message');
       for (const banner of banners) {
         banner.parentElement?.removeChild(banner);
       }
   
       const bannerNode = document.createElement('banner-message');
-      bannerNode.message = settings[0].value;
+      bannerNode.message = settingDetail[0].value;
   
       bannerNode.addEventListener('click', function () {
         bannerNode.parentElement?.removeChild(bannerNode);
@@ -125,13 +132,20 @@ export class LunaOrbit extends Localized(LitElement) {
     }
   }
 
-  private _showAirdropToast() {
-    const hasToast = this.shadowRoot?.querySelector('airdrop-toast');
-    if (hasToast) {
-      hasToast.parentElement?.removeChild(hasToast);
+  private async _showAirdropToast() {
+    if (sessionStorage.getItem('lunaorbit-airdrops-hide')) {
+      return;
     }
 
-    if (!sessionStorage.getItem('lunaorbit-airdrops-hide')) {
+    const queryBuilder = this._supabase.from<WebsiteSettingsDB>('settings');
+    const enabledReq = queryBuilder.select('name, value, type').eq('name', 'airdrop-balloon-visible');
+    const settings = (await enabledReq).data;
+    if (settings && settings[0].value == 'true') {
+      const hasToast = this.shadowRoot?.querySelector('airdrop-toast');
+      if (hasToast) {
+        hasToast.parentElement?.removeChild(hasToast);
+      }
+  
       this.shadowRoot?.appendChild(document.createElement('airdrop-toast'));
     }
   }
@@ -139,7 +153,7 @@ export class LunaOrbit extends Localized(LitElement) {
   async firstUpdated(): Promise<void> {
     await setLocaleFromUrl();
 
-    this._showAirdropToast();
+    await this._showAirdropToast();
     await this.updateBannerMessage();
     await this._setupMenus();
     this._handleMobileMenu();
