@@ -59,7 +59,9 @@ export async function ctaForPage(db: SupabaseClient, page: string): Promise<CTA 
 }
 
 export async function loadTools(db: SupabaseClient): Promise<ToolSection[] | null> {
-  return (await db.from<ToolSection>('tools').select('id, name, explain, links, order').order('order')).data;
+  return (await db.from<ToolSection>('tools').select('id, name, explain, links, order').order('order', {
+    ascending: true
+  })).data;
 }
 
 export async function loadSteps(db: SupabaseClient): Promise<Step[] | null> {
