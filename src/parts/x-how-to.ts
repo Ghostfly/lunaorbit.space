@@ -10,7 +10,7 @@ import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
 
 import '../components/cta-hero';
-import {CTA, ctaForPage, loadGlossary, loadSteps, Step, Word} from '../backend';
+import {CTA, ctaForPage, loadSteps, loadWords, Step, Word} from '../backend';
 import {retrieveSupabase} from '../luna-orbit';
 import {loader} from './dashboard/home';
 
@@ -54,7 +54,7 @@ export class XHowTo extends Localized(LitElement) {
 
 
     this._cta = await ctaForPage(db, 'how-to');
-    this._dictionary = await loadGlossary(db);
+    this._dictionary = await loadWords(db);
 
     this.loading = false;
   }

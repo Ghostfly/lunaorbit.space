@@ -8,7 +8,7 @@ import {
 
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element';
-import {CTA, ctaForPage, loadSteps, Step} from '../../backend';
+import {CTA, ctaForPage, loadSteps, loadWords, Step, Word} from '../../backend';
 import { ctaEditor, loader } from './home';
 
 @customElement('website-how-to')
@@ -19,6 +19,8 @@ export class WebsiteHowTo extends Localized(LitElement) {
   private _cta: CTA | null = null;
   @internalProperty()
   private _steps: Step[] | null = null;
+  @internalProperty()
+  private _words: Word[] | null = null;
 
   createRenderRoot(): this {
     return this;
@@ -32,6 +34,7 @@ export class WebsiteHowTo extends Localized(LitElement) {
       this.loading = true;
       this._cta = await ctaForPage(db, 'how-to');
       this._steps = await loadSteps(db);
+      this._words = await loadWords(db);
       this.loading = false;
     }
   }
@@ -99,7 +102,8 @@ export class WebsiteHowTo extends Localized(LitElement) {
       <div class="m-4">
         ${this.loading
           ? loader()
-          : html` ${this._cta ? html` ${ctaEditor(this._cta)} ` : html``} `}
+      : html`
+        ${this._cta ? html` ${ctaEditor(this._cta)} ` : html``} `}
         <div class="mt-4">
           <h1 class="text-md">
             ${msg('Steps')}
@@ -167,6 +171,58 @@ export class WebsiteHowTo extends Localized(LitElement) {
             </a>
           </div>
           `)}
+        </div>
+        <div class="glossary mt-4">
+          <h1 class="text-md">
+            ${msg('Glossary')}
+          </h1>
+          <div class="words-block flex flex-wrap w-full">
+            ${this._words?.map(word => {
+              return html`
+              <div class="word w-full flex flex-wrap mt-4 mb-4 items-center gap-3">
+                <div class="fields flex flex-col w-full">
+                  <input
+                    @change=${(e: Event) => {
+                      const target = e.target as HTMLInputElement;
+                      word.title = target.value;
+                    }}
+                    class="w-auto bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    type="text" .value=${word.title}>
+                  <textarea
+                    @change=${(e: Event) => {
+                      const target = e.target as HTMLInputElement;
+                      word.text = target.value;
+                    }}
+                    rows="5"
+                    class="w-auto bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                    .value=${word.text}></textarea>
+                </div>
+                  <a
+                    class="w-10"
+                    title="Delete word"
+                    @click=${async () => {
+                      console.warn('should delete word');
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
+                  </a>
+              </div>
+              `;
+            })}
+          </div>
         </div>
       </div>
     `;
