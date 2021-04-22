@@ -39,7 +39,7 @@ export class XHome extends Localized(LitElement) {
       await db
         .from<Strength>('strengths')
         .select('title, description, link, order')
-        .order('order')
+        .order('order', {ascending: true})
     ).data;
     if (savedStrengths) {
       this._strengths = savedStrengths;

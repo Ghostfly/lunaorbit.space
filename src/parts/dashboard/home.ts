@@ -111,10 +111,10 @@ export class WebsiteHome extends Localized(LitElement) {
         await db
           .from<Strength>('strengths')
           .select('id, title, description, link, order')
-          .order('order')
+          .order('order', {ascending: true})
       ).data;
       if (savedStrengths) {
-        this._strengths = savedStrengths;
+        this._strengths = savedStrengths.sort((strengthA, strengthB) => strengthA.order - strengthB.order);
       }
     }
   }
@@ -158,7 +158,7 @@ export class WebsiteHome extends Localized(LitElement) {
 
   protected _strengthBox(strength: Strength): TemplateResult {
     return html`
-      <div class="strength-box" @click=${this._openBox}>
+      <div class="strength-box" data-order="${strength.order}" data-id="${strength.id}" @click=${this._openBox}>
         <div class="w-full border-2 cursor-pointer mb-2 select-none">
           <div
             class="expander bg-gray-100 rounded flex p-4 h-full items-center justify-between"
@@ -316,9 +316,24 @@ export class WebsiteHome extends Localized(LitElement) {
         .match({id: `${this._cta.id}`});
     }
 
+    const boxes = this.querySelectorAll('.strength-box') as NodeListOf<HTMLElement>;
+    
+    let idx = 0;
+    for (const box of boxes) {
+      const id = box.dataset.id;
+      if (id) {
+        const strength = this._strengths.find(strength => parseInt(strength.id, 10) === parseInt(id, 10));
+        if (strength) {
+          strength.order = idx;
+        }
+        idx++;
+      }
+    }
+
+    this._strengths = this._strengths.sort((strengthA, strengthB) => strengthA.order - strengthB.order);
+
     await db.from('strengths').upsert(this._strengths);
 
-    await this._loadStrengths();
     console.warn('saved', this._strengths);
   }
 
