@@ -76,6 +76,19 @@ export class WebsiteTools extends Localized(LitElement) {
     await this._loadTools(db);
   }
 
+  private async _removeTool(tool: ToolSection) {
+    const db = document.querySelector('x-admin')?.supabase;
+    if (!db || !this._tools) {
+      return;
+    }
+
+    await db.from<ToolSection>('tools').delete().match({
+      name: tool.name,
+    });
+
+    await this._loadTools(db);
+  }
+
   render(): TemplateResult {
     return html`
         <div class="flex justify-between gap-2 ml-4 mb-4 pb-6">
@@ -98,9 +111,7 @@ export class WebsiteTools extends Localized(LitElement) {
               <div class="w-full bg-gray-100 cursor-pointer mb-2 select-none" @click=${this._openBox}>
                 <div class="rounded flex p-4 h-full items-center justify-between">
                   <span class="title-font font-medium">${tool.name}</span>
-                  <a title="Remove tool" @click=${() => {
-                    this._tools = this._tools?.filter(tooling => tooling !== tool) ?? null;
-                  }}>
+                  <a title="Remove tool" @click=${() => this._removeTool(tool)}>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                     </svg>
@@ -141,6 +152,7 @@ export class WebsiteTools extends Localized(LitElement) {
       id: this._tools.length + 1,
       name: 'New tool',
       explain: 'Why?',
+      order: this._tools.length,
       links: [{
         href: '',
         name: '',

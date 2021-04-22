@@ -25,6 +25,7 @@ export type ToolSection = {
   id: number;
   name: string;
   explain: string;
+  order: number;
   links: {
     href: string;
     name: string;
@@ -58,7 +59,7 @@ export async function ctaForPage(db: SupabaseClient, page: string): Promise<CTA 
 }
 
 export async function loadTools(db: SupabaseClient): Promise<ToolSection[] | null> {
-  return (await db.from<ToolSection>('tools').select('id, name, explain, links')).data;
+  return (await db.from<ToolSection>('tools').select('id, name, explain, links, order').order('order')).data;
 }
 
 export async function loadSteps(db: SupabaseClient): Promise<Step[] | null> {
