@@ -20,7 +20,7 @@ import {loader} from './dashboard/home';
 @customElement('x-how-to')
 export class XHowTo extends Localized(LitElement) {
   @internalProperty()
-  private step = '0';
+  private step = 1;
 
   @property({type: Boolean})
   public loading = false;
@@ -61,8 +61,8 @@ export class XHowTo extends Localized(LitElement) {
 
   private _onTabClick(e: Event) {
     const item = e.target as HTMLElement;
-    if (item.dataset.img) {
-      this.step = item.dataset.img;
+    if (item.dataset.id) {
+      this.step = parseInt(item.dataset.id, 10);
     }
   }
 
@@ -81,11 +81,11 @@ export class XHowTo extends Localized(LitElement) {
     `;
   }
 
-  private _tabItem(title: string, img: string, active?: boolean) {
+  private _tabItem(id: string, title: string, active?: boolean) {
     return html`
       <li class="mr-1">
         <a
-          data-img="${img}"
+          data-id="${id}"
           class="cursor-pointer	bg-white inline-block rounded-t py-2 px-4 ${active
             ? 'active font-semibold border-l border-t border-r text-blue-800'
             : ''}"
@@ -97,7 +97,7 @@ export class XHowTo extends Localized(LitElement) {
   }
 
   render(): TemplateResult {
-    const currentStep = this._steps?.find(step => step.img === this.step);
+    const currentStep = this._steps?.find(step => parseInt(step.id, 10) === this.step);
     const currentSignedURL = currentStep?.signedURL ?? '';
     const currentALT = currentStep?.title ?? '';
 
@@ -116,9 +116,9 @@ export class XHowTo extends Localized(LitElement) {
                 ${this._steps &&
                 this._steps.map((item) => {
                   return this._tabItem(
+                    item.id,
                     item.title,
-                    item.img,
-                    this.step === item.img
+                    this.step === parseInt(item.id, 10)
                   );
                 })}
               </ul>
