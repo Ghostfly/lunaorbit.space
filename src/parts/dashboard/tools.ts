@@ -12,7 +12,6 @@ import { Localized } from '@lit/localize/localized-element';
 import { CTA, ctaForPage, loadTools, ToolSection } from '../../backend';
 import { ctaEditor, loader } from './home';
 import { smoothDnD } from 'smooth-dnd';
-import { SupabaseClient } from '@supabase/supabase-js';
 
 @customElement('website-tools')
 export class WebsiteTools extends Localized(LitElement) {
@@ -36,7 +35,7 @@ export class WebsiteTools extends Localized(LitElement) {
     this.loading = true;
 
     this._cta = await ctaForPage(db, 'tools');
-    await this._loadTools(db);
+    await this._loadTools();
     this.loading = false;
 
     await this.updateComplete;
@@ -49,7 +48,12 @@ export class WebsiteTools extends Localized(LitElement) {
     }
   }
 
-  private async _loadTools(db: SupabaseClient) {
+  private async _loadTools() {
+    const db = document.querySelector('x-admin')?.supabase;
+    if (!db) {
+      return;
+    }
+
     this._tools = await loadTools(db);
   }
 
@@ -65,22 +69,24 @@ export class WebsiteTools extends Localized(LitElement) {
     }
   }
 
+  private _admin() {
+    return document.querySelector('x-admin');
+  }
+
   private async _saveChanges() {
-    const db = document.querySelector('x-admin')?.supabase;
+    const db = this._admin()?.supabase;
     if (!db || !this._tools) {
       return;
     }
 
-    console.warn('saving ', this._tools);
-
     await db.from<ToolSection>('tools').upsert(this._tools);
+    await this._loadTools();
 
-    console.warn('saved ', this._tools);
-    await this._loadTools(db);
+    this._admin()?.showSnack('Saved.');
   }
 
   private async _removeTool(tool: ToolSection) {
-    const db = document.querySelector('x-admin')?.supabase;
+    const db = this._admin()?.supabase;
     if (!db || !this._tools) {
       return;
     }
@@ -89,7 +95,7 @@ export class WebsiteTools extends Localized(LitElement) {
       name: tool.name,
     });
 
-    await this._loadTools(db);
+    await this._loadTools();
   }
 
   render(): TemplateResult {
@@ -98,7 +104,13 @@ export class WebsiteTools extends Localized(LitElement) {
           <h1 class="text-xl">
             ${msg('Tools')}
           </h1>
-          <mwc-fab icon="save" mini @click=${async() => this._saveChanges()}></mwc-fab>
+          <div class="global-actions">
+            <mwc-fab icon="refresh" mini @click=${async () => {
+              await this._loadTools();
+              this._admin()?.showSnack('Refresh done.');
+            }}> </mwc-fab>
+            <mwc-fab icon="save" mini @click=${async () => this._saveChanges()}></mwc-fab>
+          </div>
         </div>
         <div class="m-4">
           ${this.loading ? loader() : html`
