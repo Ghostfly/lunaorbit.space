@@ -34,15 +34,6 @@ export function retrieveSupabase(token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e
   return createClient(supabaseUrl, token);
 }
 
-export interface MenuItem {
-  id: number;
-  url: string;
-  name: string;
-  class?: string;
-  component?: string;
-  order: string;
-}
-
 /**
  * Luna-orbit
  *

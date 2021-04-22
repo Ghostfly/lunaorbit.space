@@ -36,8 +36,16 @@ export type Word = {
   text: string;
 }
 
+export type MenuItem = {
+  id: number;
+  url: string;
+  name: string;
+  class?: string;
+  component?: string;
+  order: string;
+}
+
 import { SupabaseClient } from '@supabase/supabase-js'
-import { MenuItem } from './luna-orbit'
 
 export async function ctaForPage(db: SupabaseClient, page: string): Promise<CTA | null> {
   const ctaReq = (await db.from<CTA>('cta').select('id, title, href, cta-text').match({ page })).data;

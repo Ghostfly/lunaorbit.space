@@ -10,8 +10,7 @@ import {msg} from '@lit/localize';
 import { Localized } from '@lit/localize/localized-element';
 
 import {smoothDnD} from 'smooth-dnd';
-import { MenuItem } from '../../luna-orbit';
-import { loadMenu } from '../../backend';
+import { loadMenu, MenuItem } from '../../backend';
 
 /**
  * Admin menu component
