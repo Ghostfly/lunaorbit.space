@@ -44,7 +44,7 @@ export class AdminNav extends Localized(LitElement) {
     <div class="${this.disabled ? 'pointer-events-none opacity-50' : ''}">
       <div class="flex flex-col items-center mt-3 ">
         ${this.address ? html`
-          <img class="h-10 w-10 bg-white rounded-full" src="https://avatars.dicebear.com/api/bottts/${this.address}.svg" />
+          <img class="h-10 w-10 bg-white rounded-full" src="https://avatars.dicebear.com/api/jdenticon/${this.address}.svg" />
         ` : html``}
         <a class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this.page === DashboardPages.strengths ? 'text-indigo-100 bg-blue-700' : 'hover:bg-blue-700 hover:text-white'}" href="${AdminNav.MainPathPrefix}/${DashboardPages.strengths}" title="${msg('Strengths')}">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

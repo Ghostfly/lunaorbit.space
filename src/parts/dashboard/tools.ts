@@ -54,7 +54,7 @@ export class WebsiteTools extends Localized(LitElement) {
   }
 
   private _openBox(e: Event) {
-    const editable = (e.currentTarget as HTMLElement).nextElementSibling;
+    const editable = (e.currentTarget as HTMLElement).querySelector('.expand');
     if (editable?.classList.contains('hidden')) {
       editable?.classList.remove('hidden');
     } else {
@@ -106,39 +106,43 @@ export class WebsiteTools extends Localized(LitElement) {
             <h2 class="text-md mt-4 mb-4">
               ${msg('Tools links')}
             </h2>
+            <div class="sortable-holder">
             ${this._tools && this._tools.map(tool => {
               return html`
-              <div class="w-full bg-gray-100 cursor-pointer mb-2 select-none" @click=${this._openBox}>
-                <div class="rounded flex p-4 h-full items-center justify-between">
-                  <span class="title-font font-medium">${tool.name}</span>
-                  <a title="Remove tool" @click=${() => this._removeTool(tool)}>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                  </a>
+              <div class="tool-box" @click=${this._openBox}>
+                <div class="w-full bg-gray-100 cursor-pointer mb-2 select-none">
+                  <div class="rounded flex p-4 h-full items-center justify-between">
+                    <span class="title-font font-medium">${tool.name}</span>
+                    <a title="Remove tool" @click=${() => this._removeTool(tool)}>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </a>
+                  </div>
                 </div>
-              </div>
-              <div class="p-2 m-2 rounded hidden">
-                <input @change=${(e: Event) => {
-                  const target = e.target as HTMLInputElement;
-                  tool.name = target.value;
-                }}  name="${tool.id}-name" id="${tool.id}-name" .value=${tool.name} type="text" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-                <textarea @change=${(e: Event) => {
-                  const target = e.target as HTMLInputElement;
-                  tool.explain = target.value;
-                }} placeholder="Explain" name="${tool.id}-name" id="${tool.id}-explain" .value=${tool.explain} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
+                <div class="p-2 m-2 rounded expand hidden">
+                  <input @change=${(e: Event) => {
+                    const target = e.target as HTMLInputElement;
+                    tool.name = target.value;
+                  }}  name="${tool.id}-name" id="${tool.id}-name" .value=${tool.name} type="text" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                  <textarea @change=${(e: Event) => {
+                    const target = e.target as HTMLInputElement;
+                    tool.explain = target.value;
+                  }} placeholder="Explain" name="${tool.id}-name" id="${tool.id}-explain" .value=${tool.explain} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
 
-                <div class="tool-links flex flex-wrap gap-4 sortable-holder cursor-pointer m-4">
-                  ${tool.links.map((link, idx) => {
-                    return this._templateForToolLink(idx, tool, link);
-                  })}
+                  <div class="tool-links flex flex-wrap gap-4 sortable-holder cursor-pointer m-4">
+                    ${tool.links.map((link, idx) => {
+                      return this._templateForToolLink(idx, tool, link);
+                    })}
+                  </div>
+                  <button type="button" class="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-white terra-bg" @click=${() => this._addToolLink(tool)}>
+                      ${msg('Add link')}
+                  </button>
                 </div>
-                <button type="button" class="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-white terra-bg" @click=${() => this._addToolLink(tool)}>
-                    ${msg('Add link')}
-                </button>
               </div>
               `;
             })}
+            </div>
             <button type="button" class="m-4 w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-white terra-bg" @click=${this._addTool}>
               ${msg('Add tool')}
             </button>

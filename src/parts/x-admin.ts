@@ -180,9 +180,6 @@ export class XAdmin extends Localized(LitElement) {
   private _adminContent(): TemplateResult {
     return html`
         <div class="flex">
-          <div class="flex flex-col items-center w-16 h-100 overflow-hidden text-indigo-300 terra-bg rounded-br-lg">
-            <admin-nav .address=${this._savedAddress} .disabled=${!this._signedIn}></admin-nav>
-          </div>
           <div class="px-4 py-6 h-screen w-full">
           ${this._isChecking ? loader() : html`
             ${this._signedIn ? html`
@@ -191,6 +188,9 @@ export class XAdmin extends Localized(LitElement) {
             ${this._connectButton()}
             `}
           `}
+          </div>
+          <div class="flex flex-col items-center w-16 h-100 overflow-hidden text-indigo-300 terra-bg rounded-br-lg">
+            <admin-nav .address=${this._savedAddress} .disabled=${!this._signedIn}></admin-nav>
           </div>
         </div>
     `;
