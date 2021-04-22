@@ -290,7 +290,7 @@ export class WebsiteHome extends Localized(LitElement) {
 
   private async _addStrength() {
     this._strengths.push({
-      id: this._strengths.length + 1,
+      id: `${this._strengths.length + 1}`,
       order: this._strengths.length,
       title: 'New strength',
       description: '',

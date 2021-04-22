@@ -246,7 +246,7 @@ export class WebsiteTools extends Localized(LitElement) {
 
   private _addTool() {
     this._tools?.push({
-      id: this._tools.length + 1,
+      id: `${this._tools.length + 1}`,
       name: 'New tool',
       explain: 'Why?',
       order: this._tools.length,

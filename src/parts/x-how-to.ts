@@ -42,6 +42,17 @@ export class XHowTo extends Localized(LitElement) {
     this.loading = true;
 
     this._steps = await loadSteps(db);
+    if (this._steps) {
+      for (const step of this._steps) {
+        const storage = retrieveSupabase().storage.from('assets');
+        const signedImageURL = (await storage.createSignedUrl(step.img + '.png', 3000)).signedURL;
+        if (signedImageURL) {
+          step.signedURL = signedImageURL;
+        }
+      }
+    }
+
+
     this._cta = await ctaForPage(db, 'how-to');
     this._dictionary = await loadGlossary(db);
 
@@ -86,6 +97,10 @@ export class XHowTo extends Localized(LitElement) {
   }
 
   render(): TemplateResult {
+    const currentStep = this._steps?.find(step => step.img === this.step);
+    const currentSignedURL = currentStep?.signedURL ?? '';
+    const currentALT = currentStep?.title ?? '';
+
     return html`
       <section
         class="container mx-auto px-2 py-4 text-gray-700 body-font border-t border-gray-200"
@@ -110,8 +125,8 @@ export class XHowTo extends Localized(LitElement) {
 
               <div class="p-4" id="tabs">
                 <img
-                  src=${`/assets/${this.step}.png`}
-                  alt="download terra station"
+                  src=${currentSignedURL}
+                  alt=${currentALT}
                 />
               </div>
 

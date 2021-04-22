@@ -1,5 +1,5 @@
 export type Strength = {
-  id: number;
+  id: string;
   order: number;
   title: string;
   description: string;
@@ -10,7 +10,7 @@ export type Strength = {
 };
 
 export type CTA = {
-  id: number;
+  id: string;
   title: string;
   href: string;
   page: string;
@@ -18,13 +18,14 @@ export type CTA = {
 };
 
 export type Step = {
-  id: number;
+  id: string;
   title: string;
   img: string;
+  signedURL?: string;
 };
 
 export type ToolSection = {
-  id: number;
+  id: string;
   name: string;
   explain: string;
   order: number;
@@ -35,13 +36,13 @@ export type ToolSection = {
 };
 
 export type Word = {
-  id: number;
+  id: string;
   title: string;
   text: string;
 };
 
 export type MenuItem = {
-  id: number;
+  id: string;
   url: string;
   name: string;
   class?: string;
