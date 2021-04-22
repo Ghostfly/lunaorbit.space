@@ -8,17 +8,31 @@ import {
   TemplateResult,
   customElement,
   property,
+  internalProperty,
 } from 'lit-element';
 import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
+
+import ExtensionSingleton from '../terra/terra-connect';
 
 /**
  * Sign in using Terra component
  */
 @customElement('sign-in-terra')
 export class SignInTerra extends Localized(LitElement) {
+  @internalProperty()
+  private _disabled = false;
+
   @property({type: Object})
   public onLogin!: () => Promise<void>;
+
+  public firstUpdated(): void {
+    if (!ExtensionSingleton.init) {
+      this._disabled = true;
+    } else {
+      this._disabled = false;
+    }
+  }
 
   public createRenderRoot(): this {
     return this;
@@ -30,10 +44,11 @@ export class SignInTerra extends Localized(LitElement) {
         <div class="max-w-md w-full space-y-8">
           <div>
             <button
+              .disabled=${this._disabled}
               @click=${async () => {
                 await this.onLogin();
               }}
-              class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white terra-bg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white terra-bg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${this._disabled ? 'opacity-50' : ''}"
             >
               <span class="absolute left-0 inset-y-0 flex items-center pl-3">
                 <svg
