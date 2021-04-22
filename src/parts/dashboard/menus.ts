@@ -10,11 +10,7 @@ import {msg} from '@lit/localize';
 import { Localized } from '@lit/localize/localized-element';
 
 import {smoothDnD} from 'smooth-dnd';
-
-export interface MenuItem {
-  url: string;
-  name: string;
-}
+import { MenuItem } from '../../luna-orbit';
 
 /**
  * Admin menu component

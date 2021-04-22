@@ -22,7 +22,6 @@ import './parts/x-admin';
 import config from './config';
 import {setLocaleFromUrl} from './localization';
 import {Localized} from '@lit/localize/localized-element';
-import {msg} from '@lit/localize';
 import { BannerMessage } from './components/banner-message';
 
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
@@ -32,6 +31,13 @@ export function retrieveSupabase(token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e
   const supabaseUrl = 'https://ylqcozoikxxipzbvueua.supabase.co';
 
   return createClient(supabaseUrl, token);
+}
+
+export interface MenuItem {
+  url: string;
+  name: string;
+  class?: string;
+  component?: string;
 }
 
 /**
@@ -141,54 +147,29 @@ export class LunaOrbit extends Localized(LitElement) {
 
     this._showAirdropToast();
     await this.updateBannerMessage();
-    this._setupMenus();
+    await this._setupMenus();
     this._handleMobileMenu();
 
     await this._retrieveCommissionAndPrice();
   }
 
-  private _setupMenus() {
+  private async _setupMenus() {
     const menuHolders = document.querySelectorAll('.menu-holder');
 
-    const links = [
-      {
-        href: '/home',
-        class:
-          'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
-        value: msg('Staking'),
-      },
-      {
-        href: '/how-to',
-        class:
-          'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
-        value: msg('How to'),
-      },
-      {
-        href: '/tools',
-        class:
-          'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
-        value: msg('Tools'),
-      },
-      {
-        href: '/contact',
-        class:
-          'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
-        value: msg('Contact'),
-      },
-      {
-        href: '/airdrops',
-        class:
-          'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium',
-        value: msg('Airdrops'),
-      },
-    ];
+    const menuItems = (await this._supabase?.from<MenuItem>('menu-items').select('url, name'))?.data;
+    const links = [];
+    if (menuItems) {
+      for (const menuItem of menuItems) {
+        links.push(menuItem);
+      }
+    }
 
     for (const menuHolder of menuHolders) {
       for (const link of links) {
         const elem = document.createElement('a');
-        elem.href = link.href;
-        elem.className = link.class;
-        elem.innerText = link.value;
+        elem.href = link.url;
+        elem.className = link.class ?? 'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium';
+        elem.innerText = link.name;
         menuHolder.appendChild(elem);
       }
     }
