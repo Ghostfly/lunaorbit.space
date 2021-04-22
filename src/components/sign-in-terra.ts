@@ -27,11 +27,13 @@ export class SignInTerra extends Localized(LitElement) {
   public onLogin!: () => Promise<void>;
 
   public firstUpdated(): void {
-    if (!ExtensionSingleton.init) {
-      this._disabled = true;
-    } else {
-      this._disabled = false;
-    }
+    setTimeout(() => {
+      if (!ExtensionSingleton.init) {
+        this._disabled = true;
+      } else {
+        this._disabled = false;
+      }
+    }, 0);
   }
 
   public createRenderRoot(): this {
