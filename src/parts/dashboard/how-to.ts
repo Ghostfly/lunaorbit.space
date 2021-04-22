@@ -9,7 +9,7 @@ import {
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element';
 import {CTA, ctaForPage, loadSteps, Step} from '../../backend';
-import {ctaEditor, loader} from './home';
+import { ctaEditor, loader } from './home';
 
 @customElement('website-how-to')
 export class WebsiteHowTo extends Localized(LitElement) {
@@ -58,11 +58,30 @@ export class WebsiteHowTo extends Localized(LitElement) {
       }
 
       if (this._cta) {
-        await db.from<Step>('cta').update(this._cta).match({ id: `${this._cta.id}` });
+        await db.from<CTA>('cta').update(this._cta).match({ id: `${this._cta.id}` });
       }
 
       admin?.showSnack('Updated');
     }
+  }
+  
+  private async _addStep() {
+    this._steps?.push({
+      id: `${this._steps.length + 1}`,
+      title: 'New step',
+      img: 'filename'
+    });
+    await this.requestUpdate('_steps');
+  }
+
+  private async _removeStep(step: Step) {
+    const admin = document.querySelector('x-admin');
+    const db = admin?.supabase;
+    if (db) {
+      await db.from<Step>('how-to-steps').delete().match({ id: step.id });
+      await this._refresh();
+    }
+    admin?.showSnack('Removed');
   }
 
   render(): TemplateResult {
@@ -72,6 +91,7 @@ export class WebsiteHowTo extends Localized(LitElement) {
           ${msg('How to?')}
         </h1>
         <div class="global-actions">
+          <mwc-fab icon="add" mini @click=${this._addStep}></mwc-fab>
           <mwc-fab icon="refresh" mini @click=${this._refresh}></mwc-fab>
           <mwc-fab icon="save" mini @click=${this._saveChanges}></mwc-fab>
         </div>
@@ -85,7 +105,7 @@ export class WebsiteHowTo extends Localized(LitElement) {
             ${msg('Steps')}
           </h1>
           ${this._steps && this._steps.map(step => html`
-          <div class="step-box flex flex-wrap w-full">
+          <div class="step-box flex flex-wrap w-full items-center">
             <div class="relative w-1/2">
               <label
                 for="${step.id}-step-title"
@@ -104,7 +124,7 @@ export class WebsiteHowTo extends Localized(LitElement) {
                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
-            <div class="relative w-1/2">
+            <div class="relative w-1/3">
               <label
                 for="${step.id}-step-image"
                 class="leading-7 text-sm text-gray-600"
@@ -122,6 +142,29 @@ export class WebsiteHowTo extends Localized(LitElement) {
                 class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
+            
+            <a
+              title="Remove step"
+              class="cursor-pointer flex items-center h-full"
+              @click=${async() => {
+                await this._removeStep(step);
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </a>
           </div>
           `)}
         </div>
