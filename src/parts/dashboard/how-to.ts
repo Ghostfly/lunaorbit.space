@@ -25,7 +25,8 @@ export class WebsiteHowTo extends Localized(LitElement) {
   }
 
   public async firstUpdated(): Promise<void> {
-    const db = document.querySelector('x-admin')?.supabase;
+    const admin = document.querySelector('x-admin');
+    const db = admin?.supabase;
 
     if (db) {
       this.loading = true;
@@ -35,9 +36,22 @@ export class WebsiteHowTo extends Localized(LitElement) {
     }
   }
 
+  private async _refresh() {
+    const admin = document.querySelector('x-admin');
+    const db = admin?.supabase;
+
+    if (db) {
+      this._cta = await ctaForPage(db, 'how-to');
+      this._steps = await loadSteps(db);
+      admin?.showSnack('Refresh ok.');
+    }
+    
+  }
+
   private async _saveChanges() {
     const admin = document.querySelector('x-admin');
     const db = admin?.supabase;
+
     if (db) {
       if (this._steps) {
         await db.from<Step>('how-to-steps').upsert(this._steps);
@@ -57,7 +71,10 @@ export class WebsiteHowTo extends Localized(LitElement) {
         <h1 class="text-xl">
           ${msg('How to?')}
         </h1>
-        <mwc-fab icon="save" mini @click=${this._saveChanges}></mwc-fab>
+        <div class="global-actions">
+          <mwc-fab icon="refresh" mini @click=${this._refresh}></mwc-fab>
+          <mwc-fab icon="save" mini @click=${this._saveChanges}></mwc-fab>
+        </div>
       </div>
       <div class="m-4">
         ${this.loading
