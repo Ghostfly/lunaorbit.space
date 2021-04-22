@@ -15,6 +15,8 @@ import { SupabaseStorageClient } from '@supabase/supabase-js/dist/main/lib/Supab
 import { StorageFileApi } from '@supabase/supabase-js/dist/main/lib/storage/StorageFileApi';
 import { FileObject } from '@supabase/supabase-js/dist/main/lib/storage/types';
 
+import { Dialog } from '@material/mwc-dialog';
+
 /**
  * Assets component
  */
@@ -30,6 +32,8 @@ export class WebsiteAssets extends Localized(LitElement) {
   private _storageClient!: SupabaseStorageClient;
   @internalProperty()
   private _assetsRef!: StorageFileApi;
+  @internalProperty()
+  private currentFile: FileObject | null = null;
 
   createRenderRoot(): this {
     return this;
@@ -54,22 +58,27 @@ export class WebsiteAssets extends Localized(LitElement) {
     }
   }
 
+  private async _onLinkRequest(e: Event, file: FileObject) {
+    const target = e.target as HTMLElement;
+    const signedURL = await this._assetsRef.createSignedUrl(file.name, 12000);
+
+    const fileHolder = document.createElement('img');
+    fileHolder.src = signedURL.signedURL ?? '';
+    target.parentElement?.parentElement?.parentElement?.appendChild(fileHolder);
+    console.warn(signedURL);
+  }
+
   render(): TemplateResult {
     return html`
         <div class="flex justify-between gap-2 ml-4 mb-4 items-center">
           <h1 class="text-xl">
             ${msg('Assets')}
           </h1>
-          <div class="overflow-hidden relative w-40">
-            <button class="terra-bg hover:bg-blue-700 text-white py-2 px-4 w-full inline-flex items-center rounded-md" @click=${(e:Event) => {
+          <div class="overflow-hidden relative justify-end">
+            <mwc-fab icon="upload" @click=${(e:Event) => {
               const clicked = e.currentTarget;
               ((clicked as HTMLElement).nextElementSibling as HTMLInputElement).click();
-            }}>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                </svg>
-                <span class="ml-2">${msg('Upload file')}</span>
-            </button>
+            }}></mwc-fab>    
             <input class="cursor-pointer absolute block opacity-0 pin-r pin-t" type="file" name="files" @change=${async (event: Event) => {
                 const target = event.target as HTMLInputElement;
                 if (target.files && target.files[0]) {
@@ -88,39 +97,58 @@ export class WebsiteAssets extends Localized(LitElement) {
             }}>
           </div>
         </div>
-        <div class="m-4">
+        <div class="m-4 gallery-anchor">
             <h1 class="text-xl mt-10">
               ${msg('Gallery')}
-              <div class="grid lg:grid-cols-3 sm:justify-items-start lg:justify-items-center m-4">
-                ${this.files.length === 0 ? html`
-                No files to show
-                ` : html``}
+            </h1>
+              ${this.files.length === 0 ? html`No files to show` : html`
+              <div class="flex flex-wrap mb-8 mt-6">
                 ${this.files.map((file) => {
                   return html`
-                  <div class="flex flex-col justify-center items-end p-4 m-4 bg-gray-100 border border-gray-200">
-                    ${file.name}
-                    <div class="flex justify-between">
-                      <svg @click=${async () => {
-                        const signedURL = await this._assetsRef.createSignedUrl(file.name, 12000);
-                        console.warn(signedURL);
-                      }} xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                      </svg>
-                      <svg @click=${async () => {
-                        await this._assetsRef.remove([file.name]);
-                        console.warn('deleted');
-                        await this.updateFiles();
-                      }} xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
+                  <div class="w-full md:w-1/2 lg:w-1/4 px-2 mb-4 file-holder">
+                    <div class="border h-12 text-sm text-grey-dark flex items-center justify-center flex flex-col h-24 gap-4 shadow-sm hover:shadow-md">
+                        <p>${file.name}</p>
+                        <div class="flex justify-evenly w-full">
+                          <svg class="h-6 w-6 cursor-pointer"  @click=${(e: Event) => this._onLinkRequest(e, file)} class="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                          </svg>
+                          <svg class="h-6 w-6 cursor-pointer"  @click=${(_e: Event) => this._onDeleteFile(file)} class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </div>
                     </div>
                   </div>
                   `;
                 })}
+                </div>
+                `}
               </div>
-            </h1>
         </div>
+        ${this.currentFile ? html`
+        <mwc-dialog id="dialog-${this.currentFile.id}">
+          <div>Delete file? ${this.currentFile.name}</div>
+          <mwc-button
+              @click=${async () => {
+                if (!this.currentFile) { return;}
+                await this._assetsRef.remove([this.currentFile.name]);
+                document.querySelector('x-admin')?.showSnack(`Deleted ${this.currentFile.name}`);
+                this.currentFile = null;
+                await this.updateFiles();
+              }}
+              slot="primaryAction"
+              dialogAction="delete">
+            Delete
+          </mwc-button>
+        </mwc-dialog>
+        ` : ''}
     `;
+  }
+
+  private async _onDeleteFile(file: FileObject) {
+    this.currentFile = file;
+    await this.updateComplete;
+    const deleteDialog = this.querySelector(`#dialog-${this.currentFile.id}`) as Dialog;
+    deleteDialog.open = true;
   }
 }
 

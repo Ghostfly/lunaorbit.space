@@ -24,7 +24,9 @@
   "dependencies": {
     "@lit/localize": "^0.9.0",
     "@lit/localize-tools": "^0.2.1",
+    "@material/mwc-button": "^0.20.0",
     "@material/mwc-circular-progress": "^0.20.0",
+    "@material/mwc-dialog": "^0.20.0",
     "@material/mwc-fab": "^0.20.0",
     "@material/mwc-snackbar": "^0.20.0",
     "@supabase/supabase-js": "^1.11.6",

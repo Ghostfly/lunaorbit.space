@@ -9,7 +9,7 @@
   --anchor-color: #4bdb4b;
 }
 
-mwc-circular-progress, mwc-fab {
+mwc-circular-progress, mwc-fab, mwc-button {
   --mdc-theme-primary: var(--terra-blue);
   --mdc-theme-secondary: var(--terra-light);
 }
