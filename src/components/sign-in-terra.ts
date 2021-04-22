@@ -33,7 +33,7 @@ export class SignInTerra extends Localized(LitElement) {
       } else {
         this._disabled = false;
       }
-    }, 0);
+    }, 500);
   }
 
   public createRenderRoot(): this {
