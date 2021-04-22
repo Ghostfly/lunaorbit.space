@@ -18,6 +18,7 @@ export type CTA = {
 };
 
 export type Step = {
+  id: number;
   title: string;
   img: string;
 };
@@ -34,6 +35,7 @@ export type ToolSection = {
 };
 
 export type Word = {
+  id: number;
   title: string;
   text: string;
 };
@@ -78,11 +80,11 @@ export async function loadTools(
 }
 
 export async function loadSteps(db: SupabaseClient): Promise<Step[] | null> {
-  return (await db.from<Step>('how-to-steps').select('title, img')).data;
+  return (await db.from<Step>('how-to-steps').select('id, title, img')).data;
 }
 
 export async function loadGlossary(db: SupabaseClient): Promise<Word[] | null> {
-  return (await db.from<Word>('how-to-glossary').select('title, text')).data;
+  return (await db.from<Word>('how-to-glossary').select('id, title, text')).data;
 }
 
 export async function loadMenu(db: SupabaseClient): Promise<MenuItem[] | null> {
