@@ -132,7 +132,7 @@ export class WebsiteAssets extends Localized(LitElement) {
         </div>
         ${this.currentFile ? html`
         <mwc-dialog id="dialog-${this.currentFile.id}">
-          <div>Delete file? ${this.currentFile.name}</div>
+          <div class="break-words">Delete file? ${this.currentFile.name}</div>
           <mwc-button
               @click=${async () => {
                 if (!this.currentFile) { return;}
