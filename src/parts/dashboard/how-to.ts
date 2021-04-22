@@ -117,7 +117,6 @@ export class WebsiteHowTo extends Localized(LitElement) {
           ${msg('How to?')}
         </h1>
         <div class="global-actions">
-          <mwc-fab icon="add" mini @click=${this._addStep}></mwc-fab>
           <mwc-fab icon="refresh" mini @click=${this._refresh}></mwc-fab>
           <mwc-fab icon="save" mini @click=${this._saveChanges}></mwc-fab>
         </div>
@@ -128,9 +127,13 @@ export class WebsiteHowTo extends Localized(LitElement) {
       : html`
         ${this._cta ? html` ${ctaEditor(this._cta)} ` : html``} `}
         <div class="mt-4">
-          <h1 class="text-md">
-            ${msg('Steps')}
-          </h1>
+          <div class="header flex w-full flex-wrap justify-between">
+            <h1 class="text-md">
+              ${msg('Steps')}
+            </h1>
+            <mwc-fab icon="add" mini @click=${this._addStep}></mwc-fab>
+          </div>
+
           ${this._steps && this._steps.map(step => html`
           <div class="step-box flex flex-wrap w-full items-center">
             <div class="relative w-1/2">
