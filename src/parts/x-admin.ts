@@ -156,10 +156,6 @@ export class XAdmin extends Localized(LitElement) {
     this._page = orbit?.router.location.pathname.replace(AdminNav.MainPathPrefix + '/', '') as DashboardPages;
 
     await this.handleAuth();
-
-    if (!this.querySelector('mwc-snackbar')) {
-      // this.snackText = 'Logged in as ' + this._savedAddress;
-    }
   }
 
   async connect(): Promise<boolean> {
@@ -183,7 +179,7 @@ export class XAdmin extends Localized(LitElement) {
   private _adminContent(): TemplateResult {
     return html`
         <div class="flex">
-          <div class="flex flex-col items-center w-16 h-100 overflow-hidden text-indigo-300 terra-bg">
+          <div class="flex flex-col items-center w-16 h-100 overflow-hidden text-indigo-300 terra-bg rounded-br-lg">
             <admin-nav .address=${this._savedAddress} .disabled=${!this._signedIn}></admin-nav>
           </div>
           <div class="px-4 py-6 h-screen w-full">

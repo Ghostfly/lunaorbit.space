@@ -11,6 +11,7 @@ import {Localized} from '@lit/localize/localized-element.js';
 import { retrieveSupabase } from '../../luna-orbit';
 import { CTA, ctaForPage, loadTools, ToolSection } from '../../backend';
 import { ctaEditor } from './home';
+import {smoothDnD} from 'smooth-dnd';
 
 @customElement('website-tools')
 export class WebsiteTools extends Localized(LitElement) {
@@ -30,9 +31,36 @@ export class WebsiteTools extends Localized(LitElement) {
     this.loading = true;
 
     this._cta = await ctaForPage(db, 'tools');
-    this._tools = await loadTools(db)
-
+    this._tools = await loadTools(db);
     this.loading = false;
+
+    await this.updateComplete;
+
+    const sortableHolders = this.querySelectorAll('.sortable-holder') as NodeListOf<HTMLDivElement>;
+    if (sortableHolders.length) {
+      for (const holder of sortableHolders) {
+        smoothDnD(holder, {
+          /*onDragStart: () => {
+            console.warn('drag start');
+          },
+          onDragEnd: () => {
+            console.warn('drag end');
+           },
+          onDrop: () => {
+            console.warn('drop');
+          },
+          onDropReady: () => {
+            console.warn('drop-ready');
+          },
+          onDragEnter: () => {
+            console.warn('drag-enter');
+          },
+          onDragLeave: () => {
+            console.warn('drag-leave');
+          }*/
+        });
+      }
+    }
   }
 
   private _openBox(e: Event) {
@@ -79,34 +107,60 @@ export class WebsiteTools extends Localized(LitElement) {
                 <input name="${tool.id}-name" id="${tool.id}-name" .value=${tool.name} type="text" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                 <textarea placeholder="Explain" name="${tool.id}-name" id="${tool.id}-explain" .value=${tool.explain} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
 
-                <div class="tool-links flex flex-wrap">
+                <div class="tool-links flex flex-wrap gap-4 sortable-holder m-4">
                   ${tool.links.map((link, idx) => {
-                    return html`
-                    <div class="flex">
-                      <div class="relative">
-                        <label for="${tool.id}-link-${idx}-title" class="leading-7 text-sm text-gray-600">Title</label>
-                        <input name="${tool.id}-link-${idx}-title" id="${tool.id}-link-${idx}-title" type="text" .value=${link.name} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-                      </div>
-                      <div class="relative">
-                        <label for="${tool.id}-link-${idx}-href" class="leading-7 text-sm text-gray-600">URL</label>
-                        <input name="${tool.id}-link-${idx}-href" id="${tool.id}-link-${idx}-href" type="text" .value=${link.href} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-                      </div>
-                    </div>
-                    `;
+                    return this._templateForToolLink(idx, tool, link);
                   })}
-                  <button type="button" class="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-white terra-bg">
-                    ${msg('Add link')}
-                  </button>
                 </div>
+                <button type="button" class="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-white terra-bg" @click=${() => this._addToolLink(tool)}>
+                    ${msg('Add link')}
+                </button>
               </div>
               `;
             })}
-            <button type="button" class="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-white terra-bg">
+            <button type="button" class="m-4 w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-white terra-bg">
               ${msg('Add tool')}
             </button>
           `}
         </div>
     `;
+  }
+
+  private _addToolLink(tool: ToolSection) {
+    tool.links.push({
+      href: '',
+      name: ''
+    });
+    this.requestUpdate('_tools');
+  }
+
+
+  private _removeToolLink(tool: ToolSection, link: { href: string, name: string }) {
+    tool.links = tool.links.filter(currentLinks => currentLinks !== link);
+    this.requestUpdate('_tools');
+  }
+
+  private _templateForToolLink(idx: number, tool: ToolSection, link: { href: string; name:string}) {
+    return html`
+    <div class="flex gap-3">
+      <div class="relative">
+        <label for="${tool.id}-link-${idx}-title" class="leading-7 text-sm text-gray-600">Title</label>
+        <input name="${tool.id}-link-${idx}-title" id="${tool.id}-link-${idx}-title" type="text" .value=${link.name} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+      </div>
+      <div class="relative">
+        <label for="${tool.id}-link-${idx}-href" class="leading-7 text-sm text-gray-600">URL</label>
+        <input name="${tool.id}-link-${idx}-href" id="${tool.id}-link-${idx}-href" type="text" .value=${link.href} class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+      </div>
+      <div class="relative">
+        <a title="Delete link" class="cursor-pointer flex items-center h-full" @click=${() => {
+          this._removeToolLink(tool, link);
+        }}>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </a>
+      </div>
+    </div>`;
   }
 }
 

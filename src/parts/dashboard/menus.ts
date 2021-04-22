@@ -12,6 +12,8 @@ import { Localized } from '@lit/localize/localized-element';
 import {smoothDnD} from 'smooth-dnd';
 import { loadMenu, MenuItem } from '../../backend';
 
+import '@material/mwc-circular-progress';
+
 /**
  * Admin menu component
  */
