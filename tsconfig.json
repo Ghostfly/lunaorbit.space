@@ -6,7 +6,7 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "./",
+    "outDir": "./compiled",
     "rootDir": "./src",
     "strict": true,
     "noUnusedLocals": true,
