@@ -62,7 +62,7 @@ export class XTools extends Localized(LitElement) {
                     return html`
                       <li>
                         <a
-                          target="_blank"
+                          target="${link.href.indexOf('http') !== -1 ?'_blank' : '_self'}"
                           rel="noopener"
                           href="${link.href}"
                           class="text-base font-medium"
