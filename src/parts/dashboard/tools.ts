@@ -207,7 +207,7 @@ export class WebsiteTools extends Localized(LitElement) {
                         ></textarea>
                         <div class="link-part flex items-center">
                           <div
-                            class="tool-links flex flex-wrap gap-4 sortable-holder cursor-pointer m-4"
+                            class="tool-links flex flex-wrap gap-4 cursor-pointer m-4"
                           >
                             ${tool.links.map((link, idx) => {
                               return this._templateForToolLink(idx, tool, link);
