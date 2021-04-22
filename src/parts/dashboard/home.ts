@@ -9,7 +9,7 @@ import {
 import { msg } from '@lit/localize';
 import { Localized } from '@lit/localize/localized-element';
 
-import { Strength } from '../../backend';
+import { CTA, ctaForPage, Strength } from '../../backend';
 import { smoothDnD } from 'smooth-dnd';
 
 export function ctaEditor(id: number, title: string, ctaText: string, href: string): TemplateResult {
@@ -49,6 +49,9 @@ export class WebsiteHome extends Localized(LitElement) {
 
   @internalProperty()
   private loading = false;
+
+  @internalProperty()
+  private _cta: CTA | null = null;
   
   createRenderRoot(): this {
     return this;
@@ -66,9 +69,12 @@ export class WebsiteHome extends Localized(LitElement) {
 
   public async firstUpdated(): Promise<void> {
     this.loading = true;
+    const db = document.querySelector('x-admin')?.supabase;
+    if (db) {
+      this._cta = await ctaForPage(db, 'home');
+    }
 
     await this._loadStrengths();
-
     this.loading = false;
 
     await this.updateComplete;
@@ -201,7 +207,9 @@ export class WebsiteHome extends Localized(LitElement) {
           </div>
         </div>
         <div class="m-4 p-4 flex flex-wrap">
-          ${ctaEditor(0, msg('Stake with us today !'), msg('Get started'), 'how-to')}
+          ${this._cta ? html`
+              ${ctaEditor(this._cta.id, this._cta.title, this._cta['cta-text'], this._cta.href)}
+          ` : html``}
           <div class="strengths w-full">
               <h1 class="text-md mt-8 mb-4">
                 ${msg('Strengths')}
