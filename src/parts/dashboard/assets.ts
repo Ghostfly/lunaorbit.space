@@ -80,7 +80,7 @@ export class WebsiteAssets extends Localized(LitElement) {
             ${msg('Assets')}
           </h1>
           <div class="overflow-hidden relative justify-end">
-            <mwc-fab icon="upload" @click=${(e: Event) => {
+            <mwc-fab icon="upload" mini @click=${(e: Event) => {
               const clicked = e.currentTarget;
               ((clicked as HTMLElement)
                 .nextElementSibling as HTMLInputElement).click();
