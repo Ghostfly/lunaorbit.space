@@ -37,6 +37,7 @@ export type Word = {
 }
 
 import { SupabaseClient } from '@supabase/supabase-js'
+import { MenuItem } from './luna-orbit'
 
 export async function ctaForPage(db: SupabaseClient, page: string): Promise<CTA | null> {
   const ctaReq = (await db.from<CTA>('cta').select('id, title, href, cta-text').match({ page })).data;
@@ -58,4 +59,8 @@ export async function loadSteps(db: SupabaseClient): Promise<Step[] | null> {
 
 export async function loadGlossary(db: SupabaseClient): Promise<Word[] | null> {
   return (await db.from<Word>('how-to-glossary').select('title, text')).data;
+}
+
+export async function loadMenu(db: SupabaseClient): Promise<MenuItem[] | null> {
+  return (await db.from<MenuItem>('menu-items').select('id, url, name, order').order('order', {ascending: true}))?.data;
 }

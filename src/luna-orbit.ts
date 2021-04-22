@@ -26,6 +26,7 @@ import { BannerMessage } from './components/banner-message';
 
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { WebsiteSettingsDB } from './parts/dashboard/settings';
+import { loadMenu } from './backend';
 
 export function retrieveSupabase(token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxODk5MDIyNywiZXhwIjoxOTM0NTY2MjI3fQ.Nf1C2uRIocHV2bmfvbUxPGE8MTbRjbB9Kvft4V0dUaI'): SupabaseClient {
   const supabaseUrl = 'https://ylqcozoikxxipzbvueua.supabase.co';
@@ -34,10 +35,12 @@ export function retrieveSupabase(token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e
 }
 
 export interface MenuItem {
+  id: number;
   url: string;
   name: string;
   class?: string;
   component?: string;
+  order: string;
 }
 
 /**
@@ -156,7 +159,7 @@ export class LunaOrbit extends Localized(LitElement) {
   private async _setupMenus() {
     const menuHolders = document.querySelectorAll('.menu-holder');
 
-    const menuItems = (await this._supabase?.from<MenuItem>('menu-items').select('url, name'))?.data;
+    const menuItems = await loadMenu(this._supabase);
     const links = [];
     if (menuItems) {
       for (const menuItem of menuItems) {

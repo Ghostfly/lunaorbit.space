@@ -11,6 +11,7 @@ import { Localized } from '@lit/localize/localized-element';
 
 import {smoothDnD} from 'smooth-dnd';
 import { MenuItem } from '../../luna-orbit';
+import { loadMenu } from '../../backend';
 
 /**
  * Admin menu component
@@ -26,9 +27,11 @@ export class AdminMenu extends Localized(LitElement) {
 
   async firstUpdated(): Promise<void> {
     const base = document.querySelector('x-admin')?.supabase;
-    const menuItems = (await base?.from<MenuItem>('menu-items').select('url, name'))?.data;
-    if (menuItems) {
-      this._systemPages = menuItems;
+    if (base) {
+      const menuItems = await loadMenu(base);
+      if (menuItems) {
+        this._systemPages = menuItems;
+      }
     }
 
     await this.updateComplete;
