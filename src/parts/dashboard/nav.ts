@@ -122,7 +122,7 @@ export class AdminNav extends Localized(LitElement) {
             </svg>
           </a>
           <a
-            class="flex items-center justify-center w-12 h-12 mt-2 rounded ${this
+            class="flex items-center justify-center w-12 h-12 mt-2 rounded opacity-50 pointer-events-none ${this
               .page === DashboardPages.menus
               ? 'text-indigo-100 bg-blue-700'
               : 'hover:bg-blue-700 hover:text-white'}"
