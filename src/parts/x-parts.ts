@@ -8,3 +8,4 @@ import './x-tools';
 import './x-contact';
 import './x-equation';
 import './x-404';
+import './x-bluna';

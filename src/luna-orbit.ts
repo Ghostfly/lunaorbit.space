@@ -48,7 +48,7 @@ export class LunaOrbit extends Localized(LitElement) {
 
   static APIValidatorURL = 'https://lcd.terra.dev/staking/validators/';
   static APILunaPrice =
-    'https://fcd.terra.dev/v1/market/price?denom=uusd&interval=15m';
+    'https://fcd.terra.dev/v1/market/price?denom=uusd&interval=1m';
 
   @internalProperty()
   private validatorInformation?: Validator;
@@ -65,6 +65,8 @@ export class LunaOrbit extends Localized(LitElement) {
 
   @internalProperty()
   private _supabase: SupabaseClient;
+  private _priceInterval: number | null = null;
+  private _isRefreshStopped = false;
 
   constructor() {
     super();
@@ -251,6 +253,36 @@ export class LunaOrbit extends Localized(LitElement) {
         '#commission'
       ) as HTMLElement;
       commissionNode.innerText = this._commission + '%';
+    }
+
+    if (this._isRefreshStopped) {
+      return;
+    }
+
+    console.warn('interval set');
+
+    const priceCheck = window.setInterval(async () => {
+      const priceReq = await fetch(LunaOrbit.APILunaPrice);
+      const price = (await priceReq.json()) as LunaPriceResponse;
+      if (this._price == price.lastPrice) { return; }
+
+      this._price = price.lastPrice;
+      const equation = document.querySelector('x-equation');
+      if (equation) {
+        equation.price = this._price;
+      }
+    }, 60000);
+
+    this._priceInterval = priceCheck;
+  }
+
+  public stopPriceRefesh(): void {
+    this._isRefreshStopped = true;
+    if (this._priceInterval) {
+      console.warn('interval removed');
+      window.clearInterval(this._priceInterval);
+    } else {
+      console.warn('wasn\'t started');
     }
   }
 
