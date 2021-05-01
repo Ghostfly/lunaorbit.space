@@ -1,12 +1,11 @@
 import {
-  LitElement,
   html,
   TemplateResult,
   customElement,
   query,
   state,
+  LitElement,
 } from 'lit-element';
-import {Localized} from '@lit/localize/localized-element';
 
 import {AdminNav, DashboardPages} from './dashboard/nav';
 
@@ -43,7 +42,7 @@ type AdminUser = {
  * XAdmin component
  */
 @customElement('x-admin')
-export class XAdmin extends Localized(LitElement) {
+export class XAdmin extends LitElement {
   static APPDomain = 'http://localhost:3000';
   static LOCAL_ADMIN_KEY = 'admin-terra-address';
   static LOGGED_IN_AT_KEY = 'logged-in-at';

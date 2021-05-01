@@ -1,7 +1,6 @@
-import {html, customElement, LitElement, TemplateResult} from 'lit-element';
+import {html, customElement, TemplateResult, LitElement} from 'lit-element';
 
 import {msg} from '@lit/localize';
-import {Localized} from '@lit/localize/localized-element.js';
 
 import '../components/cta-hero';
 
@@ -9,7 +8,7 @@ import '../components/cta-hero';
  * 404 component
  */
 @customElement('x-404')
-export class X404 extends Localized(LitElement) {
+export class X404 extends LitElement {
   createRenderRoot(): this {
     return this;
   }

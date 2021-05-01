@@ -1,16 +1,11 @@
-/*
-
-*/
-
 import {
-  LitElement,
   html,
   TemplateResult,
   customElement,
   property,
   state,
+  LitElement,
 } from 'lit-element';
-import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
 
 import ExtensionSingleton from '../terra/terra-connect';
@@ -19,7 +14,7 @@ import ExtensionSingleton from '../terra/terra-connect';
  * Sign in using Terra component
  */
 @customElement('sign-in-terra')
-export class SignInTerra extends Localized(LitElement) {
+export class SignInTerra extends LitElement {
   @state()
   private _disabled = false;
 

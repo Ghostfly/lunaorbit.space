@@ -1,17 +1,16 @@
 import {
-  LitElement,
   html,
   TemplateResult,
   customElement,
   property,
+  LitElement,
 } from 'lit-element';
-import {Localized} from '@lit/localize/localized-element';
 
 /**
  * Quote component
  */
 @customElement('tailwind-quote')
-export class TailwindQuote extends Localized(LitElement) {
+export class TailwindQuote extends LitElement {
   @property({type: String})
   public text = '';
 

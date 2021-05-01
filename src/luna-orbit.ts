@@ -1,10 +1,10 @@
 import {
   html,
   customElement,
-  LitElement,
   property,
   TemplateResult,
   state,
+  LitElement,
 } from 'lit-element';
 import {LunaPriceResponse, Validator} from './terra/terra-min';
 import {Router, RouterLocation} from '@vaadin/router';
@@ -20,7 +20,6 @@ import './parts/x-parts';
 import './parts/x-admin';
 
 import {setLocaleFromUrl} from './localization';
-import {Localized} from '@lit/localize/localized-element';
 import {BannerMessage} from './components/banner-message';
 
 import {createClient, SupabaseClient} from '@supabase/supabase-js';
@@ -41,7 +40,7 @@ export function retrieveSupabase(
  * @slot - This element has slots
  */
 @customElement('luna-orbit')
-export class LunaOrbit extends Localized(LitElement) {
+export class LunaOrbit extends LitElement {
   private mobileMenu!: HTMLDivElement | null;
   private mobileMenuToggle!: HTMLButtonElement | null;
 
@@ -255,17 +254,15 @@ export class LunaOrbit extends Localized(LitElement) {
         10
       );
 
-      const commissionNode = document.querySelector(
-        '#commission'
-      ) as HTMLElement;
-      commissionNode.innerText = this._commission + '%';
+      const footer = document.querySelector('website-footer');
+      if (footer) {
+        footer.commission = this._commission + '%';
+      }
     }
 
     if (this._isRefreshStopped) {
       return;
     }
-
-    console.warn('interval set');
 
     const priceCheck = window.setInterval(async () => {
       const priceReq = await fetch(LunaOrbit.APILunaPrice);
@@ -285,10 +282,7 @@ export class LunaOrbit extends Localized(LitElement) {
   public stopPriceRefesh(): void {
     this._isRefreshStopped = true;
     if (this._priceInterval) {
-      console.warn('interval removed');
       window.clearInterval(this._priceInterval);
-    } else {
-      console.warn('wasn\'t started');
     }
   }
 

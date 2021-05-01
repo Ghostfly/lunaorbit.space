@@ -1,11 +1,10 @@
 import {
   html,
   customElement,
-  LitElement,
   TemplateResult,
   state,
+  LitElement,
 } from 'lit-element';
-import {Localized} from '@lit/localize/localized-element.js';
 
 import '../components/cta-hero';
 
@@ -18,7 +17,7 @@ import {loader} from './dashboard/home';
  * Home component
  */
 @customElement('x-home')
-export class XHome extends Localized(LitElement) {
+export class XHome extends LitElement {
   @state()
   private _strengths: Strength[] = [];
   @state()

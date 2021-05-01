@@ -1,13 +1,12 @@
 import {
   html,
   customElement,
-  LitElement,
   TemplateResult,
   state,
+  LitElement,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
-import {Localized} from '@lit/localize/localized-element.js';
 import {capitalizeFirstLetter} from '../../lib/strings';
 
 import { Switch } from '@material/mwc-switch';
@@ -24,7 +23,7 @@ export type WebsiteSettingsDB = {
  * Website settings component
  */
 @customElement('website-setting')
-export class WebsiteSettings extends Localized(LitElement) {
+export class WebsiteSettings extends LitElement {
   @state()
   private _settings: WebsiteSettingsDB[] | null = null;
   createRenderRoot(): this {

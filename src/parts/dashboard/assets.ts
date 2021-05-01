@@ -1,14 +1,13 @@
 import {
   html,
   customElement,
-  LitElement,
   TemplateResult,
   property,
   state,
+  LitElement,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
-import {Localized} from '@lit/localize/localized-element.js';
 import {retrieveSupabase} from '../../luna-orbit';
 
 import { Dialog } from '@material/mwc-dialog';
@@ -20,7 +19,7 @@ import { StorageFileApi } from '@supabase/storage-js/dist/main/lib/StorageFileAp
  * Assets component
  */
 @customElement('website-assets')
-export class WebsiteAssets extends Localized(LitElement) {
+export class WebsiteAssets extends LitElement {
   static ASSETS_SUBPATH = '/assets';
 
   @property({type: Array})
@@ -98,11 +97,10 @@ export class WebsiteAssets extends Localized(LitElement) {
                     ?.showSnack('File is too big.');
                   target.value = '';
                 } else {
-                  const assetsBucket = await this._assetsRef.upload(
+                  await this._assetsRef.upload(
                     file.name,
                     file
                   );
-                  console.warn(assetsBucket.data);
                   await this.updateFiles();
                 }
               }

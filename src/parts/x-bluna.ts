@@ -1,12 +1,10 @@
 import {
   html,
   customElement,
-  LitElement,
   TemplateResult,
   property,
+  LitElement,
 } from 'lit-element';
-
-import {Localized} from '@lit/localize/localized-element.js';
 
 import '../components/cta-hero';
 
@@ -14,7 +12,7 @@ import '../components/cta-hero';
  * X-bLuna-Luna Helper
  */
 @customElement('x-bluna')
-export class XBluna extends Localized(LitElement) {
+export class XBluna extends LitElement {
   @property({type: Boolean})
   public loading = false;
 

@@ -1,14 +1,13 @@
 import {
   html,
   customElement,
-  LitElement,
   TemplateResult,
   property,
   state,
+  LitElement,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
-import {Localized} from '@lit/localize/localized-element.js';
 
 import '../components/cta-hero';
 import '../components/tailwind-quote';
@@ -21,7 +20,7 @@ import {loader} from './dashboard/home';
  * Tools component
  */
 @customElement('x-tools')
-export class XTools extends Localized(LitElement) {
+export class XTools extends LitElement {
   @state()
   private _cta: CTA | null = null;
 

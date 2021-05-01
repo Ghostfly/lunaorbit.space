@@ -1,19 +1,11 @@
-/*
-
-*/
-
-/*
-
-*/
-
 import {
-  LitElement,
   html,
   TemplateResult,
   customElement,
   state,
+  property,
+  LitElement
 } from 'lit-element';
-import {Localized} from '@lit/localize/localized-element';
 import { retrieveSupabase } from '../luna-orbit';
 import { WebsiteSettingsDB } from '../parts/dashboard/settings';
 import { loader } from '../parts/dashboard/home';
@@ -22,7 +14,7 @@ import { loader } from '../parts/dashboard/home';
  * Sign in using Terra component
  */
 @customElement('website-footer')
-export class WebsiteFooter extends Localized(LitElement) {
+export class WebsiteFooter extends LitElement {
   @state()
   private _twitter: WebsiteSettingsDB | undefined;
 
@@ -33,6 +25,9 @@ export class WebsiteFooter extends Localized(LitElement) {
   @state()
   private _name: WebsiteSettingsDB | undefined;
 
+  @property({ type: String})
+  public commission = 'Loading...';
+
   public createRenderRoot(): this {
     return this;
   }
@@ -40,7 +35,6 @@ export class WebsiteFooter extends Localized(LitElement) {
   public async firstUpdated(): Promise<void> {
     const supabase = retrieveSupabase();
     const settingsData = (await supabase.from<WebsiteSettingsDB>('settings')).data;
-    console.warn(settingsData);
 
     if (settingsData) {
       this._twitter = settingsData.find(setting => setting.name === 'twitter');
@@ -61,7 +55,7 @@ export class WebsiteFooter extends Localized(LitElement) {
               </a>
               <p class="text-sm text-white sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
                 <a title="Twitter" href="https://twitter.com/justinlunaorbit" class="text-white ml-1" rel="noopener" target="_blank">@${this._twitter.value}</a>
-                | <a class="text-white ml-1" target="_blank" rel="noopener" href="https://station.terra.money/validator/${this._operatorAddress.value}">Validator commission : <span id="commission" class="text-white">Loading ...</span></a>
+                | <a class="text-white ml-1" target="_blank" rel="noopener" href="https://station.terra.money/validator/${this._operatorAddress.value}">Validator commission : <span id="commission" class="text-white">${this.commission}</span></a>
                 | <a class="text-white ml-1" target="_blank"  rel="noopener" href="https://github.com/terra-project/validator-profiles/tree/master/validators/${this._operatorAddress.value}">Validator profile</a>
               </p>
               <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">

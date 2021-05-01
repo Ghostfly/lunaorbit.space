@@ -1,13 +1,12 @@
 import {
   html,
   customElement,
-  LitElement,
   TemplateResult,
   state,
+  LitElement,
 } from 'lit-element';
 
-import {msg} from '@lit/localize';
-import {Localized} from '@lit/localize/localized-element';
+import { msg } from '@lit/localize';
 
 import {CTA, ctaForPage, Strength} from '../../backend';
 import {smoothDnD} from 'smooth-dnd';
@@ -90,7 +89,7 @@ export function loader(): TemplateResult {
 }
 
 @customElement('website-home')
-export class WebsiteHome extends Localized(LitElement) {
+export class WebsiteHome extends LitElement {
   @state()
   private _strengths: Strength[] = [];
 
@@ -303,7 +302,6 @@ export class WebsiteHome extends Localized(LitElement) {
   }
 
   private async _save() {
-    console.warn('saving', this._strengths);
     const db = document.querySelector('x-admin')?.supabase;
     if (!db) {
       return;
@@ -333,8 +331,6 @@ export class WebsiteHome extends Localized(LitElement) {
     this._strengths = this._strengths.sort((strengthA, strengthB) => strengthA.order - strengthB.order);
 
     await db.from('strengths').upsert(this._strengths);
-
-    console.warn('saved', this._strengths);
   }
 
   render(): TemplateResult {

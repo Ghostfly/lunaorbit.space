@@ -1,14 +1,13 @@
 import {
   html,
   customElement,
-  LitElement,
   query,
   TemplateResult,
   state,
+  LitElement,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
-import {Localized} from '@lit/localize/localized-element.js';
 import { retrieveSupabase } from '../luna-orbit';
 import { WebsiteSettingsDB } from './dashboard/settings';
 
@@ -16,7 +15,7 @@ import { WebsiteSettingsDB } from './dashboard/settings';
  * Contact component
  */
 @customElement('x-contact')
-export class XContact extends Localized(LitElement) {
+export class XContact extends LitElement {
   @query('#contact-form')
   public contactForm!: HTMLFormElement;
 

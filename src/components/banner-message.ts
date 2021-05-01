@@ -6,14 +6,13 @@ import {
   property,
   query,
 } from 'lit-element';
-import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
 
 /**
  * Banner message component
  */
 @customElement('banner-message')
-export class BannerMessage extends Localized(LitElement) {
+export class BannerMessage extends LitElement {
   @property({type: String})
   public message = '';
 

@@ -6,15 +6,14 @@ import {
   state,
 } from 'lit-element';
 
-import {msg} from '@lit/localize';
-import {Localized} from '@lit/localize/localized-element';
+import {msg } from '@lit/localize';
 
 import {CTA, ctaForPage, loadTools, ToolSection} from '../../backend';
 import {ctaEditor, loader} from './home';
 import {smoothDnD} from 'smooth-dnd';
 
 @customElement('website-tools')
-export class WebsiteTools extends Localized(LitElement) {
+export class WebsiteTools extends LitElement {
   @state()
   private loading = false;
   @state()

@@ -1,20 +1,19 @@
 import {
-  LitElement,
   html,
   TemplateResult,
   customElement,
   query,
   CSSResult,
   css,
+  LitElement,
 } from 'lit-element';
-import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
 
 /**
  * Airdrop toast component
  */
 @customElement('airdrop-toast')
-export class AirdropToast extends Localized(LitElement) {
+export class AirdropToast extends LitElement {
   @query('.toast')
   public toast!: HTMLDivElement;
 

@@ -1,13 +1,12 @@
 import {
   html,
   customElement,
-  LitElement,
   TemplateResult,
   property,
+  LitElement,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
-import {Localized} from '@lit/localize/localized-element.js';
 
 export enum DashboardPages {
   cockpit = '/cockpit',
@@ -22,7 +21,7 @@ export enum DashboardPages {
  * Admin nav component
  */
 @customElement('admin-nav')
-export class AdminNav extends Localized(LitElement) {
+export class AdminNav extends LitElement {
   static MainPathPrefix = '/cockpit';
 
   @property({type: String})

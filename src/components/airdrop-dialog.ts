@@ -1,13 +1,12 @@
 import {
-  LitElement,
   html,
   TemplateResult,
   customElement,
   property,
   query,
+  LitElement
 } from 'lit-element';
-import {Localized} from '@lit/localize/localized-element';
-import {msg} from '@lit/localize';
+import { msg } from '@lit/localize';
 import {AnchorClaimResponse, MIRAirdrop, TerraQuery} from '../terra/terra-min';
 import {Router} from '@vaadin/router';
 
@@ -15,7 +14,7 @@ import {Router} from '@vaadin/router';
  * Airdrop dialog component
  */
 @customElement('airdrop-dialog')
-export class AirdropDialog extends Localized(LitElement) {
+export class AirdropDialog extends LitElement {
   static ANCAirdropCheckingURL =
     'https://mantle.anchorprotocol.com/?__isClaimed';
   static MIRAirdropCheckingURL = 'https://graph.mirror.finance/graphql';

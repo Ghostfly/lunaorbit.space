@@ -1,18 +1,17 @@
 import {
   html,
   customElement,
-  LitElement,
   TemplateResult,
   state,
+  LitElement,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
-import {Localized} from '@lit/localize/localized-element';
 import {CTA, ctaForPage, loadSteps, loadWords, Step, Word} from '../../backend';
 import { ctaEditor, loader } from './home';
 
 @customElement('website-how-to')
-export class WebsiteHowTo extends Localized(LitElement) {
+export class WebsiteHowTo extends LitElement {
   @state()
   private loading = false;
   @state()

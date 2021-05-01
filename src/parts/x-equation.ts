@@ -1,11 +1,10 @@
 import {
-  LitElement,
   html,
   TemplateResult,
   customElement,
   property,
+  LitElement,
 } from 'lit-element';
-import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
 
 /**
@@ -13,7 +12,7 @@ import {msg} from '@lit/localize';
  *
  */
 @customElement('x-equation')
-export class XEquation extends Localized(LitElement) {
+export class XEquation extends LitElement {
   @property({type: Number})
   public price = 0;
 

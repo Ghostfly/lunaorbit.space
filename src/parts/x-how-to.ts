@@ -1,15 +1,15 @@
 import {
   html,
   customElement,
-  LitElement,
   TemplateResult,
   property,
   state,
+  LitElement,
 } from 'lit-element';
 import {msg} from '@lit/localize';
-import {Localized} from '@lit/localize/localized-element.js';
 
 import '../components/cta-hero';
+
 import {CTA, ctaForPage, loadSteps, loadWords, Step, Word} from '../backend';
 import {retrieveSupabase} from '../luna-orbit';
 import {loader} from './dashboard/home';
@@ -18,7 +18,7 @@ import {loader} from './dashboard/home';
  * How to choose a validator component
  */
 @customElement('x-how-to')
-export class XHowTo extends Localized(LitElement) {
+export class XHowTo extends LitElement {
   @state()
   private step = 1;
 
