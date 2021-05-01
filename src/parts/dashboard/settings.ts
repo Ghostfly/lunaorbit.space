@@ -10,7 +10,9 @@ import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
 import {capitalizeFirstLetter} from '../../lib/strings';
 
-import {Switch} from '@material/mwc-switch';
+import { Switch } from '@material/mwc-switch';
+
+import '@material/mwc-fab';
 
 export type WebsiteSettingsDB = {
   id: number;
@@ -44,9 +46,19 @@ export class WebsiteSettings extends Localized(LitElement) {
 
   render(): TemplateResult {
     return html`
-        <h1 class="text-xl ml-4 mb-4 pb-6">
-          ${msg('Settings')}
-        </h1>
+        <div class="flex justify-between gap-2 ml-4 mb-4 pb-6">
+          <h1 class="text-xl ml-4 mb-4 pb-6">
+            ${msg('Settings')}
+          </h1>
+          <div class="global-actions">
+            <mwc-fab
+              icon="save"
+              mini
+              @click=${async () => this._onSave()}
+            ></mwc-fab>
+          </div>
+        </div>
+
         <div class="mt-5 md:mt-0 md:col-span-2">
           <div class="shadow sm:rounded-md sm:overflow-hidden">
             <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
@@ -167,13 +179,6 @@ export class WebsiteSettings extends Localized(LitElement) {
                     `;
                 }
               })}
-            </div>
-            <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-              <button @click=${
-                this._onSave
-              } class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white terra-bg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                ${msg('Save')}
-              </button>
             </div>
           </div>
         </div>

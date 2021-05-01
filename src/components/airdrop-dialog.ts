@@ -11,8 +11,6 @@ import {msg} from '@lit/localize';
 import {AnchorClaimResponse, MIRAirdrop, TerraQuery} from '../terra/terra-min';
 import {Router} from '@vaadin/router';
 
-import ExtensionSingleton from '../terra/terra-connect';
-
 /**
  * Airdrop dialog component
  */
@@ -43,23 +41,12 @@ export class AirdropDialog extends Localized(LitElement) {
   @property({type: Boolean})
   public loading = false;
 
-  @property({type: Boolean})
-  public retrieveDisabled = false;
-
   public close(): void {
     this.parentElement?.removeChild(this);
   }
 
   createRenderRoot(): this {
     return this;
-  }
-
-  async firstUpdated(): Promise<void> {
-    if (!ExtensionSingleton.init) {
-      this.retrieveDisabled = true;
-    } else {
-      this.retrieveDisabled = false;
-    }
   }
 
   public async checkAnchor(): Promise<void> {
@@ -163,15 +150,6 @@ export class AirdropDialog extends Localized(LitElement) {
     this.terraAddress = (change.target as HTMLInputElement).value;
   }
 
-  private async _retrieveTerraAddress(): Promise<void> {
-    if (ExtensionSingleton.init) {
-      const info = await ExtensionSingleton.connect();
-      this.terraAddress = info.address;
-    } else {
-      this.retrieveDisabled = true;
-    }
-  }
-
   render(): TemplateResult {
     return html`
       <div id="dialog" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -186,16 +164,6 @@ export class AirdropDialog extends Localized(LitElement) {
                     ${msg('Airdrops')}
                   </h3>
                   
-                  <div class="flex sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-2 sm:px-0 items-center m-10">
-                    ${!this.retrieveDisabled ? html`
-                    <button .disabled=${this.loading} class="${
-                      this.loading ? 'opacity-50 cursor-wait' : ''
-                    } text-white terra-bg border-0 py-2 px-8 rounded text-lg" @click=${() =>
-                      this._retrieveTerraAddress()}>
-                      ${msg('Retrieve')}
-                    </button>
-                    ` : ''}
-                  </div>
                   <div class="relative flex-grow">
                       <label for="terra-address" class="leading-7 text-sm text-gray-600">${msg(
                         'Terra address'
