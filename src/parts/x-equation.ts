@@ -73,7 +73,7 @@ export class XEquation extends LitElement {
             />
             <h3 class="font-semibold ml-2">
               ${msg('Luna governs them all !')}
-              <p><em>${msg('$LUNA')}</em> : ${this.price.toFixed(3)} ${msg('UST')}</p>
+              <p><em>$${msg('LUNA')}</em> : ${this.price.toFixed(3)} ${msg('UST')}</p>
             </h3>
           </a>
         </div>

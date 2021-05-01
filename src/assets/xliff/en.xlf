@@ -8,9 +8,6 @@
 <trans-unit id="saaa706d023df1c67">
   <source>Airdrops</source>
 </trans-unit>
-<trans-unit id="s7463db9a97cc7129">
-  <source>Retrieve</source>
-</trans-unit>
 <trans-unit id="s87d926871c09fd6d">
   <source>Terra address</source>
 </trans-unit>
@@ -37,6 +34,18 @@
 </trans-unit>
 <trans-unit id="s06af4c50ddea2213">
   <source>Sign in with Terra</source>
+</trans-unit>
+<trans-unit id="s9d8b8aa2b404c2c8">
+  <source>Settings</source>
+</trans-unit>
+<trans-unit id="sf151d592f7a2507b">
+  <source>Upload a file</source>
+</trans-unit>
+<trans-unit id="scae291f5669c9688">
+  <source>or drag and drop</source>
+</trans-unit>
+<trans-unit id="s861b0045f20633c9">
+  <source>PNG, JPG, GIF up to 25MB</source>
 </trans-unit>
 <trans-unit id="s5197655b5385f340">
   <source>Call to action</source>
@@ -125,8 +134,8 @@
 <trans-unit id="s6ad93f1069d6191b">
   <source>Luna governs them all !</source>
 </trans-unit>
-<trans-unit id="sce98ee58192f12e9">
-  <source>$LUNA</source>
+<trans-unit id="s450266b5a681de27">
+  <source>LUNA</source>
 </trans-unit>
 <trans-unit id="s61eea119db28d0d7">
   <source>UST</source>
@@ -146,29 +155,11 @@
 <trans-unit id="sf79a70a7ecf6cf42">
   <source>How to</source>
 </trans-unit>
-<trans-unit id="sa597982e46a96c4b">
-  <source>Menus</source>
-</trans-unit>
 <trans-unit id="s2ea91b543c17d318">
   <source>Assets</source>
 </trans-unit>
-<trans-unit id="s9d8b8aa2b404c2c8">
-  <source>Settings</source>
-</trans-unit>
 <trans-unit id="s67749057edb2586b">
   <source>Logout</source>
-</trans-unit>
-<trans-unit id="sf151d592f7a2507b">
-  <source>Upload a file</source>
-</trans-unit>
-<trans-unit id="scae291f5669c9688">
-  <source>or drag and drop</source>
-</trans-unit>
-<trans-unit id="s861b0045f20633c9">
-  <source>PNG, JPG, GIF up to 25MB</source>
-</trans-unit>
-<trans-unit id="s33f85f24c0f5f008">
-  <source>Save</source>
 </trans-unit>
 <trans-unit id="s1e3a08abb66683bd">
   <source>Gallery</source>
@@ -188,12 +179,6 @@
 <trans-unit id="s091d5d07b5b33dcf">
   <source>Ok</source>
 </trans-unit>
-<trans-unit id="sd158a5fc0f062f18">
-  <source>Available</source>
-</trans-unit>
-<trans-unit id="s6d3b5b0561ba34c9">
-  <source>Published</source>
-</trans-unit>
 <trans-unit id="s5fc8ce1a5e481335">
   <source>Tools links</source>
 </trans-unit>
@@ -205,21 +190,6 @@
 </trans-unit>
 <trans-unit id="s3d93f9ea0c5a13fa">
   <source>Image</source>
-</trans-unit>
-<trans-unit id="sfa847f22cbd9bff5">
-  <source>Translate</source>
-</trans-unit>
-<trans-unit id="s5f43af3669b1e098">
-  <source>Source</source>
-</trans-unit>
-<trans-unit id="s08fb5807b5964eea">
-  <source>EN</source>
-</trans-unit>
-<trans-unit id="sff5bb7742c2896c8">
-  <source>Target</source>
-</trans-unit>
-<trans-unit id="s09056e07b59ec8d1">
-  <source>FR</source>
 </trans-unit>
 </body>
 </file>
