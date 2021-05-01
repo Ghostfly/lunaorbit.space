@@ -11,7 +11,7 @@ import {
   html,
   TemplateResult,
   customElement,
-  internalProperty,
+  state,
 } from 'lit-element';
 import {Localized} from '@lit/localize/localized-element';
 import { retrieveSupabase } from '../luna-orbit';
@@ -23,14 +23,14 @@ import { loader } from '../parts/dashboard/home';
  */
 @customElement('website-footer')
 export class WebsiteFooter extends Localized(LitElement) {
-  @internalProperty()
+  @state()
   private _twitter: WebsiteSettingsDB | undefined;
 
-  @internalProperty()
+  @state()
   private _telegram: WebsiteSettingsDB | undefined;
-  @internalProperty()
+  @state()
   private _operatorAddress: WebsiteSettingsDB | undefined;
-  @internalProperty()
+  @state()
   private _name: WebsiteSettingsDB | undefined;
 
   public createRenderRoot(): this {

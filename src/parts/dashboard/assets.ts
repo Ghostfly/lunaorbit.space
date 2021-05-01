@@ -4,18 +4,17 @@ import {
   LitElement,
   TemplateResult,
   property,
-  internalProperty,
+  state,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
 import {retrieveSupabase} from '../../luna-orbit';
 
-import {SupabaseStorageClient} from '@supabase/supabase-js/dist/main/lib/SupabaseStorageClient';
-import {StorageFileApi} from '@supabase/supabase-js/dist/main/lib/storage/StorageFileApi';
-import {FileObject} from '@supabase/supabase-js/dist/main/lib/storage/types';
+import { Dialog } from '@material/mwc-dialog';
 
-import {Dialog} from '@material/mwc-dialog';
+import { FileObject, SupabaseStorageClient } from '@supabase/storage-js';
+import { StorageFileApi } from '@supabase/storage-js/dist/main/lib/StorageFileApi';
 
 /**
  * Assets component
@@ -27,13 +26,13 @@ export class WebsiteAssets extends Localized(LitElement) {
   @property({type: Array})
   public files: FileObject[] = [];
 
-  @internalProperty()
+  @state()
   private _storageClient!: SupabaseStorageClient;
-  @internalProperty()
+  @state()
   private _assetsRef!: StorageFileApi;
-  @internalProperty()
+  @state()
   private currentFile: FileObject | null = null;
-  @internalProperty()
+  @state()
   private currentLink: string | null = null;
 
   createRenderRoot(): this {

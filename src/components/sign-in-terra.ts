@@ -8,7 +8,7 @@ import {
   TemplateResult,
   customElement,
   property,
-  internalProperty,
+  state,
 } from 'lit-element';
 import {Localized} from '@lit/localize/localized-element';
 import {msg} from '@lit/localize';
@@ -20,7 +20,7 @@ import ExtensionSingleton from '../terra/terra-connect';
  */
 @customElement('sign-in-terra')
 export class SignInTerra extends Localized(LitElement) {
-  @internalProperty()
+  @state()
   private _disabled = false;
 
   @property({type: Object})

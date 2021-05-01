@@ -3,7 +3,7 @@ import {
   customElement,
   LitElement,
   TemplateResult,
-  internalProperty,
+  state,
 } from 'lit-element';
 import {Localized} from '@lit/localize/localized-element.js';
 
@@ -19,12 +19,11 @@ import {loader} from './dashboard/home';
  */
 @customElement('x-home')
 export class XHome extends Localized(LitElement) {
-  @internalProperty()
+  @state()
   private _strengths: Strength[] = [];
-
-  @internalProperty()
+  @state()
   private loading = false;
-  @internalProperty()
+  @state()
   private _cta: CTA | null = null;
 
   createRenderRoot(): this {

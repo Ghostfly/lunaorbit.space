@@ -3,7 +3,7 @@ import {
   customElement,
   LitElement,
   TemplateResult,
-  internalProperty,
+  state,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
@@ -13,13 +13,13 @@ import { ctaEditor, loader } from './home';
 
 @customElement('website-how-to')
 export class WebsiteHowTo extends Localized(LitElement) {
-  @internalProperty()
+  @state()
   private loading = false;
-  @internalProperty()
+  @state()
   private _cta: CTA | null = null;
-  @internalProperty()
+  @state()
   private _steps: Step[] | null = null;
-  @internalProperty()
+  @state()
   private _words: Word[] | null = null;
 
   createRenderRoot(): this {

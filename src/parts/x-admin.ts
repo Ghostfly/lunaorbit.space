@@ -3,8 +3,8 @@ import {
   html,
   TemplateResult,
   customElement,
-  internalProperty,
   query,
+  state,
 } from 'lit-element';
 import {Localized} from '@lit/localize/localized-element';
 
@@ -49,18 +49,18 @@ export class XAdmin extends Localized(LitElement) {
   static LOGGED_IN_AT_KEY = 'logged-in-at';
   static TOKEN_DURATION = 60000;
 
-  @internalProperty()
+  @state()
   private _signedIn = false;
 
-  @internalProperty()
+  @state()
   private _page: DashboardPages = DashboardPages.strengths;
 
-  @internalProperty()
+  @state()
   private _savedAddress: string | null = null;
 
   public supabase!: SupabaseClient;
 
-  @internalProperty()
+  @state()
   private _isChecking = false;
 
   @query('mwc-snackbar')

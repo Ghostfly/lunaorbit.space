@@ -3,7 +3,7 @@ import {
   customElement,
   LitElement,
   TemplateResult,
-  internalProperty,
+  state,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
@@ -25,7 +25,7 @@ export type WebsiteSettingsDB = {
  */
 @customElement('website-setting')
 export class WebsiteSettings extends Localized(LitElement) {
-  @internalProperty()
+  @state()
   private _settings: WebsiteSettingsDB[] | null = null;
   createRenderRoot(): this {
     return this;

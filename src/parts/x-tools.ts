@@ -3,8 +3,8 @@ import {
   customElement,
   LitElement,
   TemplateResult,
-  internalProperty,
   property,
+  state,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
@@ -22,10 +22,10 @@ import {loader} from './dashboard/home';
  */
 @customElement('x-tools')
 export class XTools extends Localized(LitElement) {
-  @internalProperty()
+  @state()
   private _cta: CTA | null = null;
 
-  @internalProperty()
+  @state()
   private _sections: ToolSection[] | null = [];
   @property({type: Boolean})
   public loading = false;

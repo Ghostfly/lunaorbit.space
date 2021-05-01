@@ -2,9 +2,9 @@ import {
   html,
   customElement,
   LitElement,
-  internalProperty,
   TemplateResult,
   property,
+  state,
 } from 'lit-element';
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
@@ -19,17 +19,17 @@ import {loader} from './dashboard/home';
  */
 @customElement('x-how-to')
 export class XHowTo extends Localized(LitElement) {
-  @internalProperty()
+  @state()
   private step = 1;
 
   @property({type: Boolean})
   public loading = false;
 
-  @internalProperty()
+  @state()
   private _cta: CTA | null = null;
-  @internalProperty()
+  @state()
   private _steps: Step[] | null = null;
-  @internalProperty()
+  @state()
   private _dictionary: Word[] | null = null;
 
   createRenderRoot(): this {

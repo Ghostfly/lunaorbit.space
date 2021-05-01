@@ -1,10 +1,10 @@
 import {
   html,
   customElement,
-  internalProperty,
   LitElement,
   property,
   TemplateResult,
+  state,
 } from 'lit-element';
 import {LunaPriceResponse, Validator} from './terra/terra-min';
 import {Router, RouterLocation} from '@vaadin/router';
@@ -49,20 +49,20 @@ export class LunaOrbit extends Localized(LitElement) {
   static APILunaPrice =
     'https://fcd.terra.dev/v1/market/price?denom=uusd&interval=1m';
 
-  @internalProperty()
+  @state()
   private validatorInformation?: Validator;
-  @internalProperty()
+  @state()
   private _commission = 0;
 
   public router: Router = new Router(document.querySelector('.content'));
   @property({type: Object})
   location = this.router.location;
-  @internalProperty()
+  @state()
   private _bannerMessage!: BannerMessage;
-  @internalProperty()
+  @state()
   private _price = 0;
 
-  @internalProperty()
+  @state()
   private _supabase: SupabaseClient;
   private _priceInterval: number | null = null;
   private _isRefreshStopped = false;

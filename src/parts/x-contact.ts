@@ -4,7 +4,7 @@ import {
   LitElement,
   query,
   TemplateResult,
-  internalProperty,
+  state,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
@@ -22,11 +22,11 @@ export class XContact extends Localized(LitElement) {
 
   @query('#status')
   public status!: HTMLParagraphElement;
-  @internalProperty()
+  @state()
   private _emailForm: WebsiteSettingsDB | undefined;
-  @internalProperty()
+  @state()
   private _twitter: WebsiteSettingsDB | undefined;
-  @internalProperty()
+  @state()
   private _telegram: WebsiteSettingsDB | undefined;
 
   createRenderRoot(): this {

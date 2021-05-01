@@ -3,7 +3,7 @@ import {
   customElement,
   LitElement,
   TemplateResult,
-  internalProperty,
+  state,
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
@@ -15,11 +15,11 @@ import {smoothDnD} from 'smooth-dnd';
 
 @customElement('website-tools')
 export class WebsiteTools extends Localized(LitElement) {
-  @internalProperty()
+  @state()
   private loading = false;
-  @internalProperty()
+  @state()
   private _cta: CTA | null = null;
-  @internalProperty()
+  @state()
   private _tools: ToolSection[] | null = null;
 
   createRenderRoot(): this {
