@@ -4,11 +4,13 @@ import {
   LitElement,
   query,
   TemplateResult,
+  internalProperty,
 } from 'lit-element';
-import config from '../config';
 
 import {msg} from '@lit/localize';
 import {Localized} from '@lit/localize/localized-element.js';
+import { retrieveSupabase } from '../luna-orbit';
+import { WebsiteSettingsDB } from './dashboard/settings';
 
 /**
  * Contact component
@@ -20,12 +22,30 @@ export class XContact extends Localized(LitElement) {
 
   @query('#status')
   public status!: HTMLParagraphElement;
+  @internalProperty()
+  private _emailForm: WebsiteSettingsDB | undefined;
+  @internalProperty()
+  private _twitter: WebsiteSettingsDB | undefined;
+  @internalProperty()
+  private _telegram: WebsiteSettingsDB | undefined;
 
   createRenderRoot(): this {
     return this;
   }
 
-  firstUpdated(): void {
+  async firstUpdated(): Promise<void> {
+    const queryBuilder = retrieveSupabase().from<WebsiteSettingsDB>('settings');
+    const query = queryBuilder.select('name, value, type');
+
+    const settings = (await query).data;
+    if (settings) {
+      this._emailForm = settings.find((setting) => setting.name === 'email-form');
+      this._telegram = settings.find((setting) => setting.name === 'telegram');
+      this._twitter = settings.find((setting) => setting.name === 'twitter');
+    }
+
+    await this.updateComplete;
+
     this.contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const form = e.target as HTMLFormElement;
@@ -69,7 +89,8 @@ export class XContact extends Localized(LitElement) {
             <h2 class="text-gray-900 text-lg mb-6 font-medium title-font">
               ${msg('Contact us')}
             </h2>
-            <form id="contact-form" action="${config.formspree}" method="POST">
+            ${this._emailForm ? html`
+            <form id="contact-form" action="${this._emailForm.value}" method="POST">
               <div class="relative mb-4">
                 <label for="email" class="leading-7 text-sm text-gray-600"
                   >${msg('Email')}</label
@@ -101,7 +122,7 @@ export class XContact extends Localized(LitElement) {
               <p class="text-md mt-3">
                 ${msg('Find us on')}
                 <a
-                  href="http://t.me/${config.telegram}"
+                  href="http://t.me/${this._telegram}"
                   target="_blank"
                   rel="noopener"
                   title="Telegram"
@@ -111,7 +132,7 @@ export class XContact extends Localized(LitElement) {
                 ${msg('or')}
                 <a
                   class="text-gray-500 hover:text-indigo-500"
-                  href="https://twitter.com/${config.twitter}"
+                  href="https://twitter.com/${this._twitter}"
                   target="_blank"
                   rel="noopener"
                   title="Twitter"
@@ -119,6 +140,7 @@ export class XContact extends Localized(LitElement) {
                 >.
               </p>
             </form>
+            ` : html``}
           </div>
         </div>
       </section>

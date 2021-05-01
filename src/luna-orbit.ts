@@ -19,7 +19,6 @@ import './parts/x-parts';
 // Todo: lazy import
 import './parts/x-admin';
 
-import config from './config';
 import {setLocaleFromUrl} from './localization';
 import {Localized} from '@lit/localize/localized-element';
 import {BannerMessage} from './components/banner-message';
@@ -198,13 +197,13 @@ export class LunaOrbit extends Localized(LitElement) {
   }
 
   render(): TemplateResult {
-    const isAdmin = this.router.location.pathname.indexOf('cockpit') === -1;
+    const isWebsite = this.router.location.pathname.indexOf('cockpit') === -1;
 
     return html`
       ${this._bannerMessage}
       <slot name="nav"></slot>
       <slot name="content"></slot>
-      ${isAdmin
+      ${isWebsite
         ? html`
             <slot name="equation"></slot>
             <slot name="divider"></slot>
@@ -227,11 +226,17 @@ export class LunaOrbit extends Localized(LitElement) {
   }
 
   private async _retrieveCommissionAndPrice(): Promise<void> {
+    const operatorAddressQuery = retrieveSupabase().from('settings').select('name, value').eq('name', 'operator-address');
+    const operatorSetting = (await operatorAddressQuery).data;
+    let operatorAddress = '';
+    if (operatorSetting) {
+      operatorAddress = operatorSetting[0].value;
+    }
     const [priceQuery, validatorQuery] = await Promise.all([
       fetch(LunaOrbit.APILunaPrice),
       fetch(
-        LunaOrbit.APIValidatorURL + config.address
-      )
+        LunaOrbit.APIValidatorURL + operatorAddress
+      ),
     ]);
 
     const price = (await priceQuery.json()) as LunaPriceResponse;

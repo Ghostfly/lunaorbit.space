@@ -30,7 +30,7 @@ export class XBluna extends Localized(LitElement) {
 
     setTimeout(() => {
       orbit?.stopPriceRefesh();
-    }, 0)
+    }, 0);
 
     this.loading = false;
   }
