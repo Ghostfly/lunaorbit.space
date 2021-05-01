@@ -23,8 +23,8 @@ const webcomponentsjs = join(nodeModules, '@webcomponents/webcomponentsjs');
 
 const assets = [
   {
-    from: resolve('./styles.css'),
-    to: join(OUTPUT_PATH)
+    from: resolve('./src/styles.css'),
+    to: join(OUTPUT_PATH, 'assets')
   },
   {
     from: resolve('./src/assets'),
@@ -129,7 +129,7 @@ const developmentConfig = merge([
     devtool: 'eval-cheap-source-map',
     plugins: [
       new NodePolyfillPlugin(),
-      new CopyWebpackPlugin({patterns: polyfills}),
+      new CopyWebpackPlugin({patterns: [...polyfills, ...assets]}),
       new HtmlWebpackPlugin({
         template: INDEX_TEMPLATE
       }),

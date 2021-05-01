@@ -1,0 +1,90 @@
+/**
+  Styles  
+*/
+
+@tailwind base;
+@tailwind utilities;
+
+:root {
+  --terra-blue: #0c3694;
+  --terra-light: #516289;
+  --mirror-color: #232d45;
+  --anchor-color: #4bdb4b;
+}
+
+mwc-circular-progress,
+mwc-fab,
+mwc-button,
+mwc-switch {
+  --mdc-theme-primary: var(--terra-blue);
+  --mdc-theme-secondary: var(--terra-light);
+}
+
+.anchor-bg {
+  background-color: var(--anchor-color);
+}
+
+.strength:hover {
+  background-color: var(--terra-blue);
+}
+
+.strength:hover h2,
+.strength:hover a {
+  color: white;
+}
+
+footer .telegram svg {
+  fill: white;
+  fill-rule: evenodd;
+  clip-rule: evenodd;
+  stroke-linejoin: round;
+  stroke-miterlimit: 1.41421;
+}
+
+.mirror-bg {
+  background-color: var(--mirror-color);
+}
+
+.terra-bg {
+  background-color: var(--terra-blue);
+}
+
+.terra-color {
+  color: var(--terra-blue);
+}
+
+.terra-light {
+  background-color: var(--terra-light);
+}
+
+.terra-light-color {
+  color: var(--terra-light);
+}
+
+.content > .leaving {
+  animation: 0.3s fadeOut;
+}
+
+.content > .entering {
+  animation: 0.3s fadeIn;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
