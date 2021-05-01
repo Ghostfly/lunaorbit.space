@@ -16,9 +16,6 @@ import '@material/mwc-circular-progress';
 import './components/x-components';
 import './parts/x-parts';
 
-// Todo: lazy import
-import './parts/x-admin';
-
 import {setLocaleFromUrl} from './localization';
 import {BannerMessage} from './components/banner-message';
 
@@ -310,6 +307,12 @@ export class LunaOrbit extends LitElement {
 
     if (this.mobileMenu) {
       this.mobileMenu.style.display = 'none';
+    }
+
+    if (page === 'cockpit') {
+      import('./parts/x-admin').then(() => {
+        this.requestUpdate();
+      });
     }
 
     this.requestUpdate();
