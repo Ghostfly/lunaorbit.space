@@ -247,8 +247,6 @@ export class XAdmin extends Localized(LitElement) {
         return html` <website-tools></website-tools> `;
       case DashboardPages.settings:
         return html` <website-setting></website-setting> `;
-      case DashboardPages.menus:
-        return html` <admin-menu></admin-menu> `;
       case DashboardPages.assets:
         return html` <website-assets></website-assets> `;
     }
