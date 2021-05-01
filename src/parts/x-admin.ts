@@ -14,7 +14,6 @@ import ExtensionSingleton from '../terra/terra-connect';
 
 import './dashboard/settings';
 import './dashboard/assets';
-import './dashboard/menus';
 import './dashboard/nav';
 import './dashboard/home';
 import './dashboard/tools';
