@@ -80,16 +80,11 @@ export class XHowTo extends LitElement {
 
   private _tabItem(id: string, title: string, active?: boolean) {
     return html`
-      <li class="mr-1">
-        <a
-          data-id="${id}"
-          class="cursor-pointer	bg-white inline-block rounded-t py-2 px-4 ${active
+      <a data-id=${id} class="${active
             ? 'active font-semibold border-l border-t border-r text-blue-800'
-            : ''}"
-        >
-          ${title}
-        </a>
-      </li>
+            : ''} sm:px-6 py-3 w-1/2 sm:w-auto justify-center sm:justify-start border-b-2 title-font font-medium bg-gray-100 inline-flex items-center leading-none border-indigo-500 text-indigo-500 tracking-wider rounded-t">
+        ${title}
+      </a>
     `;
   }
 
@@ -104,28 +99,29 @@ export class XHowTo extends LitElement {
       <section
         class="container mx-auto px-2 py-4 text-gray-700 body-font border-t border-gray-200"
       >
-        <h1 class="text-xl ml-4 mb-4 pt-6 pb-6">
+        <h1 class="text-xl ml-4 mb-4 pt-6 pb-2">
           ${msg('How to start staking on Terra ?')}
         </h1>
 
         ${this.loading
           ? loader()
-          : html`
-              <ul class="list-reset flex border-b" @click=${this._onTabClick}>
-                ${this._steps &&
-                this._steps.map((item) => {
-                  return this._tabItem(
-                    item.id,
-                    item.title,
-                    this.step === parseInt(item.id, 10)
-                  );
-                })}
-              </ul>
+        : html`
+            <section class="text-gray-600 body-font">
+              <div class="container px-5 py-5 mx-auto flex flex-wrap flex-col">
+                <div class="flex mx-auto flex-wrap m-4 cursor-pointer" @click=${this._onTabClick}>
+                  ${this._steps &&
+                    this._steps.map((item) => {
+                      return this._tabItem(
+                        item.id,
+                        item.title,
+                        this.step === parseInt(item.id, 10)
+                      );
+                    })}
+                </div>
 
-              <div class="p-4" id="tabs">
-                <img src=${currentSignedURL} alt=${currentALT} />
+              <img class="xl:w-1/4 lg:w-1/3 md:w-1/2 w-2/3 block mx-auto mb-10 object-cover object-center rounded" src=${currentSignedURL} alt=${currentALT} />
               </div>
-
+            </section>
               <div
                 class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden"
               >
