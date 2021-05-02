@@ -6,7 +6,7 @@ import {
   state,
 } from 'lit-element';
 
-import {msg } from '@lit/localize';
+import {msg} from '@lit/localize';
 
 import {CTA, ctaForPage, loadTools, ToolSection} from '../../backend';
 import {ctaEditor, loader} from './home';
@@ -111,9 +111,7 @@ export class WebsiteTools extends LitElement {
   render(): TemplateResult {
     return html`
       <div class="flex justify-between gap-2 ml-4 mb-4 pb-6">
-        <h1 class="text-xl">
-          ${msg('Tools')}
-        </h1>
+        <h1 class="text-xl">${msg('Tools')}</h1>
         <div class="global-actions">
           <mwc-fab
             icon="add"
@@ -142,9 +140,7 @@ export class WebsiteTools extends LitElement {
           : html`
               ${this._cta ? html` ${ctaEditor(this._cta)} ` : html``}
 
-              <h2 class="text-md mt-4 mb-4">
-                ${msg('Tools links')}
-              </h2>
+              <h2 class="text-md mt-4 mb-4">${msg('Tools links')}</h2>
               <div class="sortable-holder">
                 ${this._tools &&
                 this._tools.map((tool) => {

@@ -9,7 +9,7 @@ import {
 import {msg} from '@lit/localize';
 import {capitalizeFirstLetter} from '../../lib/strings';
 
-import { Switch } from '@material/mwc-switch';
+import {Switch} from '@material/mwc-switch';
 
 import '@material/mwc-fab';
 

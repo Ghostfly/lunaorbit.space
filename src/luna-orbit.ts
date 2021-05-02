@@ -163,7 +163,7 @@ export class LunaOrbit extends LitElement {
       this._setupMenus(),
       this.updateBannerMessage(),
       this._showAirdropToast(),
-      this._retrieveCommissionAndPrice()
+      this._retrieveCommissionAndPrice(),
     ]);
 
     this._handleMobileMenu();
@@ -192,10 +192,12 @@ export class LunaOrbit extends LitElement {
       }
 
       const elem = document.createElement('a');
-      elem.target = "_blank";
-      elem.href = 'https://station.terra.money/validator/terravaloper1p94a6vwl9dkd98cyrlmzf6ydjdgfvamyhu33fa';
-      elem.className ='text-gray-300 hover:text-white block px-3 py-2 text-base font-medium';
-      elem.innerText = 'Delegate'
+      elem.target = '_blank';
+      elem.href =
+        'https://station.terra.money/validator/terravaloper1p94a6vwl9dkd98cyrlmzf6ydjdgfvamyhu33fa';
+      elem.className =
+        'text-gray-300 hover:text-white block px-3 py-2 text-base font-medium';
+      elem.innerText = 'Delegate';
       menuHolder.appendChild(elem);
     }
   }
@@ -230,7 +232,10 @@ export class LunaOrbit extends LitElement {
   }
 
   private async _retrieveCommissionAndPrice(): Promise<void> {
-    const operatorAddressQuery = retrieveSupabase().from('settings').select('name, value').eq('name', 'operator-address');
+    const operatorAddressQuery = retrieveSupabase()
+      .from('settings')
+      .select('name, value')
+      .eq('name', 'operator-address');
     const operatorSetting = (await operatorAddressQuery).data;
     let operatorAddress = '';
     if (operatorSetting) {
@@ -238,9 +243,7 @@ export class LunaOrbit extends LitElement {
     }
     const [priceQuery, validatorQuery] = await Promise.all([
       fetch(LunaOrbit.APILunaPrice),
-      fetch(
-        LunaOrbit.APIValidatorURL + operatorAddress
-      ),
+      fetch(LunaOrbit.APIValidatorURL + operatorAddress),
     ]);
 
     const price = (await priceQuery.json()) as LunaPriceResponse;
@@ -272,7 +275,9 @@ export class LunaOrbit extends LitElement {
     const priceCheck = window.setInterval(async () => {
       const priceReq = await fetch(LunaOrbit.APILunaPrice);
       const price = (await priceReq.json()) as LunaPriceResponse;
-      if (this._price == price.lastPrice) { return; }
+      if (this._price == price.lastPrice) {
+        return;
+      }
 
       this._price = price.lastPrice;
       const equation = document.querySelector('x-equation');

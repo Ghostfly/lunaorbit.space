@@ -10,10 +10,10 @@ import {
 import {msg} from '@lit/localize';
 import {retrieveSupabase} from '../../luna-orbit';
 
-import { Dialog } from '@material/mwc-dialog';
+import {Dialog} from '@material/mwc-dialog';
 
-import { FileObject, SupabaseStorageClient } from '@supabase/storage-js';
-import { StorageFileApi } from '@supabase/storage-js/dist/main/lib/StorageFileApi';
+import {FileObject, SupabaseStorageClient} from '@supabase/storage-js';
+import {StorageFileApi} from '@supabase/storage-js/dist/main/lib/StorageFileApi';
 
 /**
  * Assets component
@@ -97,10 +97,7 @@ export class WebsiteAssets extends LitElement {
                     ?.showSnack('File is too big.');
                   target.value = '';
                 } else {
-                  await this._assetsRef.upload(
-                    file.name,
-                    file
-                  );
+                  await this._assetsRef.upload(file.name, file);
                   await this.updateFiles();
                 }
               }

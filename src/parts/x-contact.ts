@@ -8,8 +8,8 @@ import {
 } from 'lit-element';
 
 import {msg} from '@lit/localize';
-import { retrieveSupabase } from '../luna-orbit';
-import { WebsiteSettingsDB } from './dashboard/settings';
+import {retrieveSupabase} from '../luna-orbit';
+import {WebsiteSettingsDB} from './dashboard/settings';
 
 /**
  * Contact component
@@ -38,7 +38,9 @@ export class XContact extends LitElement {
 
     const settings = (await query).data;
     if (settings) {
-      this._emailForm = settings.find((setting) => setting.name === 'email-form');
+      this._emailForm = settings.find(
+        (setting) => setting.name === 'email-form'
+      );
       this._telegram = settings.find((setting) => setting.name === 'telegram');
       this._twitter = settings.find((setting) => setting.name === 'twitter');
     }
@@ -88,58 +90,66 @@ export class XContact extends LitElement {
             <h2 class="text-gray-900 text-lg mb-6 font-medium title-font">
               ${msg('Contact us')}
             </h2>
-            ${this._emailForm ? html`
-            <form id="contact-form" action="${this._emailForm.value}" method="POST">
-              <div class="relative mb-4">
-                <label for="email" class="leading-7 text-sm text-gray-600"
-                  >${msg('Email')}</label
-                >
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                />
-              </div>
-              <div class="relative mb-4">
-                <label for="message" class="leading-7 text-sm text-gray-600"
-                  >${msg('Comment')}</label
-                >
-                <textarea
-                  id="message"
-                  name="message"
-                  class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                ></textarea>
-              </div>
-              <button
-                type="submit"
-                class="text-white terra-bg border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
-              >
-                ${msg('Send')}
-              </button>
-              <p id="status" class="font-semibold"></p>
-              <p class="text-md mt-3">
-                ${msg('Find us on')}
-                <a
-                  href="http://t.me/${this._telegram}"
-                  target="_blank"
-                  rel="noopener"
-                  title="Telegram"
-                  class="text-gray-500 hover:text-indigo-500"
-                  >${msg('Telegram')}</a
-                >
-                ${msg('or')}
-                <a
-                  class="text-gray-500 hover:text-indigo-500"
-                  href="https://twitter.com/${this._twitter}"
-                  target="_blank"
-                  rel="noopener"
-                  title="Twitter"
-                  >${msg('Twitter')}</a
-                >.
-              </p>
-            </form>
-            ` : html``}
+            ${this._emailForm
+              ? html`
+                  <form
+                    id="contact-form"
+                    action="${this._emailForm.value}"
+                    method="POST"
+                  >
+                    <div class="relative mb-4">
+                      <label for="email" class="leading-7 text-sm text-gray-600"
+                        >${msg('Email')}</label
+                      >
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      />
+                    </div>
+                    <div class="relative mb-4">
+                      <label
+                        for="message"
+                        class="leading-7 text-sm text-gray-600"
+                        >${msg('Comment')}</label
+                      >
+                      <textarea
+                        id="message"
+                        name="message"
+                        class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                      ></textarea>
+                    </div>
+                    <button
+                      type="submit"
+                      class="text-white terra-bg border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
+                    >
+                      ${msg('Send')}
+                    </button>
+                    <p id="status" class="font-semibold"></p>
+                    <p class="text-md mt-3">
+                      ${msg('Find us on')}
+                      <a
+                        href="http://t.me/${this._telegram}"
+                        target="_blank"
+                        rel="noopener"
+                        title="Telegram"
+                        class="text-gray-500 hover:text-indigo-500"
+                        >${msg('Telegram')}</a
+                      >
+                      ${msg('or')}
+                      <a
+                        class="text-gray-500 hover:text-indigo-500"
+                        href="https://twitter.com/${this._twitter}"
+                        target="_blank"
+                        rel="noopener"
+                        title="Twitter"
+                        >${msg('Twitter')}</a
+                      >.
+                    </p>
+                  </form>
+                `
+              : html``}
           </div>
         </div>
       </section>

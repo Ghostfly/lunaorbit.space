@@ -85,7 +85,8 @@ export async function loadSteps(db: SupabaseClient): Promise<Step[] | null> {
 }
 
 export async function loadWords(db: SupabaseClient): Promise<Word[] | null> {
-  return (await db.from<Word>('how-to-glossary').select('id, title, text')).data;
+  return (await db.from<Word>('how-to-glossary').select('id, title, text'))
+    .data;
 }
 
 export async function loadMenu(db: SupabaseClient): Promise<MenuItem[] | null> {

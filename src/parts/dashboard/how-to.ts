@@ -8,7 +8,7 @@ import {
 
 import {msg} from '@lit/localize';
 import {CTA, ctaForPage, loadSteps, loadWords, Step, Word} from '../../backend';
-import { ctaEditor, loader } from './home';
+import {ctaEditor, loader} from './home';
 
 @customElement('website-how-to')
 export class WebsiteHowTo extends LitElement {
@@ -64,18 +64,21 @@ export class WebsiteHowTo extends LitElement {
       }
 
       if (this._cta) {
-        await db.from<CTA>('cta').update(this._cta).match({ id: `${this._cta.id}` });
+        await db
+          .from<CTA>('cta')
+          .update(this._cta)
+          .match({id: `${this._cta.id}`});
       }
 
       admin?.showSnack('Updated');
     }
   }
-  
+
   private async _addStep() {
     this._steps?.push({
       id: `${this._steps.length + 1}`,
       title: 'New step',
-      img: 'filename'
+      img: 'filename',
     });
     await this.requestUpdate('_steps');
   }
@@ -84,7 +87,7 @@ export class WebsiteHowTo extends LitElement {
     this._words?.push({
       id: `${this._words.length + 1}`,
       title: 'New word',
-      text: 'Word explain'
+      text: 'Word explain',
     });
     await this.requestUpdate('_words');
   }
@@ -93,7 +96,7 @@ export class WebsiteHowTo extends LitElement {
     const admin = document.querySelector('x-admin');
     const db = admin?.supabase;
     if (db) {
-      await db.from<Step>('how-to-glossary').delete().match({ id: word.id });
+      await db.from<Step>('how-to-glossary').delete().match({id: word.id});
       await this._refresh();
     }
     admin?.showSnack('Removed word');
@@ -103,7 +106,7 @@ export class WebsiteHowTo extends LitElement {
     const admin = document.querySelector('x-admin');
     const db = admin?.supabase;
     if (db) {
-      await db.from<Step>('how-to-steps').delete().match({ id: step.id });
+      await db.from<Step>('how-to-steps').delete().match({id: step.id});
       await this._refresh();
     }
     admin?.showSnack('Removed step');
@@ -112,9 +115,7 @@ export class WebsiteHowTo extends LitElement {
   render(): TemplateResult {
     return html`
       <div class="flex justify-between gap-2 ml-4 mb-4 pb-6">
-        <h1 class="text-xl">
-          ${msg('How to?')}
-        </h1>
+        <h1 class="text-xl">${msg('How to?')}</h1>
         <div class="global-actions">
           <mwc-fab icon="refresh" mini @click=${this._refresh}></mwc-fab>
           <mwc-fab icon="save" mini @click=${this._saveChanges}></mwc-fab>
@@ -123,108 +124,111 @@ export class WebsiteHowTo extends LitElement {
       <div class="m-4">
         ${this.loading
           ? loader()
-      : html`
-        ${this._cta ? html` ${ctaEditor(this._cta)} ` : html``} `}
+          : html` ${this._cta ? html` ${ctaEditor(this._cta)} ` : html``} `}
         <div class="mt-4">
           <div class="header flex w-full flex-wrap justify-between">
-            <h1 class="text-md">
-              ${msg('Steps')}
-            </h1>
+            <h1 class="text-md">${msg('Steps')}</h1>
             <mwc-fab icon="add" mini @click=${this._addStep}></mwc-fab>
           </div>
 
-          ${this._steps && this._steps.map(step => html`
-          <div class="step-box flex flex-wrap w-full items-center">
-            <div class="relative w-1/2">
-              <label
-                for="${step.id}-step-title"
-                class="leading-7 text-sm text-gray-600"
-                >Title</label
-              >
-              <input
-                @change=${(e: Event) => {
-                  const target = e.target as HTMLInputElement;
-                  step.title = target.value;
-                }}
-                name="${step.id}-step-title"
-                id="${step.id}-step-title"
-                type="text"
-                .value=${step.title}
-                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-              />
-            </div>
-            <div class="relative w-1/3">
-              <label
-                for="${step.id}-step-image"
-                class="leading-7 text-sm text-gray-600"
-                >${msg('Image')}</label
-              >
-              <input
-                @change=${(e: Event) => {
-                  const target = e.target as HTMLInputElement;
-                  step.img = target.value;
-                }}
-                name="${step.id}-step-img"
-                id="${step.id}-step-img"
-                type="text"
-                .value=${step.img}
-                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-              />
-            </div>
-            
-            <a
-              title="Remove step"
-              class="cursor-pointer flex items-center h-full"
-              @click=${async() => {
-                await this._removeStep(step);
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </a>
-          </div>
-          `)}
-        </div>
-        <div class="glossary mt-4">
-          <div class="header flex flex-wrap justify-between">
-            <h1 class="text-md">
-              ${msg('Glossary')}
-            </h1>
-            <mwc-fab icon="add" mini @click=${this._addWord}></mwc-fab>
-          </div>
-          <div class="words-block flex flex-wrap w-full">
-            ${this._words?.map(word => {
-              return html`
-              <div class="word w-full flex flex-wrap mt-4 mb-4 items-center gap-3">
-                <div class="fields flex flex-col w-3/4">
+          ${this._steps &&
+          this._steps.map(
+            (step) => html`
+              <div class="step-box flex flex-wrap w-full items-center">
+                <div class="relative w-1/2">
+                  <label
+                    for="${step.id}-step-title"
+                    class="leading-7 text-sm text-gray-600"
+                    >Title</label
+                  >
                   <input
                     @change=${(e: Event) => {
                       const target = e.target as HTMLInputElement;
-                      word.title = target.value;
+                      step.title = target.value;
                     }}
-                    class="w-auto bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                    type="text" .value=${word.title}>
-                  <textarea
+                    name="${step.id}-step-title"
+                    id="${step.id}-step-title"
+                    type="text"
+                    .value=${step.title}
+                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  />
+                </div>
+                <div class="relative w-1/3">
+                  <label
+                    for="${step.id}-step-image"
+                    class="leading-7 text-sm text-gray-600"
+                    >${msg('Image')}</label
+                  >
+                  <input
                     @change=${(e: Event) => {
                       const target = e.target as HTMLInputElement;
-                      word.text = target.value;
+                      step.img = target.value;
                     }}
-                    rows="5"
-                    class="w-auto bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                    .value=${word.text}></textarea>
+                    name="${step.id}-step-img"
+                    id="${step.id}-step-img"
+                    type="text"
+                    .value=${step.img}
+                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  />
                 </div>
+
+                <a
+                  title="Remove step"
+                  class="cursor-pointer flex items-center h-full"
+                  @click=${async () => {
+                    await this._removeStep(step);
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </a>
+              </div>
+            `
+          )}
+        </div>
+        <div class="glossary mt-4">
+          <div class="header flex flex-wrap justify-between">
+            <h1 class="text-md">${msg('Glossary')}</h1>
+            <mwc-fab icon="add" mini @click=${this._addWord}></mwc-fab>
+          </div>
+          <div class="words-block flex flex-wrap w-full">
+            ${this._words?.map((word) => {
+              return html`
+                <div
+                  class="word w-full flex flex-wrap mt-4 mb-4 items-center gap-3"
+                >
+                  <div class="fields flex flex-col w-3/4">
+                    <input
+                      @change=${(e: Event) => {
+                        const target = e.target as HTMLInputElement;
+                        word.title = target.value;
+                      }}
+                      class="w-auto bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:bg-transparent focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      type="text"
+                      .value=${word.title}
+                    />
+                    <textarea
+                      @change=${(e: Event) => {
+                        const target = e.target as HTMLInputElement;
+                        word.text = target.value;
+                      }}
+                      rows="5"
+                      class="w-auto bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                      .value=${word.text}
+                    ></textarea>
+                  </div>
                   <a
                     class="w-10 cursor-pointer"
                     title="Delete word"
@@ -245,7 +249,7 @@ export class WebsiteHowTo extends LitElement {
                       />
                     </svg>
                   </a>
-              </div>
+                </div>
               `;
             })}
           </div>

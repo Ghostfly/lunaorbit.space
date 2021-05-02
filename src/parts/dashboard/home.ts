@@ -6,7 +6,7 @@ import {
   LitElement,
 } from 'lit-element';
 
-import { msg } from '@lit/localize';
+import {msg} from '@lit/localize';
 
 import {CTA, ctaForPage, Strength} from '../../backend';
 import {smoothDnD} from 'smooth-dnd';
@@ -17,9 +17,7 @@ import '@material/mwc-circular-progress';
 export function ctaEditor(cta: CTA): TemplateResult {
   return html`
     <div class="cta-wrapper">
-      <h2 class="text-md mt-4 mb-4 w-full">
-        ${msg('Call to action')}
-      </h2>
+      <h2 class="text-md mt-4 mb-4 w-full">${msg('Call to action')}</h2>
       <div class="cta-editor flex flex-wrap gap-2">
         <div class="relative">
           <label
@@ -113,7 +111,9 @@ export class WebsiteHome extends LitElement {
           .order('order', {ascending: true})
       ).data;
       if (savedStrengths) {
-        this._strengths = savedStrengths.sort((strengthA, strengthB) => strengthA.order - strengthB.order);
+        this._strengths = savedStrengths.sort(
+          (strengthA, strengthB) => strengthA.order - strengthB.order
+        );
       }
     }
   }
@@ -157,7 +157,12 @@ export class WebsiteHome extends LitElement {
 
   protected _strengthBox(strength: Strength): TemplateResult {
     return html`
-      <div class="strength-box" data-order="${strength.order}" data-id="${strength.id}" @click=${this._openBox}>
+      <div
+        class="strength-box"
+        data-order="${strength.order}"
+        data-id="${strength.id}"
+        @click=${this._openBox}
+      >
         <div class="w-full border-2 cursor-pointer mb-2 select-none">
           <div
             class="expander bg-gray-100 rounded flex p-4 h-full items-center justify-between"
@@ -314,13 +319,17 @@ export class WebsiteHome extends LitElement {
         .match({id: `${this._cta.id}`});
     }
 
-    const boxes = this.querySelectorAll('.strength-box') as NodeListOf<HTMLElement>;
-    
+    const boxes = this.querySelectorAll(
+      '.strength-box'
+    ) as NodeListOf<HTMLElement>;
+
     let idx = 0;
     for (const box of boxes) {
       const id = box.dataset.id;
       if (id) {
-        const strength = this._strengths.find(strength => parseInt(strength.id, 10) === parseInt(id, 10));
+        const strength = this._strengths.find(
+          (strength) => parseInt(strength.id, 10) === parseInt(id, 10)
+        );
         if (strength) {
           strength.order = idx;
         }
@@ -328,7 +337,9 @@ export class WebsiteHome extends LitElement {
       }
     }
 
-    this._strengths = this._strengths.sort((strengthA, strengthB) => strengthA.order - strengthB.order);
+    this._strengths = this._strengths.sort(
+      (strengthA, strengthB) => strengthA.order - strengthB.order
+    );
 
     await db.from('strengths').upsert(this._strengths);
   }
@@ -336,9 +347,7 @@ export class WebsiteHome extends LitElement {
   render(): TemplateResult {
     return html`
       <div class="flex justify-between ml-4">
-        <h1 class="text-xl">
-          ${msg('Home')}
-        </h1>
+        <h1 class="text-xl">${msg('Home')}</h1>
         <div class="global-actions">
           <mwc-fab icon="add" mini @click=${this._addStrength}></mwc-fab>
           <mwc-fab icon="refresh" mini @click=${this._refresh}> </mwc-fab>
@@ -348,9 +357,7 @@ export class WebsiteHome extends LitElement {
       <div class="m-4 p-4 flex flex-wrap">
         ${this._cta ? html` ${ctaEditor(this._cta)} ` : html``}
         <div class="strengths w-full">
-          <h1 class="text-md mt-8 mb-4">
-            ${msg('Strengths')}
-          </h1>
+          <h1 class="text-md mt-8 mb-4">${msg('Strengths')}</h1>
           ${this.loading
             ? loader()
             : html`

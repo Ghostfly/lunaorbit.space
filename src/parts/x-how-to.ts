@@ -45,13 +45,14 @@ export class XHowTo extends LitElement {
     if (this._steps) {
       for (const step of this._steps) {
         const storage = retrieveSupabase().storage.from('assets');
-        const signedImageURL = (await storage.createSignedUrl(step.img + '.png', 3000)).signedURL;
+        const signedImageURL = (
+          await storage.createSignedUrl(step.img + '.png', 3000)
+        ).signedURL;
         if (signedImageURL) {
           step.signedURL = signedImageURL;
         }
       }
     }
-
 
     this._cta = await ctaForPage(db, 'how-to');
     this._dictionary = await loadWords(db);
@@ -70,12 +71,8 @@ export class XHowTo extends LitElement {
     return html`
       <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
         <div class="ml-4">
-          <p class="text-base font-medium text-gray-900">
-            ${title}
-          </p>
-          <p class="mt-1 text-md text-gray-500">
-            ${text}
-          </p>
+          <p class="text-base font-medium text-gray-900">${title}</p>
+          <p class="mt-1 text-md text-gray-500">${text}</p>
         </div>
       </a>
     `;
@@ -97,7 +94,9 @@ export class XHowTo extends LitElement {
   }
 
   render(): TemplateResult {
-    const currentStep = this._steps?.find(step => parseInt(step.id, 10) === this.step);
+    const currentStep = this._steps?.find(
+      (step) => parseInt(step.id, 10) === this.step
+    );
     const currentSignedURL = currentStep?.signedURL ?? '';
     const currentALT = currentStep?.title ?? '';
 
@@ -124,10 +123,7 @@ export class XHowTo extends LitElement {
               </ul>
 
               <div class="p-4" id="tabs">
-                <img
-                  src=${currentSignedURL}
-                  alt=${currentALT}
-                />
+                <img src=${currentSignedURL} alt=${currentALT} />
               </div>
 
               <div

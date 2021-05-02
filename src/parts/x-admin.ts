@@ -196,73 +196,87 @@ export class XAdmin extends LitElement {
 
   _connectButton(): TemplateResult {
     return html`
+      <form
+        class="m-4 p-8 shadow flex flex-col"
+        @submit=${async (e: Event) => {
+          e.preventDefault();
+          const form = e.target as HTMLFormElement;
+          const email = (form.querySelector('#email') as HTMLInputElement)
+            .value;
+          const password = (form.querySelector('#password') as HTMLInputElement)
+            .value;
+          if (email && password) {
+            const {error} = await this.supabase.auth.signIn({
+              email,
+              password,
+            });
 
-      <form class="m-4 p-8 shadow flex flex-col" @submit=${async (e: Event) => {
-      e.preventDefault();
-      const form = e.target as HTMLFormElement;
-      const email = (form.querySelector('#email') as HTMLInputElement).value;
-      const password = (form.querySelector('#password') as HTMLInputElement).value;
-      if (email && password) {
-        const { error } = await this.supabase.auth.signIn({
-          email,
-          password
-        });
-    
-        if (error) {
-          this.showSnack(error.message);
-        } else {
-          localStorage.setItem(XAdmin.LOCAL_ADMIN_KEY, email);
-          localStorage.setItem(
-            XAdmin.LOGGED_IN_AT_KEY,
-            new Date().getTime().toString()
-          );
+            if (error) {
+              this.showSnack(error.message);
+            } else {
+              localStorage.setItem(XAdmin.LOCAL_ADMIN_KEY, email);
+              localStorage.setItem(
+                XAdmin.LOGGED_IN_AT_KEY,
+                new Date().getTime().toString()
+              );
 
-          this._savedAddress = email;
+              this._savedAddress = email;
 
-          await this._isAllowed(email);
+              await this._isAllowed(email);
 
-          this.showSnack('Logged in !');
+              this.showSnack('Logged in !');
 
-          this._signedIn = true;
-          this._isChecking = false;
-        }
-      } else {
-        this.showSnack('Please fill every fields');
-      }
-
-      }}>
-      <div class="relative mb-4">
-        <label for="email" class="leading-7 text-sm text-gray-600"
-          >${'Email'}</label
-        >
-        <input
-          autocomplete="username"
-          type="email"
-          id="email"
-          name="email"
-          class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-        />
-      </div>
-      <div class="relative mb-4">
-        <label for="password" class="leading-7 text-sm text-gray-600"
-          >${'Password'}</label
-        >
-        <input
-          autocomplete="current-password"
-          type="password"
-          id="password"
-          name="password"
-          class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-        />
-      </div>
-      <button
-        type="submit"
-        class="text-white terra-bg border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
+              this._signedIn = true;
+              this._isChecking = false;
+            }
+          } else {
+            this.showSnack('Please fill every fields');
+          }
+        }}
       >
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-      </svg>
-      </button>
+        <div class="relative mb-4">
+          <label for="email" class="leading-7 text-sm text-gray-600"
+            >${'Email'}</label
+          >
+          <input
+            autocomplete="username"
+            type="email"
+            id="email"
+            name="email"
+            class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          />
+        </div>
+        <div class="relative mb-4">
+          <label for="password" class="leading-7 text-sm text-gray-600"
+            >${'Password'}</label
+          >
+          <input
+            autocomplete="current-password"
+            type="password"
+            id="password"
+            name="password"
+            class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          />
+        </div>
+        <button
+          type="submit"
+          class="text-white terra-bg border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+            />
+          </svg>
+        </button>
       </form>
 
       <div class="flex items-center justify-center select-none">- Or -</div>
@@ -301,7 +315,10 @@ export class XAdmin extends LitElement {
 
   render(): TemplateResult {
     return html`
-      <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+      <link
+        href="https://fonts.googleapis.com/css?family=Material+Icons&display=block"
+        rel="stylesheet"
+      />
       ${this._adminContent()}
       <mwc-snackbar></mwc-snackbar>
     `;
