@@ -12,6 +12,15 @@ export interface Validator {
   };
 }
 
+export interface ValidatorDelegation {
+  delegator_address: string;
+  validator_address: string;
+  shares: string;
+  balance: {
+    denom: string;
+    amount: string;
+  }
+}
 export interface TerraQuery {
   operationName: string;
   variables: {
