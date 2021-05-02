@@ -1,0 +1,32 @@
+{
+  "minify": true,
+  "options": [
+    "setClasses"
+  ],
+  "feature-detects": [
+    "test/custom-elements",
+    "test/customevent",
+    "test/eventlistener",
+    "test/history",
+    "test/input",
+    "test/inputtypes",
+    "test/json",
+    "test/queryselector",
+    "test/svg",
+    "test/templatestrings",
+    "test/css/borderradius",
+    "test/css/boxshadow",
+    "test/css/boxsizing",
+    "test/css/flexbox",
+    "test/css/fontface",
+    "test/css/mediaqueries",
+    "test/css/opacity",
+    "test/dom/classlist",
+    "test/es6/array",
+    "test/es6/arrow",
+    "test/es6/generators",
+    "test/es6/object",
+    "test/es6/promises",
+    "test/network/fetch"
+  ]
+}

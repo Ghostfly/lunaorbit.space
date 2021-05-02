@@ -66,6 +66,9 @@ const commonConfig = merge([
       publicPath: ENV === 'production' ? '/' : '/'
     },
     resolve: {
+      alias: {
+        modernizr$: resolve(__dirname, ".modernizrrc")
+      },
       extensions: [ '.ts', '.js', '.css' ],
       fallback: {
         "buffer": require.resolve('buffer'),
@@ -118,6 +121,14 @@ const commonConfig = merge([
           options: {
             esModule: false
           }
+        },
+        {
+          test: /\.modernizrrc.js$/,
+          use: [ '@sect/modernizr-loader' ]
+        },
+        {
+          test: /\.modernizrrc(\.json)?$/,
+          use: [ '@sect/modernizr-loader', 'json-loader' ]
         }
       ]
     }
