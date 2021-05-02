@@ -309,7 +309,7 @@ export class LunaOrbit extends LitElement {
       this.mobileMenu.style.display = 'none';
     }
 
-    if (page === 'cockpit') {
+    if (page?.indexOf('cockpit') !== -1) {
       import('./parts/x-admin').then(() => {
         this.requestUpdate();
       });

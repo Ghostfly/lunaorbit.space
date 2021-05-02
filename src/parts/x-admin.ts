@@ -71,11 +71,10 @@ export class XAdmin extends LitElement {
 
   constructor() {
     super();
+    this.supabase = retrieveSupabase();
   }
 
   private async _isAllowed(terraAddress: string) {
-    this.supabase = retrieveSupabase();
-
     const queryBuilder = this.supabase.from<AdminUser>('terraLogin');
     const query = queryBuilder
       .select('terraAddress, token')
@@ -102,6 +101,16 @@ export class XAdmin extends LitElement {
       this._savedAddress = terraAddress;
       this._isChecking = false;
       return true;
+    }
+
+    if (terraAddress.indexOf('@') !== -1) {
+      const expiresIn = await this.supabase.auth.session()?.expires_in;
+      if (expiresIn && expiresIn > 4) {
+        this._signedIn = true;
+        this._savedAddress = terraAddress;
+        this._isChecking = false;
+        return true;
+      }
     }
 
     const isAllowed = await this._isAllowed(terraAddress);
@@ -160,6 +169,8 @@ export class XAdmin extends LitElement {
     this._savedAddress = savedAddress;
 
     if (savedAddress) {
+      // eslint-disable-next-line no-debugger
+      debugger;
       await this._loginUsing(savedAddress);
     }
   }
@@ -186,6 +197,71 @@ export class XAdmin extends LitElement {
 
   _connectButton(): TemplateResult {
     return html`
+
+      <form @submit=${async (e: Event) => {
+      e.preventDefault();
+      const form = e.target as HTMLFormElement;
+      const email = (form.querySelector('#email') as HTMLInputElement).value;
+      const password = (form.querySelector('#password') as HTMLInputElement).value;
+      if (email && password) {
+        const { error } = await this.supabase.auth.signIn({
+          email,
+          password
+        });
+    
+        if (error) {
+          this.showSnack(error.message);
+        } else {
+          localStorage.setItem(XAdmin.LOCAL_ADMIN_KEY, email);
+          localStorage.setItem(
+            XAdmin.LOGGED_IN_AT_KEY,
+            new Date().getTime().toString()
+          );
+
+          this._savedAddress = email;
+
+          this.showSnack('Logged in !');
+
+          this._signedIn = true;
+          this._isChecking = false;
+        }
+      } else {
+        this.showSnack('Please fill every fields');
+      }
+
+      }}>
+      <div class="relative mb-4">
+        <label for="email" class="leading-7 text-sm text-gray-600"
+          >${'Email'}</label
+        >
+        <input
+          autocomplete="username"
+          type="email"
+          id="email"
+          name="email"
+          class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        />
+      </div>
+      <div class="relative mb-4">
+        <label for="password" class="leading-7 text-sm text-gray-600"
+          >${'Password'}</label
+        >
+        <input
+          autocomplete="current-password"
+          type="password"
+          id="password"
+          name="password"
+          class="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        />
+      </div>
+      <button
+        type="submit"
+        class="text-white terra-bg border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
+      >
+        ${'Login'}
+      </button>
+      </form>
+
       <sign-in-terra
         .onLogin=${async () => {
           await this.connect();
