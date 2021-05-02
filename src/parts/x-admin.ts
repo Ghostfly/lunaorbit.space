@@ -219,6 +219,8 @@ export class XAdmin extends LitElement {
 
           this._savedAddress = email;
 
+          await this._isAllowed(email);
+
           this.showSnack('Logged in !');
 
           this._signedIn = true;
