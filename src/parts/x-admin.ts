@@ -83,6 +83,7 @@ export class XAdmin extends LitElement {
     const isAllowed = allowedAddresses?.length;
 
     if (allowedAddresses && allowedAddresses.length > 0) {
+      await this.supabase.auth.signOut();
       this.supabase = retrieveSupabase(allowedAddresses[0].token);
     }
 
