@@ -237,6 +237,7 @@ export class LunaOrbit extends LitElement {
 
       const elem = document.createElement('a');
       elem.target = '_blank';
+      elem.rel = 'nofollow';
       elem.href =
         'https://station.terra.money/validator/terravaloper1p94a6vwl9dkd98cyrlmzf6ydjdgfvamyhu33fa';
       elem.className =

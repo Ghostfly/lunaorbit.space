@@ -121,6 +121,11 @@ export class XHowTo extends LitElement {
 
               <img class="xl:w-1/4 lg:w-1/3 md:w-1/2 w-2/3 block mx-auto mb-10 object-cover object-center rounded" src=${currentSignedURL} alt=${currentALT} />
               </div>
+
+              <div class="rounded-lg shadow-lg ring-opacity-5 p-4 m-4">
+                <p>Currently, staking is available on <a class="text-blue-800" href="https://station.terra.money/" target="_blank" rel="nofollow">Terra Station</a>, the official desktop wallet created for holding Terra assets. Terra Station is officially available for <a class="text-blue-800" href="https://docs.terra.money/quickstart.html#download-terra-station" target="_blank" rel="nofollow">Windows and macOS</a>.</p>
+                <p>In addition, staking is available using any wallet that interacts with Terra command line tools, which can be accessed in <a class="text-blue-800" href="https://docs.terra.money/terracli/staking.html#delegate" target="_blank" rel="nofollow">this guide</a>.</p>
+              </div>
             </section>
               <div
                 class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden"
