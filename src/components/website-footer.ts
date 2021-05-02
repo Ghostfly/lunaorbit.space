@@ -59,7 +59,7 @@ export class WebsiteFooter extends LitElement {
                 | <a class="text-white ml-1" target="_blank"  rel="noopener" href="https://github.com/terra-project/validator-profiles/tree/master/validators/${this._operatorAddress.value}">Validator profile</a>
               </p>
               <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
-                <a class="telegram" title="telegram" class="ml-3 text-white" href="http://t.me/${this._telegram.value.replace('@', '')}" target="_blank"  rel="noopener">
+                <a class="telegram m-4" title="telegram" class="ml-3 text-white" href="http://t.me/${this._telegram.value.replace('@', '')}" target="_blank"  rel="noopener">
                   <svg fill="currentColor" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
                   class="w-5 h-5">
                   <path id="telegram-1"
