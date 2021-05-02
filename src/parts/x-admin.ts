@@ -220,6 +220,7 @@ export class XAdmin extends LitElement {
 
   render(): TemplateResult {
     return html`
+      <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
       ${this._adminContent()}
       <mwc-snackbar></mwc-snackbar>
     `;
