@@ -375,12 +375,9 @@ export class LunaOrbit extends LitElement {
     }
 
     if (page?.indexOf('cockpit') !== -1) {
-      console.warn('loading cockpit');
       this.loaded = false;
       import('./parts/x-admin').then(() => {
-        setTimeout(() => {
-          this.loaded = true;
-        }, 500);
+        this.loaded = true;
         this.requestUpdate();
       });
     }
