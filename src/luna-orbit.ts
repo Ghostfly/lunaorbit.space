@@ -161,6 +161,7 @@ export class LunaOrbit extends LitElement {
     await Promise.all([
       setLocaleFromUrl(),
       this._setupMenus(),
+      this.updateBannerMessage(),
       this._showAirdropToast(),
       this._retrieveCommissionAndPrice()
     ]);

@@ -169,8 +169,6 @@ export class XAdmin extends LitElement {
     this._savedAddress = savedAddress;
 
     if (savedAddress) {
-      // eslint-disable-next-line no-debugger
-      debugger;
       await this._loginUsing(savedAddress);
     }
   }
@@ -198,7 +196,7 @@ export class XAdmin extends LitElement {
   _connectButton(): TemplateResult {
     return html`
 
-      <form @submit=${async (e: Event) => {
+      <form class="m-4 p-8 shadow flex flex-col" @submit=${async (e: Event) => {
       e.preventDefault();
       const form = e.target as HTMLFormElement;
       const email = (form.querySelector('#email') as HTMLInputElement).value;
@@ -258,9 +256,13 @@ export class XAdmin extends LitElement {
         type="submit"
         class="text-white terra-bg border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg"
       >
-        ${'Login'}
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+      </svg>
       </button>
       </form>
+
+      <div class="flex items-center justify-center select-none">- Or -</div>
 
       <sign-in-terra
         .onLogin=${async () => {
