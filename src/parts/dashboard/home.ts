@@ -283,7 +283,7 @@ export class WebsiteHome extends LitElement {
         title,
       });
       await this._loadStrengths();
-      document.querySelector('x-admin')?.showSnack('Removed.');
+      document.querySelector('x-admin')?.showSnack('Removed strength.');
     }
   }
 
@@ -342,6 +342,9 @@ export class WebsiteHome extends LitElement {
     );
 
     await db.from('strengths').upsert(this._strengths);
+    document
+    .querySelector('x-admin')
+    ?.showSnack(`Updated strengths`);
   }
 
   render(): TemplateResult {
