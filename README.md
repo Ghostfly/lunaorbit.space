@@ -2,8 +2,7 @@
 
 # LunaOrbit website
 
-- Dev : https://lunaorbit.ghostfly.dev
-- Prod : https://lunaorbit.space
+- URL : https://lunaorbit.space
 
 ## Setup
 
