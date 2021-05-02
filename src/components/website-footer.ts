@@ -11,7 +11,7 @@ import {WebsiteSettingsDB} from '../parts/dashboard/settings';
 import {loader} from '../parts/dashboard/home';
 
 /**
- * Sign in using Terra component
+ * Website footer
  */
 @customElement('website-footer')
 export class WebsiteFooter extends LitElement {
