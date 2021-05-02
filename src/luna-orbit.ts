@@ -106,6 +106,8 @@ export class LunaOrbit extends LitElement {
   private _supabase: SupabaseClient;
   private _priceInterval: number | null = null;
   private _isRefreshStopped = false;
+  @property({type: Boolean})
+  public loaded = false;
 
   constructor() {
     super();
@@ -211,6 +213,10 @@ export class LunaOrbit extends LitElement {
     ]);
 
     this._handleMobileMenu();
+
+    setTimeout(() => {
+      this.loaded = true;
+     }, 300);
   }
 
   private async _setupMenus() {
@@ -254,6 +260,7 @@ export class LunaOrbit extends LitElement {
       ${this._bannerMessage}
       <slot name="nav"></slot>
       <slot name="content"></slot>
+      <lunaorbit-loader ?loading="${!this.loaded}"></lunaorbit-loader>
       ${isWebsite
         ? html`
             <slot name="equation"></slot>
@@ -368,7 +375,12 @@ export class LunaOrbit extends LitElement {
     }
 
     if (page?.indexOf('cockpit') !== -1) {
+      console.warn('loading cockpit');
+      this.loaded = false;
       import('./parts/x-admin').then(() => {
+        setTimeout(() => {
+          this.loaded = true;
+        }, 500);
         this.requestUpdate();
       });
     }
