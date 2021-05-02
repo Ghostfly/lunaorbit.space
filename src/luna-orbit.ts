@@ -67,6 +67,7 @@ export class LunaOrbit extends LitElement {
   private _supabase: SupabaseClient;
   private _priceInterval: number | null = null;
   private _isRefreshStopped = false;
+  
   @property({type: Boolean})
   public loaded = false;
 

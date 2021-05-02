@@ -39,10 +39,6 @@ export class LunaOrbitLoader extends LitElement {
   }
   `;
 
-  firstUpdated(): void {
-    console.warn('updated loader', this.loading);
-  }
-
   render(): TemplateResult {
     return html`
       <div
