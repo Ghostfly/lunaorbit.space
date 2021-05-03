@@ -9,16 +9,12 @@ import {
 
 import {AdminNav, DashboardPages} from './dashboard/nav';
 
-import ExtensionSingleton from '../terra/terra-connect';
-
 import './dashboard/settings';
 import './dashboard/assets';
 import './dashboard/nav';
 import './dashboard/home';
 import './dashboard/tools';
 import './dashboard/how-to';
-
-import '../components/sign-in-terra';
 
 import '@material/mwc-snackbar';
 import '@material/mwc-fab';
@@ -184,16 +180,6 @@ export class XAdmin extends LitElement {
     await this.handleAuth();
   }
 
-  async connect(): Promise<boolean> {
-    const terraAdr = await ExtensionSingleton.connect();
-
-    if (terraAdr.address) {
-      await this._loginUsing(terraAdr.address);
-    }
-
-    return this._signedIn;
-  }
-
   _connectButton(): TemplateResult {
     return html`
       <form
@@ -279,14 +265,6 @@ export class XAdmin extends LitElement {
           </svg>
         </button>
       </form>
-
-      <div class="flex items-center justify-center select-none">- Or -</div>
-
-      <sign-in-terra
-        .onLogin=${async () => {
-          await this.connect();
-        }}
-      ></sign-in-terra>
     `;
   }
 
