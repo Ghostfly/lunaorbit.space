@@ -247,10 +247,9 @@ export class LunaOrbit extends LitElement {
     this.validatorInformation = await validatorQuery.json();
 
     if (this.validatorInformation) {
-      this._commission = parseInt(
+      this._commission = parseFloat(
         this.validatorInformation.result.commission.commission_rates.rate,
-        10
-      );
+      ) * 100;
 
       const footer = document.querySelector('website-footer');
       if (footer) {
