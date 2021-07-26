@@ -89,7 +89,6 @@ export class LunaOrbit extends LitElement {
       {path: '/how-to', component: 'x-how-to'},
       {path: '/tools', component: 'x-tools'},
       {path: '/contact', component: 'x-contact'},
-      {path: '/airdrops', component: 'airdrop-dialog'},
       {path: '/bluna', component: 'x-bluna'},
       {path: '/cockpit', component: 'x-admin'},
       {path: '/cockpit/:page', component: 'x-admin'},
@@ -100,10 +99,6 @@ export class LunaOrbit extends LitElement {
       'vaadin-router-location-changed',
       this._routerLocationChanged.bind(this)
     );
-  }
-
-  public async showAirdropDialog(): Promise<void> {
-    document.body.appendChild(document.createElement('airdrop-dialog'));
   }
 
   public async updateBannerMessage(): Promise<void> {
@@ -145,32 +140,11 @@ export class LunaOrbit extends LitElement {
     }
   }
 
-  private async _showAirdropToast() {
-    if (sessionStorage.getItem('lunaorbit-airdrops-hide')) {
-      return;
-    }
-
-    const queryBuilder = this._supabase.from<WebsiteSettingsDB>('settings');
-    const enabledReq = queryBuilder
-      .select('name, value, type')
-      .eq('name', 'airdrop-balloon-visible');
-    const settings = (await enabledReq).data;
-    if (settings && settings[0].value == 'true') {
-      const hasToast = this.shadowRoot?.querySelector('airdrop-toast');
-      if (hasToast) {
-        hasToast.parentElement?.removeChild(hasToast);
-      }
-
-      this.shadowRoot?.appendChild(document.createElement('airdrop-toast'));
-    }
-  }
-
   async firstUpdated(): Promise<void> {
     await Promise.all([
       setLocaleFromUrl(),
       this._setupMenus(),
       this.updateBannerMessage(),
-      this._showAirdropToast(),
       this._retrieveCommissionAndPrice(),
     ]);
 
