@@ -60,7 +60,7 @@ export class XContact extends LitElement {
             <h2 class="text-gray-900 text-lg mb-6 font-medium title-font">
               ${msg('Find us on')}
             </h2>
-            <p class="text-md mt-3 flex flex-row">
+            <p class="text-md mt-3 flex flex-wrap">
               <a
                 href="http://t.me/${this._telegram?.value.replace('@', '')}"
                 target="_blank"
