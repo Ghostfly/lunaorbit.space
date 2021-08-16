@@ -150,9 +150,7 @@ export class LunaOrbit extends LitElement {
 
     this._handleMobileMenu();
 
-    setTimeout(() => {
-      this.loaded = true;
-     }, 300);
+    this.loaded = true;
   }
 
   private async _setupMenus() {
