@@ -122,7 +122,7 @@ export class WebsiteSettings extends LitElement {
                             .checked=${setting.value === 'true'}
                             @change=${(e: Event) => {
                               const switchField = e.target as Switch;
-                              setting.value = switchField.checked
+                              setting.value = switchField.selected
                                 ? 'true'
                                 : 'false';
                             }}
@@ -202,7 +202,7 @@ export class WebsiteSettings extends LitElement {
         const queryBuilder = database.from<WebsiteSettingsDB>('settings');
         error = await queryBuilder
           .update({
-            value: component.checked ? 'true' : 'false',
+            value: component.selected ? 'true' : 'false',
           })
           .match({
             name: setting.name,
